@@ -13,10 +13,10 @@ public class ConexionBD {
     //  private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521/XE";
     //  private static final String DB_USER = "EMARTINEZ.";
     //  private static final String DB_PASSWORD = "123456";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/cajahorro";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/bd_systema";
 
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "3Dg4r2025$";
+    private static final String DB_PASSWORD = "root";
 
     public static Connection iniciarConexion() {
         Connection conexion = null;

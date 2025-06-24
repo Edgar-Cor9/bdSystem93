@@ -39,14 +39,14 @@ public final class OperarcionesCRUD {
     }
 // aqui se consulta a la base de datos para el acceso a login
 
-    public void login(String user, String pass, String stado) throws SQLException { // acceso a la ventana login
+    public void login(String user, String pass) throws SQLException { // acceso a la ventana login
         this.iniciarConexionBD();
         Login lg = new Login();
         String status;
         status = "Activo";
         Statement stm = this.conexion.createStatement();
-        String sql = "select estado from login where usuario = '" + user
-                + "' and password = '" + pass + "'and  estado = '" + status + "'";
+        String sql = "select status from usuarios where username = '" + user
+                + "' and password = '" + pass + "'and  status = '" + status + "'";
 
         ResultSet rst = stm.executeQuery(sql);
         if (rst.next()) {
@@ -54,7 +54,7 @@ public final class OperarcionesCRUD {
             new Principal().setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(null, "USUARIO / PASSWORD INCORRECTOS");
+            JOptionPane.showMessageDialog(null, "USUARIO INACTIVO / PASSWORD INCORRECTOS");
             lg.show(true);
         }
         this.cerrarConexionBD();
@@ -207,6 +207,33 @@ public final class OperarcionesCRUD {
                 ResultSet rst2 = stm.executeQuery(sql1);
                 JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
             }
+            this.cerrarConexionBD();
+        }
+
+    }
+
+    // Crear Usuario /Administrador
+    public void IngresarUsuario(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+
+        for (Vector<String> vector : matriz) {
+
+        }
+    }
+
+    // Para consultar si esta ingresado un usuario
+    public void ConsularUsuario(String cedula) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        String ced = cedula;
+        String sql = "select cedula from usuarios where cedula = '" + ced + "'";
+
+        ResultSet rst = stm.executeQuery(sql);
+
+        if (rst.next()) {
+            JOptionPane.showMessageDialog(null, "!! No puede Guardar a esta Persona ya se encuentra Registrado !!\n");
             this.cerrarConexionBD();
         }
 

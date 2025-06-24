@@ -32,7 +32,6 @@ public class Login extends javax.swing.JFrame {
         // setIconImage(new ImageIcon(getClass().getResource("/ico.png")).getImage());
     }
 
-    @Override
     public Image getIconImage() {
         // Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/informationuser.png"));
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/ico.png"));
@@ -59,7 +58,7 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
-        setIconImages(null);
+        setIconImages(getIconImages());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -129,7 +128,7 @@ public class Login extends javax.swing.JFrame {
             dispose();
             try {
                 // op.login(user, pass);
-                op.login(user, pass,stado);
+                op.login(user, pass);
 
             } catch (SQLException err) {
                 err.printStackTrace();

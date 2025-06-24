@@ -21,6 +21,7 @@ public class Principal extends javax.swing.JFrame {
     TransaccionesIngreso transaccion;
     TransaccionesPolizas polizas;
     Cliente cliente;
+    Registro registro;
 
     /**
      * Creates new form Principal
@@ -71,9 +72,10 @@ public class Principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
+        RegistroUsuario = new javax.swing.JMenuItem();
+        ActualizarUser = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,13 +138,22 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("Consultas");
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Polizas");
-        jMenuBar1.add(jMenu4);
-
         jMenu5.setText("Reportes");
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Usuarios");
+
+        RegistroUsuario.setText("Registro");
+        RegistroUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistroUsuarioActionPerformed(evt);
+            }
+        });
+        jMenu6.add(RegistroUsuario);
+
+        ActualizarUser.setText("Actualizar");
+        jMenu6.add(ActualizarUser);
+
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Opciones");
@@ -215,6 +226,22 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void RegistroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroUsuarioActionPerformed
+
+        try {
+            if (cerrado(registro)) {
+                registro = new Registro();
+                jTabbedPane1.add("Registro", registro);
+                registro.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Registro ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana transacciones" + e);
+        }
+
+    }//GEN-LAST:event_RegistroUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -251,11 +278,12 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ActualizarUser;
+    private javax.swing.JMenuItem RegistroUsuario;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
