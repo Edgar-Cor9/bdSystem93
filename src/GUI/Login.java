@@ -128,13 +128,12 @@ public class Login extends javax.swing.JFrame {
             dispose();
             try {
                 // op.login(user, pass);
-                op.login(user, pass);
+                op.UsuarioRegistrado(user, pass);
 
             } catch (SQLException err) {
                 err.printStackTrace();
             }
         }
-
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
