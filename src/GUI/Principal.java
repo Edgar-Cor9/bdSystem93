@@ -75,7 +75,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         RegistroUsuario = new javax.swing.JMenuItem();
-        ActualizarUser = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -151,8 +151,8 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu6.add(RegistroUsuario);
 
-        ActualizarUser.setText("Actualizar");
-        jMenu6.add(ActualizarUser);
+        jMenuItem4.setText("Password");
+        jMenu6.add(jMenuItem4);
 
         jMenuBar1.add(jMenu6);
 
@@ -278,7 +278,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem ActualizarUser;
     private javax.swing.JMenuItem RegistroUsuario;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JMenu jMenu1;
@@ -291,6 +290,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

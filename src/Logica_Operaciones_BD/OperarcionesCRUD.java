@@ -44,28 +44,29 @@ public final class OperarcionesCRUD {
         Login lg = new Login();
         String status;
         status = "Activo";
-//        String statusActual = "Bloqueado";
-//        int contador = 0;
+        String statusActual = "Bloqueado";
+
+        int veces = 0;
         Statement stm = this.conexion.createStatement();
         String sql = "select status from usuarios where username = '" + user
                 + "' and password = '" + pass + "'and  status = '" + status + "'";
 
         ResultSet rst = stm.executeQuery(sql);
+
         if (rst.next()) {
             lg.dispose();
             new Principal().setVisible(true);
 
-        } else {
+        } else if (veces == 3) {
+            JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
+            ActEstadoUser(user, statusActual);
 
+        } else {
             JOptionPane.showMessageDialog(null, "PASSWORD INCORRECTOS");
-//            contador--;
-//            System.out.println(contador);
+            veces++;
             lg.show(true);
         }
-//        if (contador <= 0) {
-//            JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
-//            ActEstadoUser(user, statusActual);
-//        }
+
         this.cerrarConexionBD();
 
     }
@@ -79,8 +80,31 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
         String sql = "update usuarios set status ='" + status + "' where username = '" + user + "'";
 
-        ResultSet rs = stm.executeQuery(sql);
+        stm.executeUpdate(sql);
         this.cerrarConexionBD();
+    }
+
+    // para consultar si el usuario se encuentra en estado activo
+    public void EstadoUsuario(String usuario, String password) throws SQLException {
+        this.iniciarConexionBD();
+
+        Login lg = new Login();
+        String user = usuario;
+        String pass = password;
+        String status = "Activo";
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "select status from usuarios where username ='" + user + "' and status = '" + status + "'";
+
+        ResultSet rst = stm.executeQuery(sql);
+
+        if (rst.next()) {
+            login(user, pass);
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario no se encuentra Activo, contacte con el administrador !!!!");
+            lg.show(true);
+        }
+
     }
 
     //para consultar si el usuario se encuentra registrado 
@@ -97,7 +121,7 @@ public final class OperarcionesCRUD {
         ResultSet rs = stm.executeQuery(sql);
 
         if (rs.next()) {
-            login(user, pass);
+            EstadoUsuario(usuario, password);
         } else {
             JOptionPane.showMessageDialog(null, "USUARIO NO SE ENCUENTRA REGISTRADO");
             lg.show(true);
@@ -195,13 +219,13 @@ public final class OperarcionesCRUD {
 
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, tipo_nivel, status, registrado_por, fecha_registro from usuarios where cedula = '" + cedula + "'";
+        String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, tipo_nivel, status, registrado_por, fecha_registro, ultima_actualizacion from usuarios where cedula = '" + cedula + "'";
         ResultSet rst = stm.executeQuery(sql);
 
         while (rst.next()) {
 
             Vector<String> datos = new Vector<>();
-            String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis;
+            String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
 
             iduser = rst.getString("idusuarios");
             cedul = rst.getString("cedula");
@@ -215,6 +239,7 @@ public final class OperarcionesCRUD {
             status = rst.getString("status");
             registradox = rst.getString("registrado_por");
             fecha_regis = rst.getString("fecha_registro");
+            ult_actua = rst.getString("ultima_actualizacion");
 
             datos.add(iduser);
             datos.add(cedul);
@@ -228,6 +253,7 @@ public final class OperarcionesCRUD {
             datos.add(status);
             datos.add(registradox);
             datos.add(fecha_regis);
+            datos.add(ult_actua);
 
             matriz.add(datos);
 
