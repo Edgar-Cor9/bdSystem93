@@ -6,8 +6,9 @@
             <file>file:/E:/EDGAR/PROYECTOS%20JAVA/SystemBry/SystemBry/src/GUI/Principal.java</file>
             <file>file:/E:/EDGAR/PROYECTOS%20JAVA/SystemBry/SystemBry/src/GUI/Login.java</file>
             <file>file:/E:/EDGAR/PROYECTOS%20JAVA/SystemBry/SystemBry/src/GUI/Registro.java</file>
-            <file>file:/E:/EDGAR/PROYECTOS%20JAVA/SystemBry/SystemBry/src/GUI/Cliente.java</file>
             <file>file:/E:/EDGAR/PROYECTOS%20JAVA/SystemBry/SystemBry/src/Logica_Operaciones_BD/OperarcionesCRUD.java</file>
+            <file>file:/E:/EDGAR/PROYECTOS%20JAVA/SystemBry/SystemBry/src/GUI/ActualizarUsuario.java</file>
+            <file>file:/E:/EDGAR/PROYECTOS%20JAVA/SystemBry/SystemBry/src/GUI/ActPassUsuario.java</file>
         </group>
     </open-files>
 </project-private>
