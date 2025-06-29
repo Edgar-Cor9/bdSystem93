@@ -32,7 +32,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     public static SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
 
     ActPassUsuario actP;
-    ActPassUsuario act = new ActPassUsuario();
+    ActPerfilUsuario actPU;
 
     /**
      * Creates new form Registro
@@ -90,7 +90,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jDesktopPane1Registro = new javax.swing.JDesktopPane();
         jPanel2 = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
-        JBLimpiar = new javax.swing.JButton();
         JBEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -124,6 +123,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         labelCedula = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
+        txtpass = new javax.swing.JPasswordField();
 
         jButton1.setText("jButton1");
 
@@ -200,21 +200,10 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         jToolBar3.setRollover(true);
-
-        JBLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
-        JBLimpiar.setToolTipText("Limpiar");
-        JBLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        JBLimpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        JBLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBLimpiarActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(JBLimpiar);
 
         JBEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
         JBEditar.setToolTipText("Editar");
@@ -273,13 +262,10 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Tipo de Nivel:");
 
-        jComboNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Usuario" }));
         jComboNivel.setToolTipText("");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("Estado:");
-
-        jcomboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
 
         JBemail.setBackground(new java.awt.Color(255, 51, 51));
         JBemail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acerca-de.png"))); // NOI18N
@@ -330,7 +316,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         );
         PanelDesActuLayout.setVerticalGroup(
             PanelDesActuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JtabActu, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+            .addComponent(JtabActu, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
         );
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -342,6 +328,9 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                 txtUsuarioActionPerformed(evt);
             }
         });
+
+        txtpass.setEditable(false);
+        txtpass.setText("jPasswordField1");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -369,7 +358,9 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                         .addGap(27, 27, 27)
                         .addComponent(labelCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtpass, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -384,30 +375,32 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel4)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBnivel))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LabelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtfono, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBtelefono)))
+                        .addComponent(JBtelefono))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JBnivel))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LabelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
             .addComponent(PanelDesActu)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -448,18 +441,24 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                             .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JBnivel)
                             .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBestado)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JBestado)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(100, 100, 100))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(100, 100, 100)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(145, 145, 145)))
                 .addComponent(PanelDesActu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -484,17 +483,15 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jDesktopPane1Registro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDesktopPane1Registro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -540,14 +537,19 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                     fecha_regis = vector.get(11);
                     ult_actua = vector.get(12);
 
+                    String txtComoNi = vector.get(8);
+                    String txtComost = vector.get(9);
+
                     labelCedula.setText(cedul);
                     txtUsuario.setText(username);
                     txtnombres.setText(nombres);
                     txtapellidos.setText(apellidos);
                     txtemail.setText(email);
                     txtfono.setText(telefono);
-                    jComboNivel.getSelectedItem();
-                    jcomboStatus.getSelectedItem();
+
+                    jComboNivel.addItem(tipo_niv);
+                    jcomboStatus.addItem(status);
+
                     LabelRegistro.setText(registradox);
                     labelFecha.setText(fecha_regis);
                     LabelActualizacion.setText(ult_actua);
@@ -572,13 +574,11 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             if (cerrado(actP)) {
-
                 actP = new ActPassUsuario();
                 JtabActu.add("Actualizacion Password", actP);
                 actP.show();
-                String usuarioConsulta = String.valueOf(txtUsuario);
-                act.setUsuario(usuarioConsulta);
-
+                String usuario = txtUsuario.getText();
+                actP.setUsuario(usuario);
             } else {
                 JOptionPane.showMessageDialog(this, "La Ventana Actualizacion Password ya se Encuentra abierta");
             }
@@ -589,72 +589,74 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
 
     private void JBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEditarActionPerformed
 
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-
-        Date fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
-        String fechas = formato.format(fecha);
-
-        String cedula, nombres, apellidos, email, telefono, tipo_nivel, status, seleccion1, seleccion2;
-        cedula = labelCedula.getText().toString();
-        int validacion = 0;
-        int seleccion = 0;
-        nombres = txtnombres.getText();
-        apellidos = txtapellidos.getText();
-        email = txtemail.getText();
-        telefono = txtfono.getText();
-
-        tipo_nivel = jComboNivel.getSelectedItem().toString();
-        status = jcomboStatus.getSelectedItem().toString();
-
-        if (nombres.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
-            JBNombres.setVisible(true);
-        }
-        if (apellidos.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");
-            JBApellidos.setVisible(true);
-        }
-        if (email.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese el email por favor");
-            JBemail.setVisible(true);
-        }
-        if (telefono.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese el telefono por favor");
-            JBtelefono.setVisible(true);
-        }
-
-        if (validacion == 0) {
-            Vector<String> datos = new Vector<>();
-
-            datos.add(cedula);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(email);
-            datos.add(telefono);
-
-            datos.add(tipo_nivel);
-            datos.add(status);
-            datos.add(usuario);
-            datos.add(fechas);
-
-            matriz.add(datos);
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
-        }
-
         try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            op.ActualizarUsuario(matriz);
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
-    }//GEN-LAST:event_JBEditarActionPerformed
+            ArrayList<Vector<String>> matriz = new ArrayList<>();
 
-    private void JBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLimpiarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBLimpiarActionPerformed
+            Date fecha = new Date();
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+
+            String fechas = formato.format(fecha);
+
+            String cedula, nombres, apellidos, email, telefono, usrname, tipo_nivel, status, seleccion1, seleccion2;
+            cedula = labelCedula.getText().toString();
+            int validacion = 0;
+            int seleccion = 0;
+            nombres = txtnombres.getText();
+            apellidos = txtapellidos.getText();
+            email = txtemail.getText();
+            telefono = txtfono.getText();
+            usrname = txtUsuario.getText();
+            tipo_nivel = jComboNivel.getSelectedItem().toString();
+            status = jcomboStatus.getSelectedItem().toString();
+
+            if (nombres.equals("")) {
+                JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
+                JBNombres.setVisible(true);
+            }
+            if (apellidos.equals("")) {
+                JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");
+                JBApellidos.setVisible(true);
+            }
+            if (email.equals("")) {
+                JOptionPane.showMessageDialog(this, "Ingrese el email por favor");
+                JBemail.setVisible(true);
+            }
+            if (telefono.equals("")) {
+                JOptionPane.showMessageDialog(this, "Ingrese el telefono por favor");
+                JBtelefono.setVisible(true);
+            }
+
+            if (validacion == 0) {
+                Vector<String> datos = new Vector<>();
+
+                datos.add(cedula);
+                datos.add(nombres);
+                datos.add(apellidos);
+                datos.add(email);
+                datos.add(telefono);
+                datos.add(usrname);
+                datos.add(tipo_nivel);
+                datos.add(status);
+                datos.add(usuario);
+                datos.add(fechas);
+
+                matriz.add(datos);
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
+            }
+
+            try {
+                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+                op.ActualizarUsuario(matriz);
+            } catch (SQLException err) {
+                err.printStackTrace();
+            }
+        } catch (Exception e) {
+            System.err.println("Error al guardar actualizacion" + e);
+            JOptionPane.showMessageDialog(null, "Error al guardar actualizacion Usuario No Registrado");
+        }
+
+    }//GEN-LAST:event_JBEditarActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
@@ -664,7 +666,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBApellidos;
     private javax.swing.JButton JBEditar;
-    private javax.swing.JButton JBLimpiar;
     private javax.swing.JButton JBNombres;
     private javax.swing.JButton JBemail;
     private javax.swing.JButton JBestado;
@@ -709,5 +710,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtfono;
     private javax.swing.JTextField txtnombres;
+    private javax.swing.JPasswordField txtpass;
     // End of variables declaration//GEN-END:variables
 }

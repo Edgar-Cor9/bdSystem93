@@ -70,10 +70,8 @@ public class Registro extends javax.swing.JInternalFrame {
         jDesktopPane1Registro = new javax.swing.JDesktopPane();
         jPanel2 = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
-        JBLimpiar = new javax.swing.JButton();
         JBGuardar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        JBEditar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         labelFecha = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -185,17 +183,6 @@ public class Registro extends javax.swing.JInternalFrame {
 
         jToolBar3.setRollover(true);
 
-        JBLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
-        JBLimpiar.setToolTipText("Limpiar");
-        JBLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        JBLimpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        JBLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBLimpiarActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(JBLimpiar);
-
         JBGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disco-flexible.png"))); // NOI18N
         JBGuardar.setToolTipText("Guardar");
         JBGuardar.setFocusable(false);
@@ -219,18 +206,6 @@ public class Registro extends javax.swing.JInternalFrame {
             }
         });
         jToolBar3.add(jButton2);
-
-        JBEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
-        JBEditar.setToolTipText("Editar");
-        JBEditar.setFocusable(false);
-        JBEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        JBEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        JBEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBEditarActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(JBEditar);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("fecha:");
@@ -390,7 +365,7 @@ public class Registro extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,7 +436,7 @@ public class Registro extends javax.swing.JInternalFrame {
         );
         jDesktopPane1RegistroLayout.setVerticalGroup(
             jDesktopPane1RegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -478,7 +453,7 @@ public class Registro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jDesktopPane1Registro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -623,10 +598,6 @@ public class Registro extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jBConsultarActionPerformed
 
-    private void JBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLimpiarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBLimpiarActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 //        jPanel1.setVisible(true);
 //        jDesktopPane1Registro.setVisible(false);
@@ -634,89 +605,10 @@ public class Registro extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void JBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEditarActionPerformed
-
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-
-        Date fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
-        String fechas = formato.format(fecha);
-
-        String cedula, nombres, apellidos, email, telefono, username, password, tipo_nivel, status, seleccion1, seleccion2;
-        cedula = labelCedula.getText().toString();
-        int validacion = 0;
-        int seleccion = 0;
-        nombres = txtnombres.getText();
-        apellidos = txtapellidos.getText();
-        email = txtemail.getText();
-        telefono = txtfono.getText();
-        username = txtusuario.getText();
-        password = txtpassword.getText();
-
-        tipo_nivel = jComboNivel.getSelectedItem().toString();
-        status = jcomboStatus.getSelectedItem().toString();
-
-        if (nombres.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
-            JBNombres.setVisible(true);
-        }
-        if (apellidos.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");
-            JBApellidos.setVisible(true);
-        }
-        if (email.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese el email por favor");
-            JBemail.setVisible(true);
-        }
-        if (telefono.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese el telefono por favor");
-            JBtelefono.setVisible(true);
-        }
-        if (username.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese el username por favor");
-            JBusuario.setVisible(true);
-        }
-        if (password.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese el password por favor");
-            JBpassword.setVisible(true);
-        }
-
-        if (validacion == 0) {
-            Vector<String> datos = new Vector<>();
-
-            datos.add(cedula);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(email);
-            datos.add(telefono);
-            datos.add(username);
-            datos.add(password);
-            datos.add(tipo_nivel);
-            datos.add(status);
-            datos.add(usuario);
-            datos.add(fechas);
-
-            matriz.add(datos);
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
-        }
-
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            op.ActualizarUsuario(matriz);
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
-
-    }//GEN-LAST:event_JBEditarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBApellidos;
-    private javax.swing.JButton JBEditar;
     private javax.swing.JButton JBGuardar;
-    private javax.swing.JButton JBLimpiar;
     private javax.swing.JButton JBNombres;
     private javax.swing.JButton JBemail;
     private javax.swing.JButton JBestado;

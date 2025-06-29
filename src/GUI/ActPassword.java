@@ -17,7 +17,7 @@ import javax.swing.WindowConstants;
  *
  * @author USUARIO
  */
-public class ActPassUsuario extends javax.swing.JInternalFrame {
+public class ActPassword extends javax.swing.JInternalFrame {
 
     String usuario;
 
@@ -26,36 +26,15 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
      */
     ActPerfilUsuario actPu;
 
-    public ActPassUsuario() {
+    public ActPassword() {
         initComponents();
         usuario = Login.user;
         JBpassword2.setVisible(false);
         JBpassword1.setVisible(false);
-        JLabelTitulo.setText(" Actualizacion Usuario > Password ");
+        JLabelTitulo.setText(" Usuarios> Actualizacion Password ");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //  setUsuario(usuarioPASS);
-        jDesktopPane1.setVisible(true);
-    }
+        jLabelUsuario.setText(usuario);
 
-    private String userA;
-
-    public void setUsuario(String usuarioPASS) {
-        this.userA = usuarioPASS;
-        jLabelUsuario.setText(userA);
-
-    }
-
-    private boolean cerrado(Object obj) {
-        JInternalFrame[] FrmActivo = jDesktopPane1.getAllFrames();
-        boolean cerrado = true;
-        int i = 0;
-        while (i < FrmActivo.length && cerrado) {
-            if (FrmActivo[i] == obj) {
-                cerrado = false;
-            }
-        }
-        i++;
-        return cerrado;
     }
 
     /**
@@ -69,7 +48,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         JLabelTitulo = new javax.swing.JLabel();
@@ -81,7 +59,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         jPassNuevoConfir = new javax.swing.JPasswordField();
         JBpassword1 = new javax.swing.JButton();
         JBpassword2 = new javax.swing.JButton();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
 
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/contrasena.png"))); // NOI18N
 
@@ -98,18 +75,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(jButton1);
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clasificacion.png"))); // NOI18N
-        jButton4.setToolTipText("Perfil");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton4);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
         jButton2.setToolTipText("Limpiar");
@@ -161,17 +126,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         JBpassword2.setToolTipText("ingrese un password");
         JBpassword2.setBorder(null);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,9 +155,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
                                 .addComponent(JBpassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(397, 397, 397)
-                .addComponent(jDesktopPane1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,25 +162,21 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)
-                                .addComponent(jPassNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JBpassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(jPassNuevoConfir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JBpassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 106, Short.MAX_VALUE))
-                    .addComponent(jDesktopPane1))
-                .addContainerGap())
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jPassNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBpassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(jPassNuevoConfir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBpassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         pack();
@@ -246,6 +193,7 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
 
         passnuevo = jPassNuevo.getText();
         confirmacionpass = jPassNuevoConfir.getText();
+        jLabelUsuario.setText(usuario);
 
         int validacion = 0;
         if (passnuevo.equals("")) {
@@ -263,9 +211,9 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
 
             if (confirmacionpass.equals(passnuevo)) {
                 try {
-                    String us = jLabelUsuario.getText();
+
                     OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                    op.ActPassUsuario(us, confirmacionpass);
+                    op.ActPassUsuario(usuario, confirmacionpass);
                     JOptionPane.showMessageDialog(this, "Contraseña Actualiza Exitosamente");
                     Limpiar();
                 } catch (SQLException err) {
@@ -295,22 +243,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         Limpiar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-            if (cerrado(actPu)) {
-                actPu = new ActPerfilUsuario();
-                jDesktopPane1.add("Actualizacion _Perfil ", actPu);
-                actPu.show();
-                String userPerfil = jLabelUsuario.getText();
-                actPu.setUserPerfil(userPerfil);
-            } else {
-                JOptionPane.showMessageDialog(this, "La Ventana Actualizacion Perfil ya se Encuentra abierta");
-            }
-        } catch (Exception e) {
-            System.err.println("Error al cargar ventana Actualizaion Perfil" + e);
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBpassword1;
@@ -319,8 +251,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

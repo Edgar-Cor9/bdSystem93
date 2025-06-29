@@ -23,6 +23,7 @@ public class Principal extends javax.swing.JFrame {
     Cliente cliente;
     Registro registro;
     ActualizarUsuario ActUsuario;
+    ActPassword actPassww;
 
     /**
      * Creates new form Principal
@@ -283,7 +284,17 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (cerrado(actPassww)) {
+                actPassww = new ActPassword();
+                jTabbedPane1.add("Actualizacion Password", actPassww);
+                actPassww.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Actualizacion Password ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Actualizar Password" + e);
+        }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
