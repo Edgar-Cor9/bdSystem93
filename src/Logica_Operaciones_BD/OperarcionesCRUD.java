@@ -304,11 +304,24 @@ public final class OperarcionesCRUD {
     }
 
     //para traer el codigo del usuario
-    public int codigoUser(String usuario){
-        int coduser = 0;
-        
+    public String codigoUser(String username) throws SQLException {
+
+        this.iniciarConexionBD();
+        String coduser = "";
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "select idusuarios from usuarios where username = '" + username + "'";
+        ResultSet rst = stm.executeQuery(sql);
+        if (rst.next()) {
+
+            coduser = rst.getString("idusuarios");
+        }
+        this.cerrarConexionBD();
+
         return coduser;
+
     }
+
     // cliente ---------------------------------------------------------------------------------------------------
     // consultar a la base de datos si el socio esta registrado
     public ArrayList<Vector<String>> cedulaCliente(String cedula) throws SQLException {
@@ -316,23 +329,25 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "select idclientes, cedula_cliente, nombres_cliente, apellidos_cliente, email_cliente, direccion_cliente, edad, username, idusuarios, fecha_ingreso, fecha_actualizacion, comentario from clientes where cedula_cliente = '" + cedula + "'";
+        String sql = "select idclientes, cedula_cliente, nombres_cliente, apellidos_cliente, email_cliente, direccion_cliente, edad, username, idusuarios, fecha_ingreso,username_Actu, fecha_actualizacion, comentario from clientes where cedula_cliente = '" + cedula + "'";
         ResultSet rst = stm.executeQuery(sql);
 
         while (rst.next()) {
 
             Vector<String> datos = new Vector<>();
-            String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, fechaAct, comentario;
+            String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr,userActu, fechaAct, comentario;
 
             idclient = rst.getString("idclientes");
             cedul = rst.getString("cedula_cliente");
             nombres = rst.getString("nombres_cliente");
             apellidos = rst.getString("apellidos_cliente");
             email = rst.getString("email_cliente");
+            direccion = rst.getString("direccion_cliente");
             edad = rst.getString("edad");
             username = rst.getString("username");
             idusuario = rst.getString("idusuarios");
             fechaIngr = rst.getString("fecha_ingreso");
+            userActu =rst.getString("username_Actu");
             fechaAct = rst.getString("fecha_actualizacion");
             comentario = rst.getString("comentario");
 
@@ -341,10 +356,12 @@ public final class OperarcionesCRUD {
             datos.add(nombres);
             datos.add(apellidos);
             datos.add(email);
+            datos.add(direccion);
             datos.add(edad);
             datos.add(username);
             datos.add(idusuario);
             datos.add(fechaIngr);
+            datos.add(userActu);
             datos.add(fechaAct);
             datos.add(comentario);
 
@@ -361,10 +378,8 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
         for (Vector<String> vector : matriz) {
-            String cedul, nombres, apellidos, email, direccion, edad, username, idusuario,  fechaIngreso, fechaActual, comentario;
+            String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngreso, fechaActual, comentario;
 
-        
-            
             cedul = vector.get(0);
             nombres = vector.get(1);
             apellidos = vector.get(2);
@@ -405,25 +420,28 @@ public final class OperarcionesCRUD {
 
         for (Vector<String> vector : matriz) {
 
-            String nombres, apellidos, edad, correo, usuarios, fechaact, cedul;
-            cedul = vector.get(0);
+            String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaA, comentario;
 
+            cedul = vector.get(0);
             nombres = vector.get(1);
             apellidos = vector.get(2);
-            edad = vector.get(3);
-            correo = vector.get(4);
-            fechaact = vector.get(5);
-            usuarios = vector.get(6);
+            email = vector.get(3);
+            direccion = vector.get(4);
+            edad = vector.get(5);
+            username = vector.get(6);
+            idusuario = vector.get(7);
+            fechaA = vector.get(8);
+            comentario = vector.get(9);
 
-            String sql1 = "select cedula from usuarios where cedula = '" + cedul + "'";
+            String sql1 = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
             ResultSet rs = stm.executeQuery(sql1);
 
             if (rs.next()) {
                 // String sql = "update persona set nombres = '" + nombres + "' where cedula = '" + cedul + "'";
-                String sql = "update persona set nombres ='" + nombres + "', apellidos ='" + apellidos + "', edad ='" + edad + "', correo ='" + correo + "', usuario_registro ='" + usuarios + "', fecha_actual ='" + fechaact + "' where cedula = '" + cedul + "'";
+                String sql = "update clientes set nombres_cliente ='" + nombres + "', apellidos_cliente ='" + apellidos + "', email_cliente ='" + email + "', edad ='" + edad + "', username_Actu ='" + username + "', fecha_actualizacion ='" + fechaA + "', comentario = '" + comentario + "' where cedula_cliente = '" + cedul + "'";
                 //  String sql = "update persona set nombres = " + nombres + ", apellidos =" + apellidos + ", edad =" + edad + ", correo =" + correo + ", usuario_registro =" + usuarios + ", fe_actualizacion =" + fechaact + " where cedula = '" + cedul + "'";
-
-                ResultSet rst = stm.executeQuery(sql);
+                stm.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
             } else {
                 JOptionPane.showMessageDialog(null, "!! No puede Actualizar personsa no se encuentra Registrado !!\n");
             }
