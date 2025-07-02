@@ -37,8 +37,137 @@ public final class OperarcionesCRUD {
             this.conexion.close();
         }
     }
-// aqui se consulta a la base de datos para el acceso a login
 
+    // usuario -------------------------------------------------------------------------------------------
+    // Para consultar si esta ingresado un usuario
+    public ArrayList<Vector<String>> cedulaUsuario(String cedula) throws SQLException {
+        this.iniciarConexionBD();
+
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, tipo_nivel, status, registrado_por, fecha_registro, ultima_actualizacion from usuarios where cedula = '" + cedula + "'";
+        ResultSet rst = stm.executeQuery(sql);
+
+        if (rst.next()) {
+
+            Vector<String> datos = new Vector<>();
+            String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
+
+            iduser = rst.getString("idusuarios");
+            cedul = rst.getString("cedula");
+            nombres = rst.getString("nombres_usuario");
+            apellidos = rst.getString("apellidos_usuario");
+            email = rst.getString("email");
+            telefono = rst.getString("telefono");
+            username = rst.getString("username");
+            pass = rst.getString("password");
+            tipo_niv = rst.getString("tipo_nivel");
+            status = rst.getString("status");
+            registradox = rst.getString("registrado_por");
+            fecha_regis = rst.getString("fecha_registro");
+            ult_actua = rst.getString("ultima_actualizacion");
+
+            datos.add(iduser);
+            datos.add(cedul);
+            datos.add(nombres);
+            datos.add(apellidos);
+            datos.add(email);
+            datos.add(telefono);
+            datos.add(username);
+            datos.add(pass);
+            datos.add(tipo_niv);
+            datos.add(status);
+            datos.add(registradox);
+            datos.add(fecha_regis);
+            datos.add(ult_actua);
+
+            matriz.add(datos);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "!! Usuario no se encuentra Registrado / Debe ir a la ventana Registro !!\n");
+        }
+        this.cerrarConexionBD();
+        return matriz;
+    }
+
+    // Crear Usuario /Administrador
+    public void IngresarUsuario(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+
+        for (Vector<String> vector : matriz) {
+            String cedula, nombres, apellidos, email, telefono, username, password, tipo_nivel, status, registradox, fecharegis;
+
+            cedula = vector.get(0);
+            nombres = vector.get(1);
+            apellidos = vector.get(2);
+            email = vector.get(3);
+            telefono = vector.get(4);
+            username = vector.get(5);
+            password = vector.get(6);
+            tipo_nivel = vector.get(7);
+            status = vector.get(8);
+            registradox = vector.get(9);
+            fecharegis = vector.get(10);
+
+            String sql = "select cedula from usuarios where cedula = '" + cedula + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                JOptionPane.showMessageDialog(null, "!! No puede Guardar Usuario ya se encuentra Registrado !!\n");
+                this.cerrarConexionBD();
+            } else {
+                this.iniciarConexionBD();
+                Statement stm2 = this.conexion.createStatement();
+                String sql2 = " INSERT INTO USUARIOS (CEDULA, NOMBRES_USUARIO, APELLIDOS_USUARIO, EMAIL, TELEFONO, USERNAME, PASSWORD, TIPO_NIVEL, STATUS, REGISTRADO_POR, FECHA_REGISTRO) VALUES ('" + cedula + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + telefono + "','" + username + "', '" + password + "' , '" + tipo_nivel + "'  , '" + status + "' , '" + registradox + "', '" + fecharegis + "')";
+                // ResultSet rst2 = stm2.executeQuery(sql2);
+                stm2.executeUpdate(sql2);
+                JOptionPane.showMessageDialog(null, "!! Usuario Guardado con Exito !!\n");
+            }
+            this.cerrarConexionBD();
+        }
+    }
+
+    // Actualizar datos Usuario    
+    public void ActualizarUsuario(ArrayList<Vector<String>> datos) throws SQLException {
+
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        Statement stm2 = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+
+        for (Vector<String> vector : matriz) {
+            String cedula, nombres, apellidos, email, telefono, username, tipo_nivel, status, usuario, fecha;
+
+            cedula = vector.get(0);
+            nombres = vector.get(1);
+            apellidos = vector.get(2);
+            email = vector.get(3);
+            telefono = vector.get(4);
+            username = vector.get(5);
+            tipo_nivel = vector.get(6);
+            status = vector.get(7);
+            usuario = vector.get(8);
+            fecha = vector.get(9);
+
+            String sql2 = "select cedula from usuarios where cedula ='" + cedula + "'";
+            ResultSet rs = stm2.executeQuery(sql2);
+
+            if (rs.next()) {
+                String sql = "update usuarios set nombres_usuario ='" + nombres + "',apellidos_usuario = '" + apellidos + "', email = '" + email + "', telefono ='" + telefono + "',username = '" + username + "',tipo_nivel = '" + tipo_nivel + "', status = '" + status + "', registrado_por ='" + usuario + "', ultima_actualizacion = '" + fecha + "' where cedula = '" + cedula + "'";
+                stm.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
+            } else {
+                JOptionPane.showMessageDialog(null, "!! No se puede Actualizar usuario no Registrado !!\n");
+            }
+
+        }
+        this.cerrarConexionBD();
+    }
+
+    // aqui se consulta a la base de datos para el acceso a login
     public void login(String user, String pass) throws SQLException { // acceso a la ventana login
         this.iniciarConexionBD();
         Login lg = new Login();
@@ -174,82 +303,51 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
     }
 
-    //aqui consultamos los datos a la base de datos si el numero de cedula le pertenece a un cliente
-    public ArrayList<Vector<String>> OperacionesTransacciones(String p_cedula) throws SQLException {
-        this.iniciarConexionBD();
-
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-        Statement stm = this.conexion.createStatement();
-        String sql = "select c.cod_cliente, c.persona_cedula, c.usuario_cod_registro,  p.nombres , p.apellidos  from cliente c join persona p on c.persona_cedula = p.cedula where persona_cedula = '" + p_cedula + "'";
-
-        ResultSet rst = stm.executeQuery(sql);
-        if (rst.next()) {
-            Vector<String> datos = new Vector<>();
-            String cliente, nombres, apellidos, codUsuario;
-            cliente = rst.getString("cod_cliente");
-            nombres = rst.getString("nombres");
-            apellidos = rst.getString("apellidos");
-            codUsuario = rst.getString("usuario_cod_registro");
-
-            datos.add(cliente);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(codUsuario);
-            matriz.add(datos);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Persona no se Encuentra Registrado como Cliente");
-
-        }
-        this.cerrarConexionBD();
-        return matriz;
+    //para traer el codigo del usuario
+    public int codigoUser(String usuario){
+        int coduser = 0;
+        
+        return coduser;
     }
-
+    // cliente ---------------------------------------------------------------------------------------------------
     // consultar a la base de datos si el socio esta registrado
     public ArrayList<Vector<String>> cedulaCliente(String cedula) throws SQLException {
 
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "SELECT\n"
-                + "    c.cedula           AS n_cedula,\n"
-                + "    c.nombres          AS n_nombre,\n"
-                + "    c.apellidos        AS n_apellios,\n"
-                + "    c.edad             AS n_edad,\n"
-                + "    c.correo           AS n_correo,\n"
-                + "    c.fecha_ingreso    AS n_fechaingreso,\n"
-                + "    c.usuario_registro AS n_usuario,\n"
-                + "    u.cod_registro     AS n_cod_usua\n"
-                + "FROM\n"
-                + "    persona c\n"
-                + "    \n"
-                + "    join usuario u on u.usuario_registro = c.usuario_registro\n"
-                + "WHERE\n"
-                + "    c.cedula = '" + cedula + "'";
+        String sql = "select idclientes, cedula_cliente, nombres_cliente, apellidos_cliente, email_cliente, direccion_cliente, edad, username, idusuarios, fecha_ingreso, fecha_actualizacion, comentario from clientes where cedula_cliente = '" + cedula + "'";
         ResultSet rst = stm.executeQuery(sql);
 
         while (rst.next()) {
 
             Vector<String> datos = new Vector<>();
-            String cedul, nombres, apellidos, edad, correo, fechaIngreso, usuario, cod_user;
+            String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, fechaAct, comentario;
 
-            cedul = rst.getString("n_cedula");
-            nombres = rst.getString("n_nombre");
-            apellidos = rst.getString("n_apellios");
-            edad = rst.getString("n_edad");
-            correo = rst.getString("n_correo");
-            fechaIngreso = rst.getString("n_fechaIngreso");
-            usuario = rst.getString("n_usuario");
-            cod_user = rst.getString("n_cod_usua");
+            idclient = rst.getString("idclientes");
+            cedul = rst.getString("cedula_cliente");
+            nombres = rst.getString("nombres_cliente");
+            apellidos = rst.getString("apellidos_cliente");
+            email = rst.getString("email_cliente");
+            edad = rst.getString("edad");
+            username = rst.getString("username");
+            idusuario = rst.getString("idusuarios");
+            fechaIngr = rst.getString("fecha_ingreso");
+            fechaAct = rst.getString("fecha_actualizacion");
+            comentario = rst.getString("comentario");
 
+            datos.add(idclient);
             datos.add(cedul);
             datos.add(nombres);
             datos.add(apellidos);
+            datos.add(email);
             datos.add(edad);
-            datos.add(correo);
-            datos.add(fechaIngreso);
-            datos.add(usuario);
-            datos.add(cod_user);
+            datos.add(username);
+            datos.add(idusuario);
+            datos.add(fechaIngr);
+            datos.add(fechaAct);
+            datos.add(comentario);
+
             matriz.add(datos);
 
         }
@@ -257,55 +355,44 @@ public final class OperarcionesCRUD {
         return matriz;
     }
 
-    // Para consultar si esta ingresado un usuario
-    public ArrayList<Vector<String>> cedulaUsuario(String cedula) throws SQLException {
+    //Crear Persona
+    public void InsertarPersona(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
-
         Statement stm = this.conexion.createStatement();
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, tipo_nivel, status, registrado_por, fecha_registro, ultima_actualizacion from usuarios where cedula = '" + cedula + "'";
-        ResultSet rst = stm.executeQuery(sql);
+        ArrayList<Vector<String>> matriz = datos;
+        for (Vector<String> vector : matriz) {
+            String cedul, nombres, apellidos, email, direccion, edad, username, idusuario,  fechaIngreso, fechaActual, comentario;
 
-        if (rst.next()) {
+        
+            
+            cedul = vector.get(0);
+            nombres = vector.get(1);
+            apellidos = vector.get(2);
+            email = vector.get(3);
+            direccion = vector.get(4);
+            edad = vector.get(5);
+            username = vector.get(6);
+            idusuario = vector.get(7);
+            fechaIngreso = vector.get(8);
+            fechaActual = vector.get(9);
+            comentario = vector.get(10);
 
-            Vector<String> datos = new Vector<>();
-            String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
+            String sql = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
 
-            iduser = rst.getString("idusuarios");
-            cedul = rst.getString("cedula");
-            nombres = rst.getString("nombres_usuario");
-            apellidos = rst.getString("apellidos_usuario");
-            email = rst.getString("email");
-            telefono = rst.getString("telefono");
-            username = rst.getString("username");
-            pass = rst.getString("password");
-            tipo_niv = rst.getString("tipo_nivel");
-            status = rst.getString("status");
-            registradox = rst.getString("registrado_por");
-            fecha_regis = rst.getString("fecha_registro");
-            ult_actua = rst.getString("ultima_actualizacion");
-
-            datos.add(iduser);
-            datos.add(cedul);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(email);
-            datos.add(telefono);
-            datos.add(username);
-            datos.add(pass);
-            datos.add(tipo_niv);
-            datos.add(status);
-            datos.add(registradox);
-            datos.add(fecha_regis);
-            datos.add(ult_actua);
-
-            matriz.add(datos);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "!! Usuario no se encuentra Registrado / Debe ir a la ventana Registro !!\n");
+            ResultSet rst = stm.executeQuery(sql);
+            if (rst.next()) {
+                JOptionPane.showMessageDialog(null, "!! No puede Guardar a esta Persona ya se encuentra Registrado !!\n");
+                this.cerrarConexionBD();
+            } else {
+                this.iniciarConexionBD();
+                Statement stm2 = this.conexion.createStatement();
+                String sql1 = " INSERT INTO clientes (CEDULA_CLIENTE, NOMBRES_CLIENTE, APELLIDOS_CLIENTE, EMAIL_CLIENTE, DIRECCION_CLIENTE,EDAD,USERNAME, IDUSUARIOS, FECHA_INGRESO,FECHA_ACTUALIZACION, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', '" + idusuario + "', '" + fechaIngreso + "', '" + fechaActual + "', '" + comentario + "')";
+                stm2.executeUpdate(sql1);
+                JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
+            }
+            this.cerrarConexionBD();
         }
-        this.cerrarConexionBD();
-        return matriz;
+
     }
 
     //para actualizar datos personales a personas
@@ -347,148 +434,35 @@ public final class OperarcionesCRUD {
 
     }
 
-    //Crear Persona
-    public void InsertarPersona(ArrayList<Vector<String>> datos) throws SQLException {
+    //aqui consultamos los datos a la base de datos si el numero de cedula le pertenece a un cliente
+    public ArrayList<Vector<String>> OperacionesTransacciones(String p_cedula) throws SQLException {
         this.iniciarConexionBD();
+
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement stm = this.conexion.createStatement();
-        ArrayList<Vector<String>> matriz = datos;
-        for (Vector<String> vector : matriz) {
-            String nombres, apellidos, edad, correo, usuarios, fechaact, cedul, caja;
+        String sql = "select c.cod_cliente, c.persona_cedula, c.usuario_cod_registro,  p.nombres , p.apellidos  from cliente c join persona p on c.persona_cedula = p.cedula where persona_cedula = '" + p_cedula + "'";
 
-            cedul = vector.get(0);
-            nombres = vector.get(1);
-            apellidos = vector.get(2);
-            edad = vector.get(3);
-            correo = vector.get(4);
-            fechaact = vector.get(5);
-            usuarios = vector.get(6);
-            caja = vector.get(7);
+        ResultSet rst = stm.executeQuery(sql);
+        if (rst.next()) {
+            Vector<String> datos = new Vector<>();
+            String cliente, nombres, apellidos, codUsuario;
+            cliente = rst.getString("cod_cliente");
+            nombres = rst.getString("nombres");
+            apellidos = rst.getString("apellidos");
+            codUsuario = rst.getString("usuario_cod_registro");
 
-            // String sql = "inset into persona  nombres ='" + nombres + "', apellidos ='" + apellidos + "', edad ='" + edad + "', correo ='" + correo + "', usuario_registro ='" + usuarios + "', fecha_actual ='" + fechaact + "' where cedula = '" + cedul + "'";
-            String sql = "select cedula from persona where cedula = '" + cedul + "'";
+            datos.add(cliente);
+            datos.add(nombres);
+            datos.add(apellidos);
+            datos.add(codUsuario);
+            matriz.add(datos);
 
-            ResultSet rst = stm.executeQuery(sql);
-            if (rst.next()) {
-                JOptionPane.showMessageDialog(null, "!! No puede Guardar a esta Persona ya se encuentra Registrado !!\n");
-                this.cerrarConexionBD();
-            } else {
-                this.iniciarConexionBD();
-                Statement stm2 = this.conexion.createStatement();
-                String sql1 = " INSERT INTO PERSONA (CEDULA, NOMBRES, APELLIDOS, EDAD, CORREO, FECHA_INGRESO, USUARIO_REGISTRO, CAJAAHORRO_CAJAAHORRO_ID) VALUES ('" + cedul + "', '" + nombres + "', '" + apellidos + "', '" + edad + "', '" + correo + "', TO_DATE('" + fechaact + "'), '" + usuarios + "', '" + caja + "')";
-                ResultSet rst2 = stm.executeQuery(sql1);
-                JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
-            }
-            this.cerrarConexionBD();
-        }
-
-    }
-
-    // Crear Usuario /Administrador
-    public void IngresarUsuario(ArrayList<Vector<String>> datos) throws SQLException {
-        this.iniciarConexionBD();
-        Statement stm = this.conexion.createStatement();
-        ArrayList<Vector<String>> matriz = datos;
-
-        for (Vector<String> vector : matriz) {
-            String cedula, nombres, apellidos, email, telefono, username, password, tipo_nivel, status, registradox, fecharegis;
-
-            cedula = vector.get(0);
-            nombres = vector.get(1);
-            apellidos = vector.get(2);
-            email = vector.get(3);
-            telefono = vector.get(4);
-            username = vector.get(5);
-            password = vector.get(6);
-            tipo_nivel = vector.get(7);
-            status = vector.get(8);
-            registradox = vector.get(9);
-            fecharegis = vector.get(10);
-
-            String sql = "select cedula from usuarios where cedula = '" + cedula + "'";
-
-            ResultSet rst = stm.executeQuery(sql);
-
-            if (rst.next()) {
-                JOptionPane.showMessageDialog(null, "!! No puede Guardar Usuario ya se encuentra Registrado !!\n");
-                this.cerrarConexionBD();
-            } else {
-                this.iniciarConexionBD();
-                Statement stm2 = this.conexion.createStatement();
-                String sql2 = " INSERT INTO USUARIOS (CEDULA, NOMBRES_USUARIO, APELLIDOS_USUARIO, EMAIL, TELEFONO, USERNAME, PASSWORD, TIPO_NIVEL, STATUS, REGISTRADO_POR, FECHA_REGISTRO) VALUES ('" + cedula + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + telefono + "','" + username + "', '" + password + "' , '" + tipo_nivel + "'  , '" + status + "' , '" + registradox + "', '" + fecharegis + "')";
-                // ResultSet rst2 = stm2.executeQuery(sql2);
-                stm2.executeUpdate(sql2);
-                JOptionPane.showMessageDialog(null, "!! Usuario Guardado con Exito !!\n");
-            }
-            this.cerrarConexionBD();
-        }
-    }
-
-    // Actualizar datos Usuario    
-    public void ActualizarUsuario(ArrayList<Vector<String>> datos) throws SQLException {
-
-        this.iniciarConexionBD();
-        Statement stm = this.conexion.createStatement();
-        Statement stm2 = this.conexion.createStatement();
-        ArrayList<Vector<String>> matriz = datos;
-
-        for (Vector<String> vector : matriz) {
-            String cedula, nombres, apellidos, email, telefono, username, tipo_nivel, status, usuario, fecha;
-
-            cedula = vector.get(0);
-            nombres = vector.get(1);
-            apellidos = vector.get(2);
-            email = vector.get(3);
-            telefono = vector.get(4);
-            username = vector.get(5);
-            tipo_nivel = vector.get(6);
-            status = vector.get(7);
-            usuario = vector.get(8);
-            fecha = vector.get(9);
-
-            String sql2 = "select cedula from usuarios where cedula ='" + cedula + "'";
-            ResultSet rs = stm2.executeQuery(sql2);
-
-            if (rs.next()) {
-                String sql = "update usuarios set nombres_usuario ='" + nombres + "',apellidos_usuario = '" + apellidos + "', email = '" + email + "', telefono ='" + telefono + "',username = '" + username + "',tipo_nivel = '" + tipo_nivel + "', status = '" + status + "', registrado_por ='" + usuario + "', ultima_actualizacion = '" + fecha + "' where cedula = '" + cedula + "'";
-                stm.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
-            }else{
-                JOptionPane.showMessageDialog(null, "!! No se puede Actualizar usuario no Registrado !!\n");
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Persona no se Encuentra Registrado como Cliente");
 
         }
         this.cerrarConexionBD();
-    }
-
-    //Crear un Cliente
-    public void CrearCliente(ArrayList<Vector<String>> datos) throws SQLException {
-        this.iniciarConexionBD();
-        Statement stm = this.conexion.createStatement();
-
-        ArrayList<Vector<String>> matriz = datos;
-
-        for (Vector<String> vector : matriz) {
-            String cedula, codigo, fechaact;
-
-            cedula = vector.get(0);
-            codigo = vector.get(1);
-            fechaact = vector.get(2);
-
-            String sql = "select persona_cedula from clientes where persona_cedula = '" + cedula + "'";
-
-            ResultSet rst = stm.executeQuery(sql);
-            if (rst.next()) {
-                JOptionPane.showMessageDialog(null, "!! No puede Guardar Cliente ya se encuentra Registrado !!\n");
-                this.cerrarConexionBD();
-            } else {
-                this.iniciarConexionBD();
-                Statement stm2 = this.conexion.createStatement();
-                String sql2 = "INSERT INTO CLIENTES (FECHA_INGRESO, PERSONA_CEDULA, USUARIO_COD_REGISTRO) VALUES (TO_DATE('" + fechaact + "'), '" + cedula + "', '" + codigo + "')";
-                ResultSet rs = stm2.executeQuery(sql2);
-                JOptionPane.showMessageDialog(null, "!! Cliente guardado con Exito !!\n");
-            }
-        }
-        this.cerrarConexionBD();
+        return matriz;
     }
 
     public void realizarTransaccion(ArrayList<Vector<String>> datos) throws SQLException {
