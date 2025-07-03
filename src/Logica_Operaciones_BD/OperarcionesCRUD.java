@@ -335,7 +335,7 @@ public final class OperarcionesCRUD {
         while (rst.next()) {
 
             Vector<String> datos = new Vector<>();
-            String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr,userActu, fechaAct, comentario;
+            String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userActu, fechaAct, comentario;
 
             idclient = rst.getString("idclientes");
             cedul = rst.getString("cedula_cliente");
@@ -347,7 +347,7 @@ public final class OperarcionesCRUD {
             username = rst.getString("username");
             idusuario = rst.getString("idusuarios");
             fechaIngr = rst.getString("fecha_ingreso");
-            userActu =rst.getString("username_Actu");
+            userActu = rst.getString("username_Actu");
             fechaAct = rst.getString("fecha_actualizacion");
             comentario = rst.getString("comentario");
 
@@ -479,6 +479,56 @@ public final class OperarcionesCRUD {
             JOptionPane.showMessageDialog(null, "Persona no se Encuentra Registrado como Cliente");
 
         }
+        this.cerrarConexionBD();
+        return matriz;
+    }
+
+    // Productos
+    //---------------------------------------------------------------------------------------------------------------
+    public ArrayList<Vector<String>> BusquedaProducto(String tipo) throws SQLException {
+        this.iniciarConexionBD();
+
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        Statement smt = this.conexion.createStatement();
+
+        String sql = "select tipo_producto from productos where tipo_producto ='" + tipo + "'";
+
+        ResultSet rs = smt.executeQuery(sql);
+        while (rs.next()) {
+            Vector<String> datos = new Vector<>();
+
+            String codproductos, idusuario, username, nombProducto, tiproducto, detaprod, fechIngre, cantpro, fechAct, precio, iva, total;
+
+            codproductos = rs.getString("codproductos");
+            idusuario = rs.getString("idusuarios");
+            username = rs.getString("username");
+            nombProducto = rs.getString("nombre_producto");
+            tiproducto = rs.getString("tipo_producto");
+            detaprod = rs.getString("detalle_producto");
+            fechIngre = rs.getString("fecha_ingreso");
+            cantpro = rs.getString("cantidad_producto");
+            fechAct = rs.getString("fecha_Actualizacion");
+            precio = rs.getString("precio");
+            iva = rs.getString("iva");
+            total = rs.getString("total");
+
+            datos.add(codproductos);
+            datos.add(idusuario);
+            datos.add(username);
+            datos.add(nombProducto);
+            datos.add(tiproducto);
+            datos.add(detaprod);
+            datos.add(fechIngre);
+            datos.add(cantpro);
+            datos.add(fechAct);
+            datos.add(precio);
+            datos.add(iva);
+            datos.add(total);
+
+            matriz.add(datos);
+
+        }
+
         this.cerrarConexionBD();
         return matriz;
     }

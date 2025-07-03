@@ -25,6 +25,7 @@ public class Principal extends javax.swing.JFrame {
     Registro registro;
     ActualizarUsuario ActUsuario;
     ActPassword actPassww;
+    Productos Regisprod;
 
     /**
      * Creates new form Principal
@@ -69,12 +70,13 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
+        Clientes = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        Productos = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        Ventas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         ActualizarUsuario = new javax.swing.JMenu();
         RegistroUsuario = new javax.swing.JMenuItem();
@@ -99,27 +101,41 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
         );
 
-        jMenu2.setText("Clientes");
+        Clientes.setText("Clientes");
 
-        jMenuItem3.setText("Ingreso");
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clasificacion.png"))); // NOI18N
+        jMenuItem3.setText("Ingreso Clientes");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        Clientes.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(Clientes);
 
-        jMenu1.setText("Ventas");
-        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu1MouseClicked(evt);
+        Productos.setText("Productos");
+
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto.png"))); // NOI18N
+        jMenuItem6.setText("Registro Productos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+        Productos.add(jMenuItem6);
+
+        jMenuBar1.add(Productos);
+
+        Ventas.setText("Ventas");
+        Ventas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VentasMouseClicked(evt);
+            }
+        });
+        Ventas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                VentasActionPerformed(evt);
             }
         });
 
@@ -129,7 +145,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        Ventas.add(jMenuItem1);
 
         jMenuItem2.setText("Polizas");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -137,12 +153,9 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        Ventas.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
-
-        jMenu3.setText("Consultas");
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(Ventas);
 
         jMenu5.setText("Reportes");
         jMenuBar1.add(jMenu5);
@@ -154,6 +167,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        RegistroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/perfil.png"))); // NOI18N
         RegistroUsuario.setText("Registro");
         RegistroUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,6 +176,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ActualizarUsuario.add(RegistroUsuario);
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/contrasena.png"))); // NOI18N
         jMenuItem5.setText("Password");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,6 +185,7 @@ public class Principal extends javax.swing.JFrame {
         });
         ActualizarUsuario.add(jMenuItem5);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
         jMenuItem4.setText("Actualizar");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,14 +215,14 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+    private void VentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentasActionPerformed
 
 
-    }//GEN-LAST:event_jMenu1ActionPerformed
+    }//GEN-LAST:event_VentasActionPerformed
 
-    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+    private void VentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentasMouseClicked
 
-    }//GEN-LAST:event_jMenu1MouseClicked
+    }//GEN-LAST:event_VentasMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
@@ -300,6 +316,21 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            if (cerrado(Regisprod)) {
+                Regisprod = new Productos();
+                jTabbedPane1.add("Registro Productos", Regisprod);
+                Regisprod.show();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Registro Producto ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Registro Producto" + e);
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -337,11 +368,11 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ActualizarUsuario;
+    private javax.swing.JMenu Clientes;
+    private javax.swing.JMenu Productos;
     private javax.swing.JMenuItem RegistroUsuario;
+    private javax.swing.JMenu Ventas;
     private javax.swing.JDesktopPane jDesktopPane2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
@@ -350,6 +381,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
