@@ -33,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         usuario = Login.user;
-        setTitle(" Sesion iniciada por " + usuario);     
+        setTitle(" Sesion iniciada por " + usuario);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
