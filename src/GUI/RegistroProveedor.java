@@ -6,7 +6,9 @@ package GUI;
 
 import Logica_Operaciones_BD.OperarcionesCRUD;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
@@ -194,15 +196,13 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(85, 85, 85)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(IdUSer, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(IdUSer, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(LabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(25, 25, 25)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(UsuarioActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -383,7 +383,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
 
         String ruc = txtRuc.getText().toString();
         LabelRuc.setText(ruc);
-        
+
         if (!ruc.equals("")) {
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
@@ -409,7 +409,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
                     comentario = vector.get(9);
                     userRegis = vector.get(10);
                     userActual = vector.get(11);
-                    
+
                     labelProveedor.setText(idprovee);
                     LabelRuc.setText(rucPro);
                     IdUSer.setText(iduser);
@@ -440,7 +440,66 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+
+        Date fechaI = new Date();
+        Date fechaA = new Date();
+
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+
+        String fechaIngreso = formato.format(fechaI);
+        String fechaActual = formato.format(fechaA);
+
+        int validacion = 0;
+        String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, comentario, userRegis, userActual;
+
+        rucPro = LabelRuc.getText();
+        iduser = IdUSer.getText();
+        nombres = txtnombres.getText();
+        apellidos = txtapellidos.getText();
+        email = txtemail.getText();
+        direccion = txtdireccion.getText();
+        comentario = txtcomentario.getText();
+        userRegis = usuario;
+
+        if (nombres.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");            
+            validacion++;
+        }
+        if (apellidos.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");            
+            validacion++;
+        }
+        if (email.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese el email por favor");            
+            validacion++;
+        }
+        if (direccion.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese la direccion por favor");            
+            validacion++;
+        }
+        if (comentario.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un comentario por favor");            
+            validacion++;
+        }
+        
+        if (validacion == 0) {
+            Vector<String> datos = new Vector<>();
+            datos.add(rucPro);
+            datos.add(iduser);
+            datos.add(nombres);
+            datos.add(apellidos);
+            datos.add(email);
+            datos.add(direccion);
+            datos.add(comentario);
+            datos.add(userRegis);
+            datos.add(fechaIngreso);
+           matriz.add(datos);
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

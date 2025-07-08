@@ -91,7 +91,7 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
         return matriz;
     }
-
+    
     // Crear Usuario /Administrador
     public void IngresarUsuario(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
@@ -323,7 +323,6 @@ public final class OperarcionesCRUD {
         return coduser;
 
     }
-
     //-----------------------------------------------------------------------------------------------------------------
     // Clientes
     //-----------------------------------------------------------------------------------------------------------------
@@ -642,7 +641,6 @@ public final class OperarcionesCRUD {
     //-----------------------------------------------------------------------------------------------------------------
     // Proveedores
     //-----------------------------------------------------------------------------------------------------------------
-
     //consultar si proveedor se encuentra registrado
     public ArrayList<Vector<String>> RucProveedor(String ruc) throws SQLException {
         this.iniciarConexionBD();
@@ -690,5 +688,10 @@ public final class OperarcionesCRUD {
         }
         this.cerrarConexionBD();
         return matriz;
+    }
+    
+    // aqui Registramos un Proveedor
+    public void InsertarProveedor(ArrayList<Vector<String>> datos)throws SQLException{
+        
     }
 }
