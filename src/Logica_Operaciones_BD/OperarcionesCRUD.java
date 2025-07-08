@@ -38,7 +38,9 @@ public final class OperarcionesCRUD {
         }
     }
 
-    // usuario -------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    // Usuarios
+    //-----------------------------------------------------------------------------------------------------------------
     // Para consultar si esta ingresado un usuario
     public ArrayList<Vector<String>> cedulaUsuario(String cedula) throws SQLException {
         this.iniciarConexionBD();
@@ -322,7 +324,9 @@ public final class OperarcionesCRUD {
 
     }
 
-    // cliente ---------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    // Clientes
+    //-----------------------------------------------------------------------------------------------------------------
     // consultar a la base de datos si el socio esta registrado
     public ArrayList<Vector<String>> cedulaCliente(String cedula) throws SQLException {
 
@@ -634,5 +638,57 @@ public final class OperarcionesCRUD {
 
         }
 
+    }
+    //-----------------------------------------------------------------------------------------------------------------
+    // Proveedores
+    //-----------------------------------------------------------------------------------------------------------------
+
+    //consultar si proveedor se encuentra registrado
+    public ArrayList<Vector<String>> RucProveedor(String ruc) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        String sql = "select idProveedor,"
+                + " ruc,idusuarios, nombres,"
+                + " apellidos, email, direccion,fecha_registro,"
+                + " fecha_actualizacion, comentario, userRegistro,"
+                + "userActualizacion from proveedor where ruc ='" + ruc + "'";
+        ResultSet rst = stm.executeQuery(sql);
+
+        while (rst.next()) {
+            Vector<String> datos = new Vector<>();
+            String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
+
+            idprovee = rst.getString("idProveedor");
+            rucPro = rst.getString("ruc");
+            iduser = rst.getString("idusuarios");
+            nombres = rst.getString("nombres");
+            apellidos = rst.getString("apellidos");
+            email = rst.getString("email");
+            direccion = rst.getString("direccion");
+            fech_regis = rst.getString("fecha_registro");
+            fecha_actu = rst.getString("fecha_actualizacion");
+            comentario = rst.getString("comentario");
+            userRegis = rst.getString("userRegistro");
+            userActual = rst.getString("userActualizacion");
+
+            datos.add(idprovee);
+            datos.add(rucPro);
+            datos.add(iduser);
+            datos.add(nombres);
+            datos.add(apellidos);
+            datos.add(email);
+            datos.add(direccion);
+            datos.add(fech_regis);
+            datos.add(fecha_actu);
+            datos.add(comentario);
+            datos.add(userRegis);
+            datos.add(userActual);
+
+            matriz.add(datos);
+
+        }
+        this.cerrarConexionBD();
+        return matriz;
     }
 }
