@@ -80,7 +80,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         Proveedor = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        Reportes = new javax.swing.JMenu();
         ActualizarUsuario = new javax.swing.JMenu();
         RegistroUsuario = new javax.swing.JMenuItem();
         CambioPassword = new javax.swing.JMenuItem();
@@ -173,8 +173,8 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(Proveedor);
 
-        jMenu5.setText("Reportes");
-        jMenuBar1.add(jMenu5);
+        Reportes.setText("Reportes");
+        jMenuBar1.add(Reportes);
 
         ActualizarUsuario.setText("Usuarios");
         ActualizarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -404,9 +404,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu Productos;
     private javax.swing.JMenu Proveedor;
     private javax.swing.JMenuItem RegistroUsuario;
+    private javax.swing.JMenu Reportes;
     private javax.swing.JMenu Ventas;
     private javax.swing.JDesktopPane jDesktopPane2;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
