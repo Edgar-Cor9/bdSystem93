@@ -101,10 +101,11 @@ public class Principal extends javax.swing.JFrame {
         );
         jDesktopPane2Layout.setVerticalGroup(
             jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
         );
 
         Clientes.setText("Clientes");
+        Clientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clasificacion.png"))); // NOI18N
         jMenuItem3.setText("Ingreso Clientes");
@@ -118,6 +119,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(Clientes);
 
         Productos.setText("Productos");
+        Productos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto.png"))); // NOI18N
         jMenuItem6.setText("Registro Productos");
@@ -131,6 +133,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(Productos);
 
         Ventas.setText("Ventas");
+        Ventas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Ventas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 VentasMouseClicked(evt);
@@ -161,6 +164,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(Ventas);
 
         Proveedor.setText("Proveedor");
+        Proveedor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar.png"))); // NOI18N
         jMenuItem5.setText("Registro");
@@ -174,9 +178,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(Proveedor);
 
         jMenu5.setText("Reportes");
+        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuBar1.add(jMenu5);
 
         ActualizarUsuario.setText("Usuarios");
+        ActualizarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ActualizarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ActualizarUsuarioActionPerformed(evt);
@@ -213,6 +219,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(ActualizarUsuario);
 
         Opciones.setText("Opciones");
+        Opciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuBar1.add(Opciones);
 
         setJMenuBar(jMenuBar1);

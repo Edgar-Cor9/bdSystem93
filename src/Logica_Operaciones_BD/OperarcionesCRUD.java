@@ -91,7 +91,7 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
         return matriz;
     }
-    
+
     // Crear Usuario /Administrador
     public void IngresarUsuario(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
@@ -323,6 +323,7 @@ public final class OperarcionesCRUD {
         return coduser;
 
     }
+
     //-----------------------------------------------------------------------------------------------------------------
     // Clientes
     //-----------------------------------------------------------------------------------------------------------------
@@ -486,6 +487,7 @@ public final class OperarcionesCRUD {
         return matriz;
     }
 
+    //---------------------------------------------------------------------------------------------------------------
     // Productos
     //---------------------------------------------------------------------------------------------------------------
     public ArrayList<Vector<String>> BusquedaProducto(String tipo) throws SQLException {
@@ -638,6 +640,7 @@ public final class OperarcionesCRUD {
         }
 
     }
+
     //-----------------------------------------------------------------------------------------------------------------
     // Proveedores
     //-----------------------------------------------------------------------------------------------------------------
@@ -689,9 +692,48 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
         return matriz;
     }
-    
+
     // aqui Registramos un Proveedor
-    public void InsertarProveedor(ArrayList<Vector<String>> datos)throws SQLException{
-        
+    public void InsertarProveedor(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        ArrayList<Vector<String>> matriz = datos;
+
+        for (Vector<String> vector : matriz) {
+            String rucPro, iduser, nombres, apellidos, email, direccion, fecha_registro, comentario, userRegis;
+
+            rucPro = vector.get(0);
+            iduser = vector.get(1);
+            nombres = vector.get(2);
+            apellidos = vector.get(3);
+            email = vector.get(4);
+            direccion = vector.get(5);
+            fecha_registro = vector.get(6);
+            comentario = vector.get(7);
+            userRegis = vector.get(8);
+
+            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                JOptionPane.showMessageDialog(null, "!! No puede Guardar a este Proveedor ya se encuentra Registrado !!\n");
+                this.cerrarConexionBD();
+            } else {
+                this.iniciarConexionBD();
+                Statement stm1 = this.conexion.createStatement();
+                String sql1 = " INSERT INTO proveedor (RUC, "
+                        + "IDUSUARIOS, NOMBRES, "
+                        + "APELLIDOS, EMAIL,DIRECCION,"
+                        + "FECHA_REGISTRO, COMENTARIO, "
+                        + "USERREGISTRO) VALUES ('" + rucPro + "', '" + iduser + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + direccion + "','" + fecha_registro + "', '" + comentario + "', '" + userRegis + "')";
+                stm1.executeUpdate(sql1);
+                JOptionPane.showMessageDialog(null, "!! Proveedor Guardado con Exito !!\n");
+            }
+            this.cerrarConexionBD();
+
+        }
+
     }
 }

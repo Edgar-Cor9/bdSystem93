@@ -760,12 +760,12 @@ public class Cliente extends javax.swing.JInternalFrame {
         }
         if (edad.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese la edad por favor");
-            JBCorreo.setVisible(true);
+            JBEdad.setVisible(true);
             validacion++;
         }
         if (email.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el correo por favor");
-            JBEdad.setVisible(true);
+            JBCorreo.setVisible(true);
             validacion++;
         }
         if (direccion.equals("")) {

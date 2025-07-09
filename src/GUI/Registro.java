@@ -114,6 +114,7 @@ public class Registro extends javax.swing.JInternalFrame {
 
         jToolBar1.setBorder(null);
         jToolBar1.setRollover(true);
+        jToolBar1.setEnabled(false);
 
         jBConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/consulta.png"))); // NOI18N
         jBConsultar.setToolTipText("Consultar");
@@ -141,6 +142,7 @@ public class Registro extends javax.swing.JInternalFrame {
 
         jToolBar2.setBorder(null);
         jToolBar2.setRollover(true);
+        jToolBar2.setEnabled(false);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
         jButton4.setToolTipText("Salir");
@@ -185,6 +187,7 @@ public class Registro extends javax.swing.JInternalFrame {
         );
 
         jToolBar3.setRollover(true);
+        jToolBar3.setEnabled(false);
 
         JBGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disco-flexible.png"))); // NOI18N
         JBGuardar.setToolTipText("Guardar");

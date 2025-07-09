@@ -64,6 +64,7 @@ public class ActPassword extends javax.swing.JInternalFrame {
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/contrasena.png"))); // NOI18N
 
         jToolBar1.setRollover(true);
+        jToolBar1.setEnabled(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disco-flexible.png"))); // NOI18N
         jButton1.setToolTipText("Guardar");
