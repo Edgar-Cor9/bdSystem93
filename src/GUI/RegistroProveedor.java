@@ -430,14 +430,14 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
 
         String ruc = txtRuc.getText().toString();
         LabelRuc.setText(ruc);
-        
+
         if (!ruc.equals("")) {
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 String coduser = op.codigoUser(usuario);
                 IdUSer.setText(coduser);
                 LabelUsuario.setText(usuario);
-                
+
                 ArrayList<Vector<String>> matriz = op.RucProveedor(ruc);
                 jPanel1.setVisible(true);
                 jPanel2.setVisible(false);
@@ -511,26 +511,26 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         userRegis = usuario;
 
         if (nombres.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");            
+            JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
             validacion++;
         }
         if (apellidos.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");            
+            JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");
             validacion++;
         }
         if (email.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese el email por favor");            
+            JOptionPane.showMessageDialog(this, "Ingrese el email por favor");
             validacion++;
         }
         if (direccion.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese la direccion por favor");            
+            JOptionPane.showMessageDialog(this, "Ingrese la direccion por favor");
             validacion++;
         }
         if (comentario.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ingrese un comentario por favor");            
+            JOptionPane.showMessageDialog(this, "Ingrese un comentario por favor");
             validacion++;
         }
-        
+
         if (validacion == 0) {
             Vector<String> datos = new Vector<>();
             datos.add(rucPro);
@@ -542,30 +542,90 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             datos.add(fechaIngreso);
             datos.add(comentario);
             datos.add(userRegis);
-            
-           matriz.add(datos);
-            
-        }else{
+
+            matriz.add(datos);
+
+        } else {
             JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
         }
-        
+
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
             op.InsertarProveedor(matriz);
         } catch (SQLException err) {
             err.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-       ArrayList<Vector<String>> matriz = new ArrayList<>();
-       Date fechaA = new Date();
-    
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy,MM,dd");
-        String fechaActual = formato.format(fechaA);
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        Date fechaA = new Date();
+
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaAc = formato.format(fechaA);
+
+        int validacion = 0;
+        String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
+
+        rucPro = LabelRuc.getText().toString();
+        nombres = txtnombres.getText();
+        apellidos = txtapellidos.getText();
+        email = txtemail.getText();
+        direccion = txtdireccion.getText();
+        fechaActual = fechaAc;
+        comentario = txtcomentario.getText();
+        userActual = usuario;
+        iduser = IdUSer.getText();
         
-        
+        if (nombres.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
+            validacion++;
+        }
+        if (apellidos.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");
+            validacion++;
+        }
+        if (email.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese el correo por favor");
+            validacion++;
+        }
+        if (direccion.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese la direccion por favor");
+            validacion++;
+        }
+        if (comentario.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un comentario por favor");
+            validacion++;
+        }
+
+        if (validacion == 0) {
+
+            Vector<String> datos = new Vector<>();
+            datos.add(rucPro);
+            datos.add(iduser);
+            datos.add(nombres);
+            datos.add(apellidos);
+            datos.add(email);
+            datos.add(direccion);
+            datos.add(fechaActual);
+            datos.add(comentario);
+            datos.add(userActual);
+            
+            matriz.add(datos);           
+            
+            try {
+                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+                op.AtualizarProveedor(matriz);
+            } catch (SQLException err) {
+                err.printStackTrace();
+            }
+            
+        }else {
+            JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
+
+        }
+
     }//GEN-LAST:event_EditarActionPerformed
 
 

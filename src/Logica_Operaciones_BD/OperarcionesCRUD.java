@@ -441,9 +441,12 @@ public final class OperarcionesCRUD {
             ResultSet rs = stm.executeQuery(sql1);
 
             if (rs.next()) {
-                // String sql = "update persona set nombres = '" + nombres + "' where cedula = '" + cedul + "'";
-                String sql = "update clientes set nombres_cliente ='" + nombres + "', apellidos_cliente ='" + apellidos + "', email_cliente ='" + email + "', edad ='" + edad + "', username_Actu ='" + username + "', fecha_actualizacion ='" + fechaA + "', comentario = '" + comentario + "' where cedula_cliente = '" + cedul + "'";
-                //  String sql = "update persona set nombres = " + nombres + ", apellidos =" + apellidos + ", edad =" + edad + ", correo =" + correo + ", usuario_registro =" + usuarios + ", fe_actualizacion =" + fechaact + " where cedula = '" + cedul + "'";
+
+                String sql = "update clientes set nombres_cliente ='" + nombres + "', "
+                        + "apellidos_cliente ='" + apellidos + "', email_cliente ='" + email + "', "
+                        + "edad ='" + edad + "', username_Actu ='" + username + "', fecha_actualizacion ='" + fechaA + "',"
+                        + " comentario = '" + comentario + "' where cedula_cliente = '" + cedul + "'";
+
                 stm.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
             } else {
@@ -655,8 +658,7 @@ public final class OperarcionesCRUD {
                 + " fecha_actualizacion, comentario, userRegistro,"
                 + "userActualizacion from proveedor where ruc ='" + ruc + "'";
         ResultSet rst = stm.executeQuery(sql);
-
-        while (rst.next()) {
+        if (rst.next()) {
             Vector<String> datos = new Vector<>();
             String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
 
@@ -688,7 +690,10 @@ public final class OperarcionesCRUD {
 
             matriz.add(datos);
 
+        } else {
+            JOptionPane.showMessageDialog(null, "!! Proveedor no se encuentra Registrado !!\n");
         }
+
         this.cerrarConexionBD();
         return matriz;
     }
@@ -735,5 +740,44 @@ public final class OperarcionesCRUD {
 
         }
 
+    }
+
+    //aqui Actualizamos un proveedor
+    public void AtualizarProveedor(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+        for (Vector<String> vector : matriz) {
+            String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
+            rucPro = vector.get(0);
+            iduser = vector.get(1);
+            nombres = vector.get(2);
+            apellidos = vector.get(3);
+            email = vector.get(4);
+            direccion = vector.get(5);
+            fechaActual = vector.get(6);
+            comentario = vector.get(7);
+            userActual = vector.get(8);
+
+            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                String sql2 = "update proveedor set nombres ='" + nombres + "', "
+                        + "apellidos ='" + apellidos + "',"
+                        + " email ='" + email + "', direccion ='" + direccion + "', "
+                        + "fecha_actualizacion ='" + fechaActual + "', "
+                        + "comentario ='" + comentario + "',"
+                        + " userActualizacion = '" + userActual + "' where ruc = '" + rucPro + "'";
+                stm.executeUpdate(sql2);
+                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "!! No puede Actualizar Proveedor no se encuentra Registrado !!\n");
+            }
+
+        }
+        this.cerrarConexionBD();
     }
 }
