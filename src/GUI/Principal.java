@@ -82,7 +82,6 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         Proveedor = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        Reportes = new javax.swing.JMenu();
         ActualizarUsuario = new javax.swing.JMenu();
         RegistroUsuario = new javax.swing.JMenuItem();
         CambioPassword = new javax.swing.JMenuItem();
@@ -186,15 +185,6 @@ public class Principal extends javax.swing.JFrame {
         Proveedor.add(jMenuItem5);
 
         jMenuBar1.add(Proveedor);
-
-<<<<<<< HEAD
-        Reportes.setText("Reportes");
-        jMenuBar1.add(Reportes);
-=======
-        jMenu5.setText("Reportes");
-        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuBar1.add(jMenu5);
->>>>>>> ver-03
 
         ActualizarUsuario.setText("Usuarios");
         ActualizarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -427,7 +417,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu Productos;
     private javax.swing.JMenu Proveedor;
     private javax.swing.JMenuItem RegistroUsuario;
-    private javax.swing.JMenu Reportes;
     private javax.swing.JMenu Ventas;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JMenuBar jMenuBar1;
