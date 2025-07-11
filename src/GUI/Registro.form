@@ -88,6 +88,7 @@
               <Border info="null"/>
             </Property>
             <Property name="rollover" type="boolean" value="true"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
@@ -128,6 +129,7 @@
               <Border info="null"/>
             </Property>
             <Property name="rollover" type="boolean" value="true"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
@@ -215,6 +217,7 @@
             <Container class="javax.swing.JToolBar" name="jToolBar3">
               <Properties>
                 <Property name="rollover" type="boolean" value="true"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>

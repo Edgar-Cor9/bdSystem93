@@ -75,6 +75,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         Productos = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        ActualizarProducto = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         Ventas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -101,10 +103,11 @@ public class Principal extends javax.swing.JFrame {
         );
         jDesktopPane2Layout.setVerticalGroup(
             jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
         );
 
         Clientes.setText("Clientes");
+        Clientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clasificacion.png"))); // NOI18N
         jMenuItem3.setText("Ingreso Clientes");
@@ -117,7 +120,8 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(Clientes);
 
-        Productos.setText("Productos");
+        Productos.setText("Mercaderia");
+        Productos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto.png"))); // NOI18N
         jMenuItem6.setText("Registro Productos");
@@ -128,9 +132,18 @@ public class Principal extends javax.swing.JFrame {
         });
         Productos.add(jMenuItem6);
 
+        ActualizarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
+        ActualizarProducto.setText("Editar Producto");
+        Productos.add(ActualizarProducto);
+
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto1.png"))); // NOI18N
+        jMenuItem7.setText("Ingreso Mercaderia");
+        Productos.add(jMenuItem7);
+
         jMenuBar1.add(Productos);
 
         Ventas.setText("Ventas");
+        Ventas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Ventas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 VentasMouseClicked(evt);
@@ -161,6 +174,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(Ventas);
 
         Proveedor.setText("Proveedor");
+        Proveedor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar.png"))); // NOI18N
         jMenuItem5.setText("Registro");
@@ -173,10 +187,17 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(Proveedor);
 
+<<<<<<< HEAD
         Reportes.setText("Reportes");
         jMenuBar1.add(Reportes);
+=======
+        jMenu5.setText("Reportes");
+        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jMenuBar1.add(jMenu5);
+>>>>>>> ver-03
 
         ActualizarUsuario.setText("Usuarios");
+        ActualizarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ActualizarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ActualizarUsuarioActionPerformed(evt);
@@ -213,6 +234,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(ActualizarUsuario);
 
         Opciones.setText("Opciones");
+        Opciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuBar1.add(Opciones);
 
         setJMenuBar(jMenuBar1);
@@ -397,6 +419,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ActualizarProducto;
     private javax.swing.JMenu ActualizarUsuario;
     private javax.swing.JMenuItem CambioPassword;
     private javax.swing.JMenu Clientes;
@@ -414,6 +437,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
