@@ -493,46 +493,49 @@ public final class OperarcionesCRUD {
     //---------------------------------------------------------------------------------------------------------------
     // Productos
     //---------------------------------------------------------------------------------------------------------------
+    //busqueda de producto por tipodeproducto
     public ArrayList<Vector<String>> BusquedaProducto(String tipo) throws SQLException {
         this.iniciarConexionBD();
 
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement smt = this.conexion.createStatement();
 
-        String sql = "select tipo_producto from productos where tipo_producto ='" + tipo + "'";
+        // String sql = "select tipo_producto from productos where tipo_producto ='" + tipo + "'";
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.cantidad_producto, p.precio, pro.ruc, pro.nombres, u.username\n"
+                + "FROM bd_systema.productos p \n"
+                + "INNER JOIN bd_systema.proveedor pro \n"
+                + "on p.idusuarios = pro.idusuarios \n"
+                + "INNER JOIN bd_systema.usuarios u \n"
+                + "on p.idusuarios = u.idusuarios\n"
+                + "where p.tipo_producto ='" + tipo + "'";
 
         ResultSet rs = smt.executeQuery(sql);
         while (rs.next()) {
             Vector<String> datos = new Vector<>();
 
-            String codproductos, idusuario, username, nombProducto, tiproducto, detaprod, fechIngre, cantpro, fechAct, precio, iva, total;
+            String codproductos, username, nombProducto, tiproducto, ruc, nombresPro, fechIngre, cantpro, precio;
 
             codproductos = rs.getString("codproductos");
-            idusuario = rs.getString("idusuarios");
-            username = rs.getString("username");
             nombProducto = rs.getString("nombre_producto");
             tiproducto = rs.getString("tipo_producto");
-            detaprod = rs.getString("detalle_producto");
             fechIngre = rs.getString("fecha_ingreso");
             cantpro = rs.getString("cantidad_producto");
-            fechAct = rs.getString("fecha_Actualizacion");
             precio = rs.getString("precio");
-            iva = rs.getString("iva");
-            total = rs.getString("total");
+            ruc = rs.getString("ruc");
+            nombresPro = rs.getString("nombres");
+            //  idusuario = rs.getString("idusuarios");
+            username = rs.getString("username");
 
             datos.add(codproductos);
-            datos.add(idusuario);
-            datos.add(username);
             datos.add(nombProducto);
             datos.add(tiproducto);
-            datos.add(detaprod);
             datos.add(fechIngre);
             datos.add(cantpro);
-            datos.add(fechAct);
             datos.add(precio);
-            datos.add(iva);
-            datos.add(total);
-
+            datos.add(ruc);
+            datos.add(nombresPro);
+            //  datos.add(idusuario);
+            datos.add(username);
             matriz.add(datos);
 
         }
@@ -541,6 +544,226 @@ public final class OperarcionesCRUD {
         return matriz;
     }
 
+    //busqueda de producto por Proveedor
+    public ArrayList<Vector<String>> BusquedaRucProveedor(String ruc) throws SQLException {
+        this.iniciarConexionBD();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.cantidad_producto, p.precio, pro.ruc, pro.nombres, u.username\n"
+                + "FROM bd_systema.productos p \n"
+                + "INNER JOIN bd_systema.proveedor pro \n"
+                + "on p.idusuarios = pro.idusuarios \n"
+                + "INNER JOIN bd_systema.usuarios u \n"
+                + "on p.idusuarios = u.idusuarios\n"
+                + "where pro.ruc = '" + ruc + "'";
+
+        ResultSet rs = stm.executeQuery(sql);
+        while (rs.next()) {
+            Vector<String> datos = new Vector<>();
+
+            String codproductos, username, nombProducto, tiproducto, rucPro, nombresPro, fechIngre, cantpro, precio;
+
+            codproductos = rs.getString("codproductos");
+            nombProducto = rs.getString("nombre_producto");
+            tiproducto = rs.getString("tipo_producto");
+            fechIngre = rs.getString("fecha_ingreso");
+            cantpro = rs.getString("cantidad_producto");
+            precio = rs.getString("precio");
+            rucPro = rs.getString("ruc");
+            nombresPro = rs.getString("nombres");
+            //  idusuario = rs.getString("idusuarios");
+            username = rs.getString("username");
+
+            datos.add(codproductos);
+            datos.add(nombProducto);
+            datos.add(tiproducto);
+            datos.add(fechIngre);
+            datos.add(cantpro);
+            datos.add(precio);
+            datos.add(rucPro);
+            datos.add(nombresPro);
+            //  datos.add(idusuario);
+            datos.add(username);
+            matriz.add(datos);
+
+        }
+
+        return matriz;
+    }
+
+    // para registrar un producto    
+    public void InsertarProducto(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+
+        for (Vector<String> vector : matriz) {
+            String iduser, idProve, nombre, tipo, detalle, fechaIn, cantidad, precio, iva, total;
+            iduser = vector.get(0);
+            idProve = vector.get(1);
+            nombre = vector.get(2);
+            tipo = vector.get(3);
+            detalle = vector.get(4);
+            fechaIn = vector.get(5);
+            cantidad = vector.get(6);
+            precio = vector.get(7);
+            iva = vector.get(8);
+            total = vector.get(9);
+
+            String sql = "insert into productos "
+                    + "(idusuarios, idProveedor, nombre_producto,"
+                    + " tipo_producto, detalle_producto, "
+                    + "fecha_ingreso, cantidad_producto, "
+                    + "precio, iva, total ) VALUES ('" + iduser + "','" + idProve + "', '" + nombre + "', '" + tipo + "', '" + detalle + "', '" + fechaIn + "', '" + cantidad + "', '" + precio + "', '" + iva + "','" + total + "')";
+            JOptionPane.showMessageDialog(null, "!! Producto Guardado con Exito !!\n");
+            stm.executeUpdate(sql);
+        }
+        this.cerrarConexionBD();
+
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------
+    // Proveedores
+    //-----------------------------------------------------------------------------------------------------------------
+    //consultar si proveedor se encuentra registrado
+    public ArrayList<Vector<String>> RucProveedor(String ruc) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        String sql = "select idProveedor,"
+                + " ruc,idusuarios, nombres,"
+                + " apellidos, email, direccion,fecha_registro,"
+                + " fecha_actualizacion, comentario, userRegistro,"
+                + "userActualizacion from proveedor where ruc ='" + ruc + "'";
+        ResultSet rst = stm.executeQuery(sql);
+        if (rst.next()) {
+            Vector<String> datos = new Vector<>();
+            String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
+
+            idprovee = rst.getString("idProveedor");
+            rucPro = rst.getString("ruc");
+            iduser = rst.getString("idusuarios");
+            nombres = rst.getString("nombres");
+            apellidos = rst.getString("apellidos");
+            email = rst.getString("email");
+            direccion = rst.getString("direccion");
+            fech_regis = rst.getString("fecha_registro");
+            fecha_actu = rst.getString("fecha_actualizacion");
+            comentario = rst.getString("comentario");
+            userRegis = rst.getString("userRegistro");
+            userActual = rst.getString("userActualizacion");
+
+            datos.add(idprovee);
+            datos.add(rucPro);
+            datos.add(iduser);
+            datos.add(nombres);
+            datos.add(apellidos);
+            datos.add(email);
+            datos.add(direccion);
+            datos.add(fech_regis);
+            datos.add(fecha_actu);
+            datos.add(comentario);
+            datos.add(userRegis);
+            datos.add(userActual);
+
+            matriz.add(datos);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "!! Proveedor no se encuentra Registrado !!\n");
+        }
+
+        this.cerrarConexionBD();
+        return matriz;
+    }
+
+    // aqui Registramos un Proveedor
+    public void InsertarProveedor(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        ArrayList<Vector<String>> matriz = datos;
+
+        for (Vector<String> vector : matriz) {
+            String rucPro, iduser, nombres, apellidos, email, direccion, fecha_registro, comentario, userRegis;
+
+            rucPro = vector.get(0);
+            iduser = vector.get(1);
+            nombres = vector.get(2);
+            apellidos = vector.get(3);
+            email = vector.get(4);
+            direccion = vector.get(5);
+            fecha_registro = vector.get(6);
+            comentario = vector.get(7);
+            userRegis = vector.get(8);
+
+            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                JOptionPane.showMessageDialog(null, "!! No puede Guardar a este Proveedor ya se encuentra Registrado !!\n");
+                this.cerrarConexionBD();
+            } else {
+                this.iniciarConexionBD();
+                Statement stm1 = this.conexion.createStatement();
+                String sql1 = " INSERT INTO proveedor (RUC, "
+                        + "IDUSUARIOS, NOMBRES, "
+                        + "APELLIDOS, EMAIL,DIRECCION,"
+                        + "FECHA_REGISTRO, COMENTARIO, "
+                        + "USERREGISTRO) VALUES ('" + rucPro + "', '" + iduser + "',"
+                        + " '" + nombres + "', '" + apellidos + "', '" + email + "', "
+                        + "'" + direccion + "','" + fecha_registro + "', "
+                        + "'" + comentario + "', '" + userRegis + "')";
+                stm1.executeUpdate(sql1);
+                JOptionPane.showMessageDialog(null, "!! Proveedor Guardado con Exito !!\n");
+            }
+            this.cerrarConexionBD();
+
+        }
+
+    }
+
+    //aqui Actualizamos un proveedor
+    public void AtualizarProveedor(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+        for (Vector<String> vector : matriz) {
+            String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
+            rucPro = vector.get(0);
+            iduser = vector.get(1);
+            nombres = vector.get(2);
+            apellidos = vector.get(3);
+            email = vector.get(4);
+            direccion = vector.get(5);
+            fechaActual = vector.get(6);
+            comentario = vector.get(7);
+            userActual = vector.get(8);
+
+            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                String sql2 = "update proveedor set nombres ='" + nombres + "', "
+                        + "apellidos ='" + apellidos + "',"
+                        + " email ='" + email + "', direccion ='" + direccion + "', "
+                        + "fecha_actualizacion ='" + fechaActual + "', "
+                        + "comentario ='" + comentario + "',"
+                        + " userActualizacion = '" + userActual + "' where ruc = '" + rucPro + "'";
+                stm.executeUpdate(sql2);
+                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "!! No puede Actualizar Proveedor no se encuentra Registrado !!\n");
+            }
+
+        }
+        this.cerrarConexionBD();
+    }
+
+    //transacciones
     public void realizarTransaccion(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
@@ -642,142 +865,5 @@ public final class OperarcionesCRUD {
 
         }
 
-    }
-
-    //-----------------------------------------------------------------------------------------------------------------
-    // Proveedores
-    //-----------------------------------------------------------------------------------------------------------------
-    //consultar si proveedor se encuentra registrado
-    public ArrayList<Vector<String>> RucProveedor(String ruc) throws SQLException {
-        this.iniciarConexionBD();
-        Statement stm = this.conexion.createStatement();
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "select idProveedor,"
-                + " ruc,idusuarios, nombres,"
-                + " apellidos, email, direccion,fecha_registro,"
-                + " fecha_actualizacion, comentario, userRegistro,"
-                + "userActualizacion from proveedor where ruc ='" + ruc + "'";
-        ResultSet rst = stm.executeQuery(sql);
-        if (rst.next()) {
-            Vector<String> datos = new Vector<>();
-            String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
-
-            idprovee = rst.getString("idProveedor");
-            rucPro = rst.getString("ruc");
-            iduser = rst.getString("idusuarios");
-            nombres = rst.getString("nombres");
-            apellidos = rst.getString("apellidos");
-            email = rst.getString("email");
-            direccion = rst.getString("direccion");
-            fech_regis = rst.getString("fecha_registro");
-            fecha_actu = rst.getString("fecha_actualizacion");
-            comentario = rst.getString("comentario");
-            userRegis = rst.getString("userRegistro");
-            userActual = rst.getString("userActualizacion");
-
-            datos.add(idprovee);
-            datos.add(rucPro);
-            datos.add(iduser);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(email);
-            datos.add(direccion);
-            datos.add(fech_regis);
-            datos.add(fecha_actu);
-            datos.add(comentario);
-            datos.add(userRegis);
-            datos.add(userActual);
-
-            matriz.add(datos);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "!! Proveedor no se encuentra Registrado !!\n");
-        }
-
-        this.cerrarConexionBD();
-        return matriz;
-    }
-
-    // aqui Registramos un Proveedor
-    public void InsertarProveedor(ArrayList<Vector<String>> datos) throws SQLException {
-        this.iniciarConexionBD();
-        Statement stm = this.conexion.createStatement();
-
-        ArrayList<Vector<String>> matriz = datos;
-
-        for (Vector<String> vector : matriz) {
-            String rucPro, iduser, nombres, apellidos, email, direccion, fecha_registro, comentario, userRegis;
-
-            rucPro = vector.get(0);
-            iduser = vector.get(1);
-            nombres = vector.get(2);
-            apellidos = vector.get(3);
-            email = vector.get(4);
-            direccion = vector.get(5);
-            fecha_registro = vector.get(6);
-            comentario = vector.get(7);
-            userRegis = vector.get(8);
-
-            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
-
-            ResultSet rst = stm.executeQuery(sql);
-
-            if (rst.next()) {
-                JOptionPane.showMessageDialog(null, "!! No puede Guardar a este Proveedor ya se encuentra Registrado !!\n");
-                this.cerrarConexionBD();
-            } else {
-                this.iniciarConexionBD();
-                Statement stm1 = this.conexion.createStatement();
-                String sql1 = " INSERT INTO proveedor (RUC, "
-                        + "IDUSUARIOS, NOMBRES, "
-                        + "APELLIDOS, EMAIL,DIRECCION,"
-                        + "FECHA_REGISTRO, COMENTARIO, "
-                        + "USERREGISTRO) VALUES ('" + rucPro + "', '" + iduser + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + direccion + "','" + fecha_registro + "', '" + comentario + "', '" + userRegis + "')";
-                stm1.executeUpdate(sql1);
-                JOptionPane.showMessageDialog(null, "!! Proveedor Guardado con Exito !!\n");
-            }
-            this.cerrarConexionBD();
-
-        }
-
-    }
-
-    //aqui Actualizamos un proveedor
-    public void AtualizarProveedor(ArrayList<Vector<String>> datos) throws SQLException {
-        this.iniciarConexionBD();
-        Statement stm = this.conexion.createStatement();
-        ArrayList<Vector<String>> matriz = datos;
-        for (Vector<String> vector : matriz) {
-            String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
-            rucPro = vector.get(0);
-            iduser = vector.get(1);
-            nombres = vector.get(2);
-            apellidos = vector.get(3);
-            email = vector.get(4);
-            direccion = vector.get(5);
-            fechaActual = vector.get(6);
-            comentario = vector.get(7);
-            userActual = vector.get(8);
-
-            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
-
-            ResultSet rst = stm.executeQuery(sql);
-
-            if (rst.next()) {
-                String sql2 = "update proveedor set nombres ='" + nombres + "', "
-                        + "apellidos ='" + apellidos + "',"
-                        + " email ='" + email + "', direccion ='" + direccion + "', "
-                        + "fecha_actualizacion ='" + fechaActual + "', "
-                        + "comentario ='" + comentario + "',"
-                        + " userActualizacion = '" + userActual + "' where ruc = '" + rucPro + "'";
-                stm.executeUpdate(sql2);
-                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
-
-            } else {
-                JOptionPane.showMessageDialog(null, "!! No puede Actualizar Proveedor no se encuentra Registrado !!\n");
-            }
-
-        }
-        this.cerrarConexionBD();
     }
 }

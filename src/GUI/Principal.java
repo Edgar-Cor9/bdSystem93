@@ -75,6 +75,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         Productos = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        ActualizarProducto = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         Ventas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -118,7 +120,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(Clientes);
 
-        Productos.setText("Productos");
+        Productos.setText("Mercaderia");
         Productos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto.png"))); // NOI18N
@@ -129,6 +131,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         Productos.add(jMenuItem6);
+
+        ActualizarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
+        ActualizarProducto.setText("Editar Producto");
+        Productos.add(ActualizarProducto);
+
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto1.png"))); // NOI18N
+        jMenuItem7.setText("Ingreso Mercaderia");
+        Productos.add(jMenuItem7);
 
         jMenuBar1.add(Productos);
 
@@ -404,6 +414,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ActualizarProducto;
     private javax.swing.JMenu ActualizarUsuario;
     private javax.swing.JMenuItem CambioPassword;
     private javax.swing.JMenu Clientes;
@@ -421,6 +432,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
