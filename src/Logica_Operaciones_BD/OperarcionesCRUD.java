@@ -406,7 +406,9 @@ public final class OperarcionesCRUD {
                 Statement stm2 = this.conexion.createStatement();
                 String sql1 = " INSERT INTO clientes (CEDULA_CLIENTE, NOMBRES_CLIENTE,"
                         + " APELLIDOS_CLIENTE, EMAIL_CLIENTE, DIRECCION_CLIENTE,EDAD,USERNAME, "
-                        + "IDUSUARIOS, FECHA_INGRESO, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', '" + idusuario + "', '" + fechaIngreso + "','" + comentario + "')";
+                        + "IDUSUARIOS, FECHA_INGRESO, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "',"
+                        + " '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', "
+                        + "'" + idusuario + "', '" + fechaIngreso + "','" + comentario + "')";
                 stm2.executeUpdate(sql1);
                 JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
             }
@@ -502,7 +504,7 @@ public final class OperarcionesCRUD {
         Statement smt = this.conexion.createStatement();
 
         // String sql = "select tipo_producto from productos where tipo_producto ='" + tipo + "'";
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.cantidad_producto, p.precio, pro.ruc, pro.nombres, u.username\n"
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, u.username\n"
                 + "FROM bd_systema.productos p \n"
                 + "INNER JOIN bd_systema.proveedor pro \n"
                 + "on p.idusuarios = pro.idusuarios \n"
@@ -510,18 +512,19 @@ public final class OperarcionesCRUD {
                 + "on p.idusuarios = u.idusuarios\n"
                 + "where p.tipo_producto ='" + tipo + "'";
 
+       
         ResultSet rs = smt.executeQuery(sql);
         while (rs.next()) {
             Vector<String> datos = new Vector<>();
 
-            String codproductos, username, nombProducto, tiproducto, ruc, nombresPro, fechIngre, cantpro, precio;
+            String codproductos, username, nombProducto, tiproducto, ruc, nombresPro, fechIngre, precio, iva;
 
             codproductos = rs.getString("codproductos");
             nombProducto = rs.getString("nombre_producto");
             tiproducto = rs.getString("tipo_producto");
             fechIngre = rs.getString("fecha_ingreso");
-            cantpro = rs.getString("cantidad_producto");
             precio = rs.getString("precio");
+            iva = rs.getString("iva");
             ruc = rs.getString("ruc");
             nombresPro = rs.getString("nombres");
             //  idusuario = rs.getString("idusuarios");
@@ -531,8 +534,8 @@ public final class OperarcionesCRUD {
             datos.add(nombProducto);
             datos.add(tiproducto);
             datos.add(fechIngre);
-            datos.add(cantpro);
             datos.add(precio);
+            datos.add(iva);
             datos.add(ruc);
             datos.add(nombresPro);
             //  datos.add(idusuario);
@@ -551,10 +554,10 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement stm = this.conexion.createStatement();
 
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.cantidad_producto, p.precio, pro.ruc, pro.nombres, u.username\n"
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, pro.idProveedor, u.username\n"
                 + "FROM bd_systema.productos p \n"
                 + "INNER JOIN bd_systema.proveedor pro \n"
-                + "on p.idusuarios = pro.idusuarios \n"
+                + "on p.idProveedor = pro.idProveedor \n"
                 + "INNER JOIN bd_systema.usuarios u \n"
                 + "on p.idusuarios = u.idusuarios\n"
                 + "where pro.ruc = '" + ruc + "'";
@@ -563,14 +566,14 @@ public final class OperarcionesCRUD {
         while (rs.next()) {
             Vector<String> datos = new Vector<>();
 
-            String codproductos, username, nombProducto, tiproducto, rucPro, nombresPro, fechIngre, cantpro, precio;
+            String codproductos, username, nombProducto, tiproducto, rucPro, nombresPro, fechIngre, precio, iva;
 
             codproductos = rs.getString("codproductos");
             nombProducto = rs.getString("nombre_producto");
             tiproducto = rs.getString("tipo_producto");
             fechIngre = rs.getString("fecha_ingreso");
-            cantpro = rs.getString("cantidad_producto");
             precio = rs.getString("precio");
+            iva = rs.getString("iva");
             rucPro = rs.getString("ruc");
             nombresPro = rs.getString("nombres");
             //  idusuario = rs.getString("idusuarios");
@@ -580,8 +583,8 @@ public final class OperarcionesCRUD {
             datos.add(nombProducto);
             datos.add(tiproducto);
             datos.add(fechIngre);
-            datos.add(cantpro);
             datos.add(precio);
+            datos.add(iva);
             datos.add(rucPro);
             datos.add(nombresPro);
             //  datos.add(idusuario);
@@ -600,23 +603,24 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = datos;
 
         for (Vector<String> vector : matriz) {
-            String iduser, idProve, nombre, tipo, detalle, fechaIn, cantidad, precio, iva, total;
+            String iduser, idProve, nombre, tipo, detalle, fechaIn, precio, iva;
+            
             iduser = vector.get(0);
             idProve = vector.get(1);
             nombre = vector.get(2);
             tipo = vector.get(3);
             detalle = vector.get(4);
             fechaIn = vector.get(5);
-            cantidad = vector.get(6);
-            precio = vector.get(7);
-            iva = vector.get(8);
-            total = vector.get(9);
+            precio = vector.get(6);
+            iva = vector.get(7);
 
-            String sql = "insert into productos "
+            String sql = "INSERT into productos "
                     + "(idusuarios, idProveedor, nombre_producto,"
-                    + " tipo_producto, detalle_producto, "
-                    + "fecha_ingreso, cantidad_producto, "
-                    + "precio, iva, total ) VALUES ('" + iduser + "','" + idProve + "', '" + nombre + "', '" + tipo + "', '" + detalle + "', '" + fechaIn + "', '" + cantidad + "', '" + precio + "', '" + iva + "','" + total + "')";
+                    + " tipo_producto, detalle_producto,"
+                    + "fecha_ingreso,"
+                    + "precio, iva) VALUES ('" + iduser + "','" + idProve + "', "
+                    + "'" + nombre + "', '" + tipo + "', '" + detalle + "',"
+                    + "'" + fechaIn + "', '" + precio + "', '" + iva + "')";
             JOptionPane.showMessageDialog(null, "!! Producto Guardado con Exito !!\n");
             stm.executeUpdate(sql);
         }

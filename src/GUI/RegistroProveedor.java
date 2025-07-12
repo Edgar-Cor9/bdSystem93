@@ -32,7 +32,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jPanel1.setVisible(false);
         usuario = Login.user;
-        
+
         LocalDate fechaActual = LocalDate.now();
         FechaRegistro.setText(fechaActual.format(DateTimeFormatter.ISO_DATE));
 
@@ -435,51 +435,59 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
 
         String ruc = txtRuc.getText().toString();
         LabelRuc.setText(ruc);
+        int longitud = 13;
+        int valor = ruc.length();
 
         if (!ruc.equals("")) {
-            try {
-                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                String coduser = op.codigoUser(usuario);
-                IdUSer.setText(coduser);
-                LabelUsuario.setText(usuario);
+            if (valor < longitud) {
+                JOptionPane.showMessageDialog(null, "!! EL ruc debe contener 13 digitos !!\n");
+            } else if (valor > longitud) {
+                JOptionPane.showMessageDialog(null, "!! EL ruc debe contener 13 digitos !!\n");
+            } else {
+                try {
+                    OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+                    String coduser = op.codigoUser(usuario);
+                    IdUSer.setText(coduser);
+                    LabelUsuario.setText(usuario);
 
-                ArrayList<Vector<String>> matriz = op.RucProveedor(ruc);
-                jPanel1.setVisible(true);
-                jPanel2.setVisible(false);
+                    ArrayList<Vector<String>> matriz = op.RucProveedor(ruc);
+                    jPanel1.setVisible(true);
+                    jPanel2.setVisible(false);
 
-                for (Vector<String> vector : matriz) {
-                    String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
+                    for (Vector<String> vector : matriz) {
+                        String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
 
-                    idprovee = vector.get(0);
-                    rucPro = vector.get(1);
-                    iduser = vector.get(2);
-                    nombres = vector.get(3);
-                    apellidos = vector.get(4);
-                    email = vector.get(5);
-                    direccion = vector.get(6);
-                    fech_regis = vector.get(7);
-                    fecha_actu = vector.get(8);
-                    comentario = vector.get(9);
-                    userRegis = vector.get(10);
-                    userActual = vector.get(11);
+                        idprovee = vector.get(0);
+                        rucPro = vector.get(1);
+                        iduser = vector.get(2);
+                        nombres = vector.get(3);
+                        apellidos = vector.get(4);
+                        email = vector.get(5);
+                        direccion = vector.get(6);
+                        fech_regis = vector.get(7);
+                        fecha_actu = vector.get(8);
+                        comentario = vector.get(9);
+                        userRegis = vector.get(10);
+                        userActual = vector.get(11);
 
-                    labelProveedor.setText(idprovee);
-                    LabelRuc.setText(rucPro);
-                    IdUSer.setText(iduser);
-                    txtnombres.setText(nombres);
-                    txtapellidos.setText(apellidos);
-                    txtemail.setText(email);
-                    txtdireccion.setText(direccion);
-                    FechaRegistro.setText(fech_regis);
-                    fechaActual.setText(fecha_actu);
-                    txtcomentario.setText(comentario);
-                    LabelUsuario.setText(userRegis);
-                    UsuarioActualizacion.setText(userActual);
+                        labelProveedor.setText(idprovee);
+                        LabelRuc.setText(rucPro);
+                        IdUSer.setText(iduser);
+                        txtnombres.setText(nombres);
+                        txtapellidos.setText(apellidos);
+                        txtemail.setText(email);
+                        txtdireccion.setText(direccion);
+                        FechaRegistro.setText(fech_regis);
+                        fechaActual.setText(fecha_actu);
+                        txtcomentario.setText(comentario);
+                        LabelUsuario.setText(userRegis);
+                        UsuarioActualizacion.setText(userActual);
+                    }
+
+                } catch (SQLException err) {
+                    err.printStackTrace();
+
                 }
-
-            } catch (SQLException err) {
-                err.printStackTrace();
-
             }
 
         } else {
@@ -494,9 +502,8 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        
+
         String fechaIngreso = FechaRegistro.getText();
-        
 
         int validacion = 0;
         String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, comentario, userRegis, userActual;
@@ -577,7 +584,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         comentario = txtcomentario.getText();
         userActual = usuario;
         iduser = IdUSer.getText();
-        
+
         if (nombres.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
             validacion++;
@@ -611,17 +618,17 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             datos.add(fechaActual);
             datos.add(comentario);
             datos.add(userActual);
-            
-            matriz.add(datos);           
-            
+
+            matriz.add(datos);
+
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 op.AtualizarProveedor(matriz);
             } catch (SQLException err) {
                 err.printStackTrace();
             }
-            
-        }else {
+
+        } else {
             JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
 
         }
