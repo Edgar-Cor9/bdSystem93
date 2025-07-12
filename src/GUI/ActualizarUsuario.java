@@ -251,6 +251,8 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jToolBar3.add(jLabel12);
         jToolBar3.add(labelFecha);
 
+        JtabActu.setBackground(new java.awt.Color(255, 255, 255));
+
         PanelDesActu.setLayer(JtabActu, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout PanelDesActuLayout = new javax.swing.GroupLayout(PanelDesActu);

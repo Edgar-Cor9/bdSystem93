@@ -583,14 +583,13 @@ public class Cliente extends javax.swing.JInternalFrame {
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 String coduser = op.codigoUser(usuario);
-
                 ArrayList<Vector<String>> matriz = op.cedulaCliente(cedula);
                 Panel1.setVisible(false);
                 JDesktopCliente.setVisible(true);
                 idUser1.setText(coduser);
-                
+
                 for (Vector<String> vector : matriz) {
-                    String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr,userAct, fechaAct, comentario;
+                    String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userAct, fechaAct, comentario;
 
                     idclient = vector.get(0);
                     cedul = vector.get(1);
@@ -687,8 +686,8 @@ public class Cliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese el correo por favor");
             JBDireccion1.setVisible(true);
             validacion++;
-        }       
-        
+        }
+
         if (validacion == 0) {
 
             Vector<String> datos = new Vector<>();
@@ -699,7 +698,7 @@ public class Cliente extends javax.swing.JInternalFrame {
             datos.add(direccion);
             datos.add(edad);
             datos.add(usernameAct);
-            datos.add(idusuario);            
+            datos.add(idusuario);
             datos.add(fechaA);
             datos.add(comentario);
 

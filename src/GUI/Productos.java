@@ -30,10 +30,7 @@ public class Productos extends javax.swing.JInternalFrame {
         LabelTitulo.setText("Productos> Registro Productos");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JOptionPane.showMessageDialog(this, "Antes de Registrar un producto consulte si ya se encuentra registrado");
-        OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-        String coduser = op.codigoUser(usuario);
         labelUSuario.setText(usuario);
-        labelID.setText(coduser);
     }
 
     /**
@@ -152,6 +149,11 @@ public class Productos extends javax.swing.JInternalFrame {
 
         jButton3.setText("Calcular");
         jButton3.setToolTipText("Calcular");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -666,7 +668,7 @@ public class Productos extends javax.swing.JInternalFrame {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 ArrayList<Vector<String>> matriz = op.RucProveedor(ruc);
                 for (Vector<String> vector : matriz) {
-                    String nombres, apellidos,id;
+                    String nombres, apellidos, id;
 
                     id = vector.get(0);
                     nombres = vector.get(3);
@@ -727,6 +729,22 @@ public class Productos extends javax.swing.JInternalFrame {
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
         txtRucConsultaPRo.setText("");
     }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+//        String cantidad, precio, iva, total = "";
+//
+//        cantidad = txtcantidad.getText();
+//        precio = txtcantidad.getText();
+//        iva = txtiva.getText();
+//
+//        int cant = (Integer.valueOf(cantidad));
+//        int pre = (Integer.valueOf(precio));
+//        int iv = (Integer.valueOf(iva));
+//
+//        int tot = (cant * pre);
+//        System.out.println(tot);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
