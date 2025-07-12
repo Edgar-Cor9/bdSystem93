@@ -7,6 +7,8 @@ package GUI;
 import Logica_Operaciones_BD.OperarcionesCRUD;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -30,6 +32,9 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jPanel1.setVisible(false);
         usuario = Login.user;
+        
+        LocalDate fechaActual = LocalDate.now();
+        FechaRegistro.setText(fechaActual.format(DateTimeFormatter.ISO_DATE));
 
     }
 
@@ -489,14 +494,9 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-
-        Date fechaI = new Date();
-        Date fechaA = new Date();
-
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-
-        String fechaIngreso = formato.format(fechaI);
-        String fechaActual = formato.format(fechaA);
+        
+        String fechaIngreso = FechaRegistro.getText();
+        
 
         int validacion = 0;
         String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, comentario, userRegis, userActual;

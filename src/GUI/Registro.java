@@ -48,8 +48,6 @@ public class Registro extends javax.swing.JInternalFrame {
         JBtelefono.setVisible(false);
     }
 
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -501,7 +499,7 @@ public class Registro extends javax.swing.JInternalFrame {
         Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         String fechas = formato.format(fecha);
-        
+
         String cedula, nombres, apellidos, email, telefono, username, password, tipo_nivel, status, seleccion1, seleccion2;
         cedula = labelCedula.getText().toString();
         int validacion = 0;
@@ -518,26 +516,32 @@ public class Registro extends javax.swing.JInternalFrame {
 
         if (nombres.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
+            validacion++;
             JBNombres.setVisible(true);
         }
         if (apellidos.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese los apellidos por favor");
+            validacion++;
             JBApellidos.setVisible(true);
         }
         if (email.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el email por favor");
+            validacion++;
             JBemail.setVisible(true);
         }
         if (telefono.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el telefono por favor");
+            validacion++;
             JBtelefono.setVisible(true);
         }
         if (username.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el username por favor");
+            validacion++;
             JBusuario.setVisible(true);
         }
         if (password.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el password por favor");
+            validacion++;
             JBpassword.setVisible(true);
         }
 
@@ -555,7 +559,6 @@ public class Registro extends javax.swing.JInternalFrame {
             datos.add(status);
             datos.add(usuario);
             datos.add(fechas);
-
             matriz.add(datos);
         } else {
             JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
@@ -590,7 +593,7 @@ public class Registro extends javax.swing.JInternalFrame {
 
                 for (Vector<String> vector : matriz) {
 
-                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis,ult_actua;
+                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
 
                     iduser = vector.get(0);
                     cedul = vector.get(1);

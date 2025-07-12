@@ -9,6 +9,9 @@ import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -46,6 +49,9 @@ public class Cliente extends javax.swing.JInternalFrame {
         JBEdad.setVisible(false);
         JBDireccion.setVisible(false);
         JBDireccion1.setVisible(false);
+        
+        LocalDate fechaActuar = LocalDate.now();
+        LabelIngreso.setText(fechaActuar.format(DateTimeFormatter.ISO_DATE));
     }
 
     private boolean cerrado(Object obj) {
@@ -727,11 +733,9 @@ public class Cliente extends javax.swing.JInternalFrame {
     private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
-        Date fechaI = new Date();
-        Date fechaA = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        String fechaIngreso = formato.format(fechaI);
-        String fechaActual = formato.format(fechaA);
+       
+        String fechaIngreso = LabelIngreso.getText();
+        
 
         int validacion = 0;
 
@@ -788,8 +792,7 @@ public class Cliente extends javax.swing.JInternalFrame {
             datos.add(edad);
             datos.add(usuario);
             datos.add(idusuario);
-            datos.add(fechaIngreso);
-            datos.add(fechaActual);
+            datos.add(fechaIngreso);            
             datos.add(comentario);
 
             matriz.add(datos);

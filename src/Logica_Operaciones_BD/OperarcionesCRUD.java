@@ -393,8 +393,7 @@ public final class OperarcionesCRUD {
             username = vector.get(6);
             idusuario = vector.get(7);
             fechaIngreso = vector.get(8);
-            fechaActual = vector.get(9);
-            comentario = vector.get(10);
+            comentario = vector.get(9);
 
             String sql = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
 
@@ -405,7 +404,9 @@ public final class OperarcionesCRUD {
             } else {
                 this.iniciarConexionBD();
                 Statement stm2 = this.conexion.createStatement();
-                String sql1 = " INSERT INTO clientes (CEDULA_CLIENTE, NOMBRES_CLIENTE, APELLIDOS_CLIENTE, EMAIL_CLIENTE, DIRECCION_CLIENTE,EDAD,USERNAME, IDUSUARIOS, FECHA_INGRESO,FECHA_ACTUALIZACION, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', '" + idusuario + "', '" + fechaIngreso + "', '" + fechaActual + "', '" + comentario + "')";
+                String sql1 = " INSERT INTO clientes (CEDULA_CLIENTE, NOMBRES_CLIENTE,"
+                        + " APELLIDOS_CLIENTE, EMAIL_CLIENTE, DIRECCION_CLIENTE,EDAD,USERNAME, "
+                        + "IDUSUARIOS, FECHA_INGRESO, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', '" + idusuario + "', '" + fechaIngreso + "','" + comentario + "')";
                 stm2.executeUpdate(sql1);
                 JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
             }

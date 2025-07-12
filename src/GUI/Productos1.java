@@ -7,8 +7,6 @@ package GUI;
 import Logica_Operaciones_BD.OperarcionesCRUD;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -20,14 +18,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author USUARIO
  */
-public class Productos extends javax.swing.JInternalFrame {
+public class Productos1 extends javax.swing.JInternalFrame {
 
     String usuario;
 
     /**
      * Creates new form Productos
      */
-    public Productos() throws SQLException {
+    public Productos1() throws SQLException {
         initComponents();
 
         usuario = Login.user;
@@ -38,9 +36,6 @@ public class Productos extends javax.swing.JInternalFrame {
         OperarcionesCRUD ops = OperarcionesCRUD.getInstance();
         String coduser = ops.codigoUser(usuario);
         labelID.setText(coduser);
-        
-        LocalDate fechaActual = LocalDate.now();
-        labelFecha1.setText(fechaActual.format(DateTimeFormatter.ISO_DATE));
     }
 
     /**
@@ -69,6 +64,9 @@ public class Productos extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        labelCodigo = new javax.swing.JLabel();
+        labelFecha = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -80,6 +78,7 @@ public class Productos extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         labelUSuario = new javax.swing.JLabel();
         labelFecha1 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         labelID = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -228,6 +227,13 @@ public class Productos extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Código :");
+
+        labelCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        labelFecha.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
         txtnombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -255,6 +261,9 @@ public class Productos extends javax.swing.JInternalFrame {
 
         labelFecha1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setText("Fecha Actualización:");
+
         labelID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -262,8 +271,9 @@ public class Productos extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(1031, Short.MAX_VALUE)
+                .addContainerGap(998, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel7))
@@ -271,6 +281,7 @@ public class Productos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(labelID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -281,10 +292,12 @@ public class Productos extends javax.swing.JInternalFrame {
                     .addContainerGap()
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel4)
+                        .addComponent(jLabel1)
                         .addComponent(jLabel6))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(1029, Short.MAX_VALUE)))
         );
@@ -308,10 +321,18 @@ public class Productos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                     .addComponent(labelFecha1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(59, 59, 59))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(46, 46, 46)
+                    .addContainerGap()
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(labelCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGap(20, 20, 20)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                         .addComponent(txtnombre)
                         .addComponent(jLabel6))
@@ -916,7 +937,9 @@ public class Productos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jCombobusqueda;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -942,6 +965,8 @@ public class Productos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel labelCodigo;
+    private javax.swing.JLabel labelFecha;
     private javax.swing.JLabel labelFecha1;
     private javax.swing.JLabel labelID;
     private javax.swing.JLabel labelUSuario;
