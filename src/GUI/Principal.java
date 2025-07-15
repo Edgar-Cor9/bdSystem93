@@ -28,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
     Productos Regisprod;
     RegistroProveedor RegProvee;
     EditarProductos editPro;
+    IngresoMercaderia ingreMer;
 
     /**
      * Creates new form Principal
@@ -146,6 +147,11 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto1.png"))); // NOI18N
         jMenuItem7.setText("Ingreso Mercaderia");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         Productos.add(jMenuItem7);
 
         jMenuBar1.add(Productos);
@@ -395,6 +401,21 @@ public class Principal extends javax.swing.JFrame {
             System.err.println("Error al cargar ventana Editar Productos" + e);
         }
     }//GEN-LAST:event_ActualizarProductoActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        try {
+            if (cerrado(ingreMer)) {
+                ingreMer = new IngresoMercaderia();
+                jTabbedPane1.add("Ingreso Mercaderoa", ingreMer);
+                ingreMer.show();
+            }else{
+                  JOptionPane.showMessageDialog(this, "La Ventana Ingreso Mercaderia ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+             System.err.println("Error al cargar ventana Ingreso Mercaderia" + e);
+        }
+  
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
