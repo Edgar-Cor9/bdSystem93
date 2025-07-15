@@ -616,8 +616,8 @@ public class Registro extends javax.swing.JInternalFrame {
                     txtfono.setText(telefono);
                     txtusuario.setText(username);
                     txtpassword.setText(pass);
-                    jComboNivel.getSelectedItem();
-                    jcomboStatus.getSelectedItem();
+                    jComboNivel.setSelectedItem(tipo_niv);
+                    jcomboStatus.setSelectedItem(status);
                     LabelRegistro.setText(registradox);
                     labelFecha.setText("  " + fecha_regis);
                     LabelActualizacion.setText(ult_actua);

@@ -27,6 +27,7 @@ public class Principal extends javax.swing.JFrame {
     ActPassword actPassww;
     Productos Regisprod;
     RegistroProveedor RegProvee;
+    EditarProductos editPro;
 
     /**
      * Creates new form Principal
@@ -36,7 +37,7 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         usuario = Login.user;
         setTitle(" Sesion iniciada por " + usuario);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);        
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     @Override
@@ -90,7 +91,10 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jDesktopPane2.setBackground(new java.awt.Color(204, 204, 204));
+
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
+        jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jDesktopPane2.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -133,6 +137,11 @@ public class Principal extends javax.swing.JFrame {
 
         ActualizarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
         ActualizarProducto.setText("Editar Producto");
+        ActualizarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarProductoActionPerformed(evt);
+            }
+        });
         Productos.add(ActualizarProducto);
 
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto1.png"))); // NOI18N
@@ -365,13 +374,27 @@ public class Principal extends javax.swing.JFrame {
                 RegProvee = new RegistroProveedor();
                 jTabbedPane1.add("Registro Proveedor", RegProvee);
                 RegProvee.show();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "La Ventana Registro Proveedor ya se Encuentra abierta");
             }
         } catch (Exception e) {
             System.err.println("Error al cargar ventana Registro Proveedor" + e);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void ActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarProductoActionPerformed
+        try {
+            if (cerrado(editPro)) {
+                editPro = new EditarProductos();
+                jTabbedPane1.add("Editar Productos", editPro);
+                editPro.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Editar Productos ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Editar Productos" + e);
+        }
+    }//GEN-LAST:event_ActualizarProductoActionPerformed
 
     /**
      * @param args the command line arguments

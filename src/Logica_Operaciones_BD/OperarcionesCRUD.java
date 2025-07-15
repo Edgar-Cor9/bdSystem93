@@ -512,7 +512,6 @@ public final class OperarcionesCRUD {
                 + "on p.idusuarios = u.idusuarios\n"
                 + "where p.tipo_producto ='" + tipo + "'";
 
-       
         ResultSet rs = smt.executeQuery(sql);
         while (rs.next()) {
             Vector<String> datos = new Vector<>();
@@ -604,7 +603,7 @@ public final class OperarcionesCRUD {
 
         for (Vector<String> vector : matriz) {
             String iduser, idProve, nombre, tipo, detalle, fechaIn, precio, iva;
-            
+
             iduser = vector.get(0);
             idProve = vector.get(1);
             nombre = vector.get(2);
@@ -626,6 +625,97 @@ public final class OperarcionesCRUD {
         }
         this.cerrarConexionBD();
 
+    }
+
+    //consultar un producto por codigo
+    public ArrayList<Vector<String>> CodigoProduto(String codProdu) throws SQLException {
+        this.iniciarConexionBD();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.detalle_producto, p.tipo_producto,"
+                + " p.fecha_ingreso, p.fecha_Actualizacion, p.precio, p.iva, pro.ruc, pro.nombres, "
+                + "pro.apellidos, pro.idProveedor, u.username, u.idusuarios\n"
+                + "FROM bd_systema.productos p \n"
+                + "INNER JOIN bd_systema.proveedor pro \n"
+                + "on p.idProveedor = pro.idProveedor\n"
+                + "INNER JOIN bd_systema.usuarios u \n"
+                + "on p.idusuarios = u.idusuarios\n"
+                + "where p.codproductos = '" + codProdu + "'";
+        ResultSet rst = stm.executeQuery(sql);
+
+        while (rst.next()) {
+            Vector<String> datos = new Vector<>();
+            String codiPro, nombreProd, detaProd, tipoProd, fechRegistro, fechAc, prec, iva, rucPro, nombProve, apellProve, idProve, idUser, username;
+            codiPro = rst.getString("codproductos");
+            nombreProd = rst.getString("nombre_producto");
+            detaProd = rst.getString("detalle_producto");
+            tipoProd = rst.getString("tipo_producto");
+            fechRegistro = rst.getString("fecha_ingreso");
+            fechAc = rst.getString("fecha_Actualizacion");
+            prec = rst.getString("precio");
+            iva = rst.getString("iva");
+            rucPro = rst.getString("ruc");
+            nombProve = rst.getString("nombres");
+            apellProve = rst.getString("apellidos");
+            idProve = rst.getString("idProveedor");
+            username = rst.getString("username");
+            idUser = rst.getString("idusuarios");
+
+            datos.add(codiPro);
+            datos.add(nombreProd);
+            datos.add(detaProd);
+            datos.add(tipoProd);
+            datos.add(fechRegistro);
+            datos.add(fechAc);
+            datos.add(prec);
+            datos.add(iva);
+            datos.add(rucPro);
+            datos.add(nombProve);
+            datos.add(apellProve);
+            datos.add(idProve);
+            datos.add(username);
+            datos.add(idUser);
+            matriz.add(datos);
+
+        }
+
+        return matriz;
+    }
+
+    //editar un producto
+    public void ActualizarProducto(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+        for (Vector<String> vector : matriz) {
+            String codiPro,  idProve, nombreProd, detaProd, tipoProd, fechAc, prec, iva;
+
+            codiPro = vector.get(0);
+            idProve = vector.get(1);
+            nombreProd = vector.get(2);
+            detaProd = vector.get(3);
+            tipoProd = vector.get(4);
+            fechAc = vector.get(5);
+            prec = vector.get(6);
+            iva = vector.get(7);
+            
+         
+
+            String sql = "select codproductos from productos where codproductos = '" + codiPro + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                String sql2 = "update productos set idProveedor ='" + idProve + "', "
+                        + "nombre_producto = '" + nombreProd + "', tipo_producto = '" + tipoProd + "',"
+                        + "detalle_producto = '" + detaProd + "', fecha_Actualizacion = '" + fechAc + "',"
+                        + "precio = '" + prec + "', iva = '" + iva + "' where codproductos = '" + codiPro + "'";
+                stm.executeUpdate(sql2);
+                JOptionPane.showMessageDialog(null, "!! Producto Actualizado con Exito !!\n");
+            }            
+           
+        }
     }
 
     //-----------------------------------------------------------------------------------------------------------------

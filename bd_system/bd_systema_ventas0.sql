@@ -16,37 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `productos`
+-- Table structure for table `ventas`
 --
 
-DROP TABLE IF EXISTS `productos`;
+DROP TABLE IF EXISTS `ventas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `productos` (
-  `codproductos` int NOT NULL AUTO_INCREMENT,
-  `idclientes` int DEFAULT NULL,
-  `idusuarios` int DEFAULT NULL,
-  `nombre_producto` varchar(45) NOT NULL,
-  `tipo_producto` varchar(45) NOT NULL,
-  `cantidad_producto` int DEFAULT NULL,
-  `fecha_ingreso` date NOT NULL,
-  `fecha_modificacion` date NOT NULL,
+CREATE TABLE `ventas` (
+  `codventa` int NOT NULL AUTO_INCREMENT,
+  `idclientes` int NOT NULL,
+  `idsuarios` int NOT NULL,
+  `codproductos` int NOT NULL,
+  `cantidad` int NOT NULL,
+  `precio` decimal(10,0) NOT NULL,
+  `total_venta` decimal(10,0) NOT NULL,
+  `fecha_venta` date NOT NULL,
   `registrado_por` varchar(45) NOT NULL,
-  `precio` decimal(10,0) DEFAULT NULL,
-  PRIMARY KEY (`codproductos`),
-  KEY `idclientes_idx` (`idclientes`),
-  KEY `idusuarios_idx` (`idusuarios`),
-  CONSTRAINT `idclientes` FOREIGN KEY (`idclientes`) REFERENCES `clientes` (`idclientes`)
+  PRIMARY KEY (`codventa`),
+  KEY `idlcientes_idx` (`idclientes`),
+  KEY `idusuarios_idx` (`idsuarios`),
+  KEY `codproductos_idx` (`codproductos`),
+  CONSTRAINT `codproductos` FOREIGN KEY (`codproductos`) REFERENCES `productos` (`codproductos`),
+  CONSTRAINT `idsuarios` FOREIGN KEY (`idsuarios`) REFERENCES `usuarios` (`idusuarios`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `productos`
+-- Dumping data for table `ventas`
 --
 
-LOCK TABLES `productos` WRITE;
-/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+LOCK TABLES `ventas` WRITE;
+/*!40000 ALTER TABLE `ventas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ventas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-21 12:31:41
+-- Dump completed on 2025-07-14 18:53:43

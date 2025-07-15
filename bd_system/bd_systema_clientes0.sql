@@ -16,36 +16,43 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `clientes`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
-  `idusuarios` int NOT NULL AUTO_INCREMENT,
-  `nombres_usuario` varchar(45) NOT NULL,
-  `apellidos_usuario` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
+CREATE TABLE `clientes` (
+  `idclientes` int NOT NULL AUTO_INCREMENT,
+  `idusuarios` int NOT NULL,
+  `cedula_cliente` varchar(45) NOT NULL,
+  `nombres_cliente` varchar(45) NOT NULL,
+  `apellidos_cliente` varchar(45) NOT NULL,
+  `email_cliente` varchar(45) NOT NULL,
+  `direccion_cliente` varchar(45) NOT NULL,
+  `edad` varchar(45) NOT NULL,
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `tipo_nivel` varchar(45) NOT NULL,
-  `status` varchar(45) NOT NULL,
-  `registrado_por` varchar(45) NOT NULL,
-  `fecha_registro` date NOT NULL,
-  PRIMARY KEY (`idusuarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `fecha_ingreso` date NOT NULL,
+  `username_Actu` varchar(45) DEFAULT NULL,
+  `fecha_actualizacion` date NOT NULL,
+  `comentario` longtext NOT NULL,
+  `idventa` int DEFAULT NULL,
+  PRIMARY KEY (`idclientes`),
+  KEY `idusuarios_idx` (`idusuarios`) /*!80000 INVISIBLE */,
+  KEY `idventa_idx` (`idventa`),
+  CONSTRAINT `idusuarios` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`),
+  CONSTRAINT `idventa` FOREIGN KEY (`idventa`) REFERENCES `ventas` (`codventa`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `clientes`
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (2,'Edgar Andre','MArtinez Romero','edandre_93@hotmail.com','0988525908','EMARTINEZ','12345','Administrador','Activo','EMARTINEZ','2025-06-21');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+LOCK TABLES `clientes` WRITE;
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,2,'0706628393','EDGAR ANDRE','Martinez','eda','dad','31','EMARTINEZ','2025-07-01','bmartinez','2025-07-08','dasasdd',NULL);
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-21 12:31:41
+-- Dump completed on 2025-07-14 18:53:44

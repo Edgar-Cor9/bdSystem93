@@ -16,36 +16,40 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `clientes`
+-- Table structure for table `proveedor`
 --
 
-DROP TABLE IF EXISTS `clientes`;
+DROP TABLE IF EXISTS `proveedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `clientes` (
-  `idclientes` int NOT NULL AUTO_INCREMENT,
-  `cedula_cliente` varchar(45) NOT NULL,
-  `nombres_cliente` varchar(45) NOT NULL,
-  `apellidos_cliente` varchar(45) NOT NULL,
-  `email_cliente` varchar(45) NOT NULL,
-  `direccion_cliente` varchar(45) NOT NULL,
-  `username` varchar(45) NOT NULL,
+CREATE TABLE `proveedor` (
+  `idProveedor` int NOT NULL AUTO_INCREMENT,
+  `ruc` varchar(45) NOT NULL,
   `idusuarios` int NOT NULL,
-  `fecha_ingreso` date NOT NULL,
-  `fecha_actualizacion` date NOT NULL,
-  PRIMARY KEY (`idclientes`),
+  `nombres` varchar(45) NOT NULL,
+  `apellidos` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `direccion` varchar(45) NOT NULL,
+  `fecha_registro` varchar(45) NOT NULL,
+  `fecha_actualizacion` varchar(45) DEFAULT NULL,
+  `comentario` longtext NOT NULL,
+  `userRegistro` varchar(45) NOT NULL,
+  `userActualizacion` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idProveedor`),
   KEY `idusuarios_idx` (`idusuarios`),
-  CONSTRAINT `idusuarios` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `userRegistro_idx` (`userRegistro`),
+  CONSTRAINT `idusuario` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `clientes`
+-- Dumping data for table `proveedor`
 --
 
-LOCK TABLES `clientes` WRITE;
-/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
+LOCK TABLES `proveedor` WRITE;
+/*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
+INSERT INTO `proveedor` VALUES (1,'0706628393001',2,'edgar','martinez','efdfgafasaq','piñas','2025-07-08','2025-07-09','vive en el parque lineal','emartinez','bmartinez'),(2,'0706157161001',3,'SANTIAGO','MARTINEZ','DASDSADA','PINAS','2025-07-12',NULL,'PRODUCTOS SALUD','BMARTINEZ',NULL);
+/*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-21 12:31:41
+-- Dump completed on 2025-07-14 18:53:43
