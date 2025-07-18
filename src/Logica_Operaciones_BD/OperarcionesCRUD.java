@@ -462,37 +462,6 @@ public final class OperarcionesCRUD {
 
     }
 
-    //aqui consultamos los datos a la base de datos si el numero de cedula le pertenece a un cliente
-    public ArrayList<Vector<String>> OperacionesTransacciones(String p_cedula) throws SQLException {
-        this.iniciarConexionBD();
-
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-        Statement stm = this.conexion.createStatement();
-        String sql = "select c.cod_cliente, c.persona_cedula, c.usuario_cod_registro,  p.nombres , p.apellidos  from cliente c join persona p on c.persona_cedula = p.cedula where persona_cedula = '" + p_cedula + "'";
-
-        ResultSet rst = stm.executeQuery(sql);
-        if (rst.next()) {
-            Vector<String> datos = new Vector<>();
-            String cliente, nombres, apellidos, codUsuario;
-            cliente = rst.getString("cod_cliente");
-            nombres = rst.getString("nombres");
-            apellidos = rst.getString("apellidos");
-            codUsuario = rst.getString("usuario_cod_registro");
-
-            datos.add(cliente);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(codUsuario);
-            matriz.add(datos);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Persona no se Encuentra Registrado como Cliente");
-
-        }
-        this.cerrarConexionBD();
-        return matriz;
-    }
-
     //---------------------------------------------------------------------------------------------------------------
     // Productos
     //---------------------------------------------------------------------------------------------------------------
@@ -689,7 +658,7 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
         for (Vector<String> vector : matriz) {
-            String codiPro,  idProve, nombreProd, detaProd, tipoProd, fechAc, prec, iva;
+            String codiPro, idProve, nombreProd, detaProd, tipoProd, fechAc, prec, iva;
 
             codiPro = vector.get(0);
             idProve = vector.get(1);
@@ -699,8 +668,6 @@ public final class OperarcionesCRUD {
             fechAc = vector.get(5);
             prec = vector.get(6);
             iva = vector.get(7);
-            
-         
 
             String sql = "select codproductos from productos where codproductos = '" + codiPro + "'";
 
@@ -713,15 +680,122 @@ public final class OperarcionesCRUD {
                         + "precio = '" + prec + "', iva = '" + iva + "' where codproductos = '" + codiPro + "'";
                 stm.executeUpdate(sql2);
                 JOptionPane.showMessageDialog(null, "!! Producto Actualizado con Exito !!\n");
-            }            
-           
+            }
+
         }
     }
 
     //-----------------------------------------------------------------------------------------------------------------
+    // Inventario
+    //-----------------------------------------------------------------------------------------------------------------
+    public void Mercaderia(ArrayList<Vector<String>> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = datos;
+
+        for (Vector<String> vector : matriz) {
+            String codProd, idUser, detalle, fechIngre, cantidad, stock, total;
+            int saldo;
+            int resultado;
+
+            codProd = vector.get(0);
+            idUser = vector.get(1);
+            detalle = vector.get(2);
+            fechIngre = vector.get(3);
+            cantidad = vector.get(4);
+            total = vector.get(5);
+
+            switch (detalle) {
+                case "Compra":
+                    try {
+                    //  String sql2 = "select * from inventario(select idinventario, stock from inventario where codproductos = '" + codProd + "'" + "order by idinventario desc) where rownum =1";
+//              
+                    String sql2 = "SELECT idinventario, stock FROM ("
+                            + "SELECT idinventario, stock FROM inventario "
+                            + "WHERE codproductos = '" + codProd + "' "
+                            + "ORDER BY idinventario DESC"
+                            + ") AS inv LIMIT 1";
+
+                    ResultSet rst = stm.executeQuery(sql2);
+                    if (rst.next()) {
+                        saldo = rst.getInt("stock");
+                        int canti = (Integer.parseInt(cantidad));
+                        resultado = saldo + canti;
+
+                        String sql3 = "insert into inventario "
+                                + "(codproductos,idusuarios,detalle,"
+                                + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
+                                + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
+                        stm.executeUpdate(sql3);
+                        JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+
+                    } else {
+                        stock = cantidad;
+                        String sql = "insert into inventario "
+                                + "(codproductos,idusuarios,detalle,"
+                                + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
+                                + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
+                        stm.executeUpdate(sql);
+                        JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                        this.cerrarConexionBD();
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "!! Error al registrar compra/Inventario !!\n" + e);
+                    System.out.println("Error al registrar compra/Inventario !!" + e);
+                }
+
+                break;
+
+                case "Venta":
+                    this.iniciarConexionBD();
+                    Statement stm4 = this.conexion.createStatement();
+
+                    String sql4 = "SELECT idinventario, stock FROM ("
+                            + "SELECT idinventario, stock FROM inventario "
+                            + "WHERE codproductos = '" + codProd + "' "
+                            + "ORDER BY idinventario DESC"
+                            + ") AS inv LIMIT 1";
+                    ResultSet rst4 = stm4.executeQuery(sql4);
+
+                    if (rst4.next()) {
+                        saldo = rst4.getInt("stock");
+                        int canti = (Integer.getInteger(cantidad));
+
+                        if (saldo < canti || saldo == 0) {
+                            JOptionPane.showMessageDialog(null, "!! No existe la cantidad Requerida !!");
+                        } else if (saldo >= canti) {
+
+                            resultado = saldo - canti;
+
+                            String sql5 = "insert into inventario "
+                                    + "(codproductos,idusuarios,detalle,"
+                                    + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
+                                    + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
+                            stm4.executeUpdate(sql5);
+                            JOptionPane.showMessageDialog(null, "!! Venta realizada con Exito !!");
+                            this.cerrarConexionBD();
+                        }
+
+                        break;
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "!! Producto no se encuentra en el Inventario !!");
+                    }
+                default:
+                    break;
+            }
+
+            this.cerrarConexionBD();
+
+        }
+    }
+    
+    
+    //-----------------------------------------------------------------------------------------------------------------
     // Proveedores
     //-----------------------------------------------------------------------------------------------------------------
     //consultar si proveedor se encuentra registrado
+
     public ArrayList<Vector<String>> RucProveedor(String ruc) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
@@ -960,5 +1034,36 @@ public final class OperarcionesCRUD {
 
         }
 
+    }
+    //aqui consultamos los datos a la base de datos si el numero de cedula le pertenece a un cliente
+
+    public ArrayList<Vector<String>> OperacionesTransacciones(String p_cedula) throws SQLException {
+        this.iniciarConexionBD();
+
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        Statement stm = this.conexion.createStatement();
+        String sql = "select c.cod_cliente, c.persona_cedula, c.usuario_cod_registro,  p.nombres , p.apellidos  from cliente c join persona p on c.persona_cedula = p.cedula where persona_cedula = '" + p_cedula + "'";
+
+        ResultSet rst = stm.executeQuery(sql);
+        if (rst.next()) {
+            Vector<String> datos = new Vector<>();
+            String cliente, nombres, apellidos, codUsuario;
+            cliente = rst.getString("cod_cliente");
+            nombres = rst.getString("nombres");
+            apellidos = rst.getString("apellidos");
+            codUsuario = rst.getString("usuario_cod_registro");
+
+            datos.add(cliente);
+            datos.add(nombres);
+            datos.add(apellidos);
+            datos.add(codUsuario);
+            matriz.add(datos);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Persona no se Encuentra Registrado como Cliente");
+
+        }
+        this.cerrarConexionBD();
+        return matriz;
     }
 }

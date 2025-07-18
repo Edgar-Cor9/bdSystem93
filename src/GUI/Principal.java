@@ -29,6 +29,7 @@ public class Principal extends javax.swing.JFrame {
     RegistroProveedor RegProvee;
     EditarProductos editPro;
     IngresoMercaderia ingreMer;
+    CompraPorLote compLote;
 
     /**
      * Creates new form Principal
@@ -72,22 +73,24 @@ public class Principal extends javax.swing.JFrame {
 
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        BarraMenu = new javax.swing.JMenuBar();
         Clientes = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        IngresoClientes = new javax.swing.JMenuItem();
         Productos = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        RegistroProducto = new javax.swing.JMenuItem();
         ActualizarProducto = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        IngresoMercaderia = new javax.swing.JMenu();
+        UnaCompra = new javax.swing.JMenuItem();
+        PorLote = new javax.swing.JMenuItem();
         Ventas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         Proveedor = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        Registro = new javax.swing.JMenuItem();
         ActualizarUsuario = new javax.swing.JMenu();
         RegistroUsuario = new javax.swing.JMenuItem();
         CambioPassword = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        ActualizacionUsuario = new javax.swing.JMenuItem();
         Opciones = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -113,28 +116,28 @@ public class Principal extends javax.swing.JFrame {
         Clientes.setText("Clientes");
         Clientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clasificacion.png"))); // NOI18N
-        jMenuItem3.setText("Ingreso Clientes");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        IngresoClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clasificacion.png"))); // NOI18N
+        IngresoClientes.setText("Ingreso Clientes");
+        IngresoClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                IngresoClientesActionPerformed(evt);
             }
         });
-        Clientes.add(jMenuItem3);
+        Clientes.add(IngresoClientes);
 
-        jMenuBar1.add(Clientes);
+        BarraMenu.add(Clientes);
 
         Productos.setText("Mercaderia");
         Productos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto.png"))); // NOI18N
-        jMenuItem6.setText("Registro Productos");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        RegistroProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto.png"))); // NOI18N
+        RegistroProducto.setText("Registro Productos");
+        RegistroProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                RegistroProductoActionPerformed(evt);
             }
         });
-        Productos.add(jMenuItem6);
+        Productos.add(RegistroProducto);
 
         ActualizarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
         ActualizarProducto.setText("Editar Producto");
@@ -145,16 +148,30 @@ public class Principal extends javax.swing.JFrame {
         });
         Productos.add(ActualizarProducto);
 
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto1.png"))); // NOI18N
-        jMenuItem7.setText("Ingreso Mercaderia");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        IngresoMercaderia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto1.png"))); // NOI18N
+        IngresoMercaderia.setText("Ingreso Mercaderia");
+
+        UnaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro.png"))); // NOI18N
+        UnaCompra.setText("Una Compra");
+        UnaCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                UnaCompraActionPerformed(evt);
             }
         });
-        Productos.add(jMenuItem7);
+        IngresoMercaderia.add(UnaCompra);
 
-        jMenuBar1.add(Productos);
+        PorLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro-de-la-carretilla.png"))); // NOI18N
+        PorLote.setText("Por lote");
+        PorLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PorLoteActionPerformed(evt);
+            }
+        });
+        IngresoMercaderia.add(PorLote);
+
+        Productos.add(IngresoMercaderia);
+
+        BarraMenu.add(Productos);
 
         Ventas.setText("Ventas");
         Ventas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -185,21 +202,21 @@ public class Principal extends javax.swing.JFrame {
         });
         Ventas.add(jMenuItem2);
 
-        jMenuBar1.add(Ventas);
+        BarraMenu.add(Ventas);
 
         Proveedor.setText("Proveedor");
         Proveedor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar.png"))); // NOI18N
-        jMenuItem5.setText("Registro");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        Registro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar.png"))); // NOI18N
+        Registro.setText("Registro");
+        Registro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                RegistroActionPerformed(evt);
             }
         });
-        Proveedor.add(jMenuItem5);
+        Proveedor.add(Registro);
 
-        jMenuBar1.add(Proveedor);
+        BarraMenu.add(Proveedor);
 
         ActualizarUsuario.setText("Usuarios");
         ActualizarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -227,22 +244,22 @@ public class Principal extends javax.swing.JFrame {
         });
         ActualizarUsuario.add(CambioPassword);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
-        jMenuItem4.setText("Actualizar");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        ActualizacionUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
+        ActualizacionUsuario.setText("Actualizar");
+        ActualizacionUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                ActualizacionUsuarioActionPerformed(evt);
             }
         });
-        ActualizarUsuario.add(jMenuItem4);
+        ActualizarUsuario.add(ActualizacionUsuario);
 
-        jMenuBar1.add(ActualizarUsuario);
+        BarraMenu.add(ActualizarUsuario);
 
         Opciones.setText("Opciones");
         Opciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuBar1.add(Opciones);
+        BarraMenu.add(Opciones);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(BarraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -295,7 +312,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void IngresoClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoClientesActionPerformed
         try {
             if (cerrado(cliente)) {
                 cliente = new Cliente();
@@ -307,7 +324,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Error al cargar ventana transacciones" + e);
         }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_IngresoClientesActionPerformed
 
     private void RegistroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroUsuarioActionPerformed
 
@@ -330,7 +347,7 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ActualizarUsuarioActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void ActualizacionUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizacionUsuarioActionPerformed
         try {
             if (cerrado(ActUsuario)) {
                 ActUsuario = new ActualizarUsuario();
@@ -343,7 +360,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Error al cargar ventana Actualizar Usuario" + e);
         }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_ActualizacionUsuarioActionPerformed
 
     private void CambioPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CambioPasswordActionPerformed
         try {
@@ -359,7 +376,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CambioPasswordActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void RegistroProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroProductoActionPerformed
         try {
             if (cerrado(Regisprod)) {
                 Regisprod = new Productos();
@@ -372,9 +389,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Error al cargar ventana Registro Producto" + e);
         }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_RegistroProductoActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
         try {
             if (cerrado(RegProvee)) {
                 RegProvee = new RegistroProveedor();
@@ -386,7 +403,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Error al cargar ventana Registro Proveedor" + e);
         }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_RegistroActionPerformed
 
     private void ActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarProductoActionPerformed
         try {
@@ -402,20 +419,35 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ActualizarProductoActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void UnaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnaCompraActionPerformed
         try {
             if (cerrado(ingreMer)) {
                 ingreMer = new IngresoMercaderia();
-                jTabbedPane1.add("Ingreso Mercaderoa", ingreMer);
+                jTabbedPane1.add("Compra Mercaderia", ingreMer);
                 ingreMer.show();
             }else{
-                  JOptionPane.showMessageDialog(this, "La Ventana Ingreso Mercaderia ya se Encuentra abierta");
+                JOptionPane.showMessageDialog(this, "La Ventana Una Compra ya se Encuentra abierta");
             }
         } catch (Exception e) {
-             System.err.println("Error al cargar ventana Ingreso Mercaderia" + e);
+             System.err.println("Error al cargar ventana Una Compra" + e);
         }
   
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_UnaCompraActionPerformed
+
+    private void PorLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PorLoteActionPerformed
+        try {
+            if (cerrado(compLote)) {
+               compLote = new CompraPorLote();
+               jTabbedPane1.add("Compra por Lote", compLote);
+               compLote.show();
+            }else{
+                 JOptionPane.showMessageDialog(this, "La Ventana Compra por Lote ya se Encuentra abierta");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Compra por Lote" + e);
+        }
+    }//GEN-LAST:event_PorLoteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -453,24 +485,26 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ActualizacionUsuario;
     private javax.swing.JMenuItem ActualizarProducto;
     private javax.swing.JMenu ActualizarUsuario;
+    private javax.swing.JMenuBar BarraMenu;
     private javax.swing.JMenuItem CambioPassword;
     private javax.swing.JMenu Clientes;
+    private javax.swing.JMenuItem IngresoClientes;
+    private javax.swing.JMenu IngresoMercaderia;
     private javax.swing.JMenu Opciones;
+    private javax.swing.JMenuItem PorLote;
     private javax.swing.JMenu Productos;
     private javax.swing.JMenu Proveedor;
+    private javax.swing.JMenuItem Registro;
+    private javax.swing.JMenuItem RegistroProducto;
     private javax.swing.JMenuItem RegistroUsuario;
+    private javax.swing.JMenuItem UnaCompra;
     private javax.swing.JMenu Ventas;
     private javax.swing.JDesktopPane jDesktopPane2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
