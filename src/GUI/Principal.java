@@ -30,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
     EditarProductos editPro;
     IngresoMercaderia ingreMer;
     CompraPorLote compLote;
+    AprobarCompra aprCom;
 
     /**
      * Creates new form Principal
@@ -80,8 +81,14 @@ public class Principal extends javax.swing.JFrame {
         RegistroProducto = new javax.swing.JMenuItem();
         ActualizarProducto = new javax.swing.JMenuItem();
         IngresoMercaderia = new javax.swing.JMenu();
-        UnaCompra = new javax.swing.JMenuItem();
-        PorLote = new javax.swing.JMenuItem();
+        IngresoCompra = new javax.swing.JMenuItem();
+        AprobarUnaCompra = new javax.swing.JMenuItem();
+        ProcesarCompra = new javax.swing.JMenuItem();
+        IngresoPorLote = new javax.swing.JMenu();
+        IngresoCompraLote = new javax.swing.JMenuItem();
+        AprobarCompraLote = new javax.swing.JMenuItem();
+        ProcesarCompraLote = new javax.swing.JMenuItem();
+        ComprasDiarias = new javax.swing.JMenuItem();
         Ventas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -151,25 +158,50 @@ public class Principal extends javax.swing.JFrame {
         IngresoMercaderia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto1.png"))); // NOI18N
         IngresoMercaderia.setText("Ingreso Mercaderia");
 
-        UnaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro.png"))); // NOI18N
-        UnaCompra.setText("Una Compra");
-        UnaCompra.addActionListener(new java.awt.event.ActionListener() {
+        IngresoCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro.png"))); // NOI18N
+        IngresoCompra.setText("Ingreso Compra");
+        IngresoCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UnaCompraActionPerformed(evt);
+                IngresoCompraActionPerformed(evt);
             }
         });
-        IngresoMercaderia.add(UnaCompra);
+        IngresoMercaderia.add(IngresoCompra);
 
-        PorLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro-de-la-carretilla.png"))); // NOI18N
-        PorLote.setText("Por lote");
-        PorLote.addActionListener(new java.awt.event.ActionListener() {
+        AprobarUnaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
+        AprobarUnaCompra.setText("Aprobar Compra");
+        AprobarUnaCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PorLoteActionPerformed(evt);
+                AprobarUnaCompraActionPerformed(evt);
             }
         });
-        IngresoMercaderia.add(PorLote);
+        IngresoMercaderia.add(AprobarUnaCompra);
+
+        ProcesarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugar.png"))); // NOI18N
+        ProcesarCompra.setText("Procesar Compra");
+        IngresoMercaderia.add(ProcesarCompra);
 
         Productos.add(IngresoMercaderia);
+
+        IngresoPorLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro-de-la-carretilla.png"))); // NOI18N
+        IngresoPorLote.setText("Ingreso por Lote");
+
+        IngresoCompraLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro-de-la-carretilla.png"))); // NOI18N
+        IngresoCompraLote.setText("Compra por Lote");
+        IngresoPorLote.add(IngresoCompraLote);
+
+        AprobarCompraLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
+        AprobarCompraLote.setText("Aprobar");
+        IngresoPorLote.add(AprobarCompraLote);
+
+        ProcesarCompraLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugar.png"))); // NOI18N
+        ProcesarCompraLote.setText("Procesar");
+        IngresoPorLote.add(ProcesarCompraLote);
+
+        Productos.add(IngresoPorLote);
+
+        ComprasDiarias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/anadir.png"))); // NOI18N
+        ComprasDiarias.setText("Compras Diarias");
+        Productos.add(ComprasDiarias);
 
         BarraMenu.add(Productos);
 
@@ -419,7 +451,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ActualizarProductoActionPerformed
 
-    private void UnaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnaCompraActionPerformed
+    private void IngresoCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoCompraActionPerformed
         try {
             if (cerrado(ingreMer)) {
                 ingreMer = new IngresoMercaderia();
@@ -432,22 +464,21 @@ public class Principal extends javax.swing.JFrame {
              System.err.println("Error al cargar ventana Una Compra" + e);
         }
   
-    }//GEN-LAST:event_UnaCompraActionPerformed
+    }//GEN-LAST:event_IngresoCompraActionPerformed
 
-    private void PorLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PorLoteActionPerformed
+    private void AprobarUnaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AprobarUnaCompraActionPerformed
         try {
-            if (cerrado(compLote)) {
-               compLote = new CompraPorLote();
-               jTabbedPane1.add("Compra por Lote", compLote);
-               compLote.show();
+            if (cerrado(aprCom)) {
+                aprCom = new AprobarCompra();
+                jTabbedPane1.add("Aprobar Compra", aprCom);
+                aprCom.show();
             }else{
-                 JOptionPane.showMessageDialog(this, "La Ventana Compra por Lote ya se Encuentra abierta");
+                 JOptionPane.showMessageDialog(this, "La Ventana Arpobar Compra ya se Encuentra abierta");
             }
-            
         } catch (Exception e) {
-            System.err.println("Error al cargar ventana Compra por Lote" + e);
+            System.err.println("Error al cargar ventana Una Compra" + e);
         }
-    }//GEN-LAST:event_PorLoteActionPerformed
+    }//GEN-LAST:event_AprobarUnaCompraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -488,19 +519,25 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem ActualizacionUsuario;
     private javax.swing.JMenuItem ActualizarProducto;
     private javax.swing.JMenu ActualizarUsuario;
+    private javax.swing.JMenuItem AprobarCompraLote;
+    private javax.swing.JMenuItem AprobarUnaCompra;
     private javax.swing.JMenuBar BarraMenu;
     private javax.swing.JMenuItem CambioPassword;
     private javax.swing.JMenu Clientes;
+    private javax.swing.JMenuItem ComprasDiarias;
     private javax.swing.JMenuItem IngresoClientes;
+    private javax.swing.JMenuItem IngresoCompra;
+    private javax.swing.JMenuItem IngresoCompraLote;
     private javax.swing.JMenu IngresoMercaderia;
+    private javax.swing.JMenu IngresoPorLote;
     private javax.swing.JMenu Opciones;
-    private javax.swing.JMenuItem PorLote;
+    private javax.swing.JMenuItem ProcesarCompra;
+    private javax.swing.JMenuItem ProcesarCompraLote;
     private javax.swing.JMenu Productos;
     private javax.swing.JMenu Proveedor;
     private javax.swing.JMenuItem Registro;
     private javax.swing.JMenuItem RegistroProducto;
     private javax.swing.JMenuItem RegistroUsuario;
-    private javax.swing.JMenuItem UnaCompra;
     private javax.swing.JMenu Ventas;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JMenuItem jMenuItem1;

@@ -888,6 +888,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         int contador = 0;
 
         String detalleCompra = "Compra";
+        String stado = "Ingresado";
 
         idCod = labelCodigo.getText();
         idUser = labelID.getText();
@@ -904,6 +905,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
             datos.add(idCod);
             datos.add(idUser);
             datos.add(detalleCompra);
+            datos.add(stado);
             datos.add(fechaAc);
             datos.add(cantidad);
             datos.add(totalCompra);

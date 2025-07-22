@@ -688,22 +688,24 @@ public final class OperarcionesCRUD {
     //-----------------------------------------------------------------------------------------------------------------
     // Inventario
     //-----------------------------------------------------------------------------------------------------------------
+    //Ingreso de mercaderia al inventario estado Ingresado
     public void Mercaderia(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
 
         for (Vector<String> vector : matriz) {
-            String codProd, idUser, detalle, fechIngre, cantidad, stock, total;
+            String codProd, idUser, detalle, stado, fechIngre, cantidad, stock, total;
             int saldo;
             int resultado;
 
             codProd = vector.get(0);
             idUser = vector.get(1);
             detalle = vector.get(2);
-            fechIngre = vector.get(3);
-            cantidad = vector.get(4);
-            total = vector.get(5);
+            stado = vector.get(3);
+            fechIngre = vector.get(4);
+            cantidad = vector.get(5);
+            total = vector.get(6);
 
             switch (detalle) {
                 case "Compra":
@@ -723,9 +725,9 @@ public final class OperarcionesCRUD {
                         resultado = saldo + canti;
 
                         String sql3 = "insert into inventario "
-                                + "(codproductos,idusuarios,detalle,"
+                                + "(codproductos,idusuarios,detalle, estado,"
                                 + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
-                                + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
+                                + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
                         stm.executeUpdate(sql3);
                         JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
 
@@ -789,13 +791,57 @@ public final class OperarcionesCRUD {
 
         }
     }
-    
-    
+
+    // Extraer los valores de un compra del inventario,
+    public ArrayList<Vector<String>> InventarioEstado(String estado) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        String sql = "SELECT i.codproductos, i.detalle, i.estado, i.fecha_registro, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+                + "FROM bd_systema.inventario i\n"
+                + "INNER JOIN bd_systema.proveedor pro \n"
+                + "on i.idProveedor = pro.idProveedor\n"
+                + "INNER JOIN bd_systema.usuarios u \n"
+                + "on i.idusuarios = u.idusuarios\n"
+                + "INNER JOIN bd_systema.productos p \n"
+                + "on i.codproductos = p.codproductos\n"
+                + "where i.estado = '" + estado + "'";
+
+        ResultSet rst = stm.executeQuery(sql);
+        while (rst.next()) {
+            Vector<String> vector = new Vector<>();
+            String codProd, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
+
+            codProd = rst.getString("codproductos");
+            nombreProducto = rst.getString("nombre_producto");
+            usuario = rst.getString("username");
+            nombreProveedor = rst.getString("nombres");
+            detalle = rst.getString("detalle");
+            fecharesgitro = rst.getString("fecha_registro");
+            cantidad = rst.getString("ingreso");
+            totalcompra = rst.getString("total");
+
+            vector.add(codProd);
+            vector.add(nombreProducto);
+            vector.add(usuario);
+            vector.add(nombreProveedor);
+            vector.add(detalle);
+            vector.add(fecharesgitro);
+            vector.add(cantidad);
+            vector.add(totalcompra);
+
+            matriz.add(vector);
+
+        }
+        this.cerrarConexionBD();
+        return matriz;
+    }
+
     //-----------------------------------------------------------------------------------------------------------------
     // Proveedores
     //-----------------------------------------------------------------------------------------------------------------
     //consultar si proveedor se encuentra registrado
-
     public ArrayList<Vector<String>> RucProveedor(String ruc) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();

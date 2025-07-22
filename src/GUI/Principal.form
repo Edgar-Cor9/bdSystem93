@@ -63,30 +63,80 @@
                 <Property name="text" type="java.lang.String" value="Ingreso Mercaderia"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="UnaCompra">
+                <MenuItem class="javax.swing.JMenuItem" name="IngresoCompra">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/carro.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Una Compra"/>
+                    <Property name="text" type="java.lang.String" value="Ingreso Compra"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UnaCompraActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IngresoCompraActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="PorLote">
+                <MenuItem class="javax.swing.JMenuItem" name="AprobarUnaCompra">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/aprobado.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Aprobar Compra"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AprobarUnaCompraActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="ProcesarCompra">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/jugar.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Procesar Compra"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="IngresoPorLote">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/carro-de-la-carretilla.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Ingreso por Lote"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="IngresoCompraLote">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/carro-de-la-carretilla.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Por lote"/>
+                    <Property name="text" type="java.lang.String" value="Compra por Lote"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PorLoteActionPerformed"/>
-                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="AprobarCompraLote">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/aprobado.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Aprobar"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="ProcesarCompraLote">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/images/jugar.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Procesar"/>
+                  </Properties>
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="ComprasDiarias">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/anadir.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Compras Diarias"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="Ventas">
