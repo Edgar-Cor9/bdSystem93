@@ -683,6 +683,7 @@ public final class OperarcionesCRUD {
             }
 
         }
+        this.cerrarConexionBD();
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -695,52 +696,62 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = datos;
 
         for (Vector<String> vector : matriz) {
-            String codProd, idUser, detalle, stado, fechIngre, cantidad, stock, total;
+            String codProd, idUser, idProve, orden, detalle, stado, fechIngre, cantidad, stock, total;
             int saldo;
             int resultado;
 
             codProd = vector.get(0);
             idUser = vector.get(1);
-            detalle = vector.get(2);
-            stado = vector.get(3);
-            fechIngre = vector.get(4);
-            cantidad = vector.get(5);
-            total = vector.get(6);
+            idProve = vector.get(2);
+            orden = vector.get(3);
+            detalle = vector.get(4);
+            stado = vector.get(5);
+            fechIngre = vector.get(6);
+            cantidad = vector.get(7);
+            total = vector.get(8);
 
             switch (detalle) {
                 case "Compra":
                     try {
                     //  String sql2 = "select * from inventario(select idinventario, stock from inventario where codproductos = '" + codProd + "'" + "order by idinventario desc) where rownum =1";
-//              
-                    String sql2 = "SELECT idinventario, stock FROM ("
-                            + "SELECT idinventario, stock FROM inventario "
-                            + "WHERE codproductos = '" + codProd + "' "
-                            + "ORDER BY idinventario DESC"
-                            + ") AS inv LIMIT 1";
 
-                    ResultSet rst = stm.executeQuery(sql2);
-                    if (rst.next()) {
-                        saldo = rst.getInt("stock");
-                        int canti = (Integer.parseInt(cantidad));
-                        resultado = saldo + canti;
-
-                        String sql3 = "insert into inventario "
-                                + "(codproductos,idusuarios,detalle, estado,"
-                                + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
-                                + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
-                        stm.executeUpdate(sql3);
-                        JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
-
-                    } else {
-                        stock = cantidad;
-                        String sql = "insert into inventario "
-                                + "(codproductos,idusuarios,detalle,"
-                                + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
-                                + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
-                        stm.executeUpdate(sql);
-                        JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                    String sq = "select orden from inventario where orden = '" + orden + "'";
+                    ResultSet rs = stm.executeQuery(sq);
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "!! Orden ya se encuentra registrada/ Espera de aprobación !!\n");
                         this.cerrarConexionBD();
+                    } else {
+                        String sql2 = "SELECT idinventario, stock FROM ("
+                                + "SELECT idinventario, stock FROM inventario "
+                                + "WHERE codproductos = '" + codProd + "' "
+                                + "ORDER BY idinventario DESC"
+                                + ") AS inv LIMIT 1";
+
+                        ResultSet rst = stm.executeQuery(sql2);
+                        if (rst.next()) {
+                            saldo = rst.getInt("stock");
+                            int canti = (Integer.parseInt(cantidad));
+                            resultado = saldo + canti;
+
+                            String sql3 = "insert into inventario "
+                                    + "(codproductos,idusuarios,idproveedor,orden,detalle, estado,"
+                                    + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                    + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
+                            stm.executeUpdate(sql3);
+                            JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+
+                        } else {
+                            stock = cantidad;
+                            String sql = "insert into inventario "
+                                    + "(codproductos,idusuarios,detalle,"
+                                    + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
+                                    + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
+                            stm.executeUpdate(sql);
+                            JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                            this.cerrarConexionBD();
+                        }
                     }
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "!! Error al registrar compra/Inventario !!\n" + e);
                     System.out.println("Error al registrar compra/Inventario !!" + e);
@@ -798,7 +809,7 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
 
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "SELECT i.codproductos, i.detalle, i.estado, i.fecha_registro, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+        String sql = "SELECT i.codproductos,i.orden, i.detalle, i.estado, i.fecha_registro, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
                 + "FROM bd_systema.inventario i\n"
                 + "INNER JOIN bd_systema.proveedor pro \n"
                 + "on i.idProveedor = pro.idProveedor\n"
@@ -811,9 +822,10 @@ public final class OperarcionesCRUD {
         ResultSet rst = stm.executeQuery(sql);
         while (rst.next()) {
             Vector<String> vector = new Vector<>();
-            String codProd, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
+            String codProd, orden, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
 
             codProd = rst.getString("codproductos");
+            orden = rst.getString("orden");
             nombreProducto = rst.getString("nombre_producto");
             usuario = rst.getString("username");
             nombreProveedor = rst.getString("nombres");
@@ -823,6 +835,7 @@ public final class OperarcionesCRUD {
             totalcompra = rst.getString("total");
 
             vector.add(codProd);
+            vector.add(orden);
             vector.add(nombreProducto);
             vector.add(usuario);
             vector.add(nombreProveedor);
@@ -836,6 +849,39 @@ public final class OperarcionesCRUD {
         }
         this.cerrarConexionBD();
         return matriz;
+    }
+
+    // Eliminar una Compra al Inventario
+    public void ActualizarEstadoCompra(String orden, String stado) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "select * from inventario where orden = '" + orden + "'";
+
+        ResultSet rst = stm.executeQuery(sql);
+        if (rst.next()) {
+            switch (stado) {
+                case "Anulado":
+                    String sql2 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                    stm.executeUpdate(sql2);
+                    JOptionPane.showMessageDialog(null, "!! Compra Anulada con Exito !!\n");
+                    break;
+
+                case "Aprobado":
+                    String sql3 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                    stm.executeUpdate(sql3);
+                    JOptionPane.showMessageDialog(null, "!! Compra Aprobada con Exito !!\n");
+                    break;
+                case "Procesado":
+                    String sql4 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                    stm.executeUpdate(sql4);
+                    JOptionPane.showMessageDialog(null, "!! Compra Procesada con Exito !!\n");
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
+        this.cerrarConexionBD();
     }
 
     //-----------------------------------------------------------------------------------------------------------------

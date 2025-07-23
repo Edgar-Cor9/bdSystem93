@@ -19,19 +19,19 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author USUARIO
  */
-public class AprobarCompra extends javax.swing.JInternalFrame {
+public class ProcesarCompra extends javax.swing.JInternalFrame {
 
     String usuario;
 
     /**
      * Creates new form AprobarCompra
      */
-    public AprobarCompra() {
+    public ProcesarCompra() {
         initComponents();
-        labelTitulo.setText("Mercadería>Ingreso Mercaderia>AprobarCompra");
+        labelTitulo.setText("Mercadería>Ingreso Mercaderia>ProcesarCompra");
         usuario = Login.user;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        String estado = "Ingresado";
+        String estado = "Aprobado";
         jPanel1.setVisible(false);
 
         try {
@@ -96,7 +96,6 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
         JBAprobar = new javax.swing.JButton();
-        JBAnular = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -186,18 +185,6 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         });
         jToolBar2.add(JBAprobar);
 
-        JBAnular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/borrar.png"))); // NOI18N
-        JBAnular.setToolTipText("Anular");
-        JBAnular.setFocusable(false);
-        JBAnular.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        JBAnular.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        JBAnular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBAnularActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(JBAnular);
-
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
         jButton5.setToolTipText("Salir");
         jButton5.setFocusable(false);
@@ -210,7 +197,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         });
         jToolBar2.add(jButton5);
 
-        jLabel1.setText("Realizar Aprobacion o Anulación de Compra");
+        jLabel1.setText("Proceso de Compra");
 
         jLabel2.setText("Nombre Producto:");
 
@@ -313,29 +300,10 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         jPanel1.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void JBAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAnularActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Anular Compra", "Confirmación", JOptionPane.YES_NO_OPTION);
-        if (opcion == JOptionPane.YES_OPTION) {
-            String orden;
-            orden = txtOrden.getText();
-            String stado = "Anulado";
-            try {
-                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                op.ActualizarEstadoCompra(orden, stado);
-                JBAprobar.setVisible(false);
-                JBAnular.setVisible(false);
-            } catch (SQLException err) {
-                err.printStackTrace();
-            }
-        } else if (opcion == JOptionPane.NO_OPTION) {
-
-        }
-    }//GEN-LAST:event_JBAnularActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         try {
-            String stado = "Ingresado";
+            String stado = "Aprobado";
             jPanel1.setVisible(false);
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
             ArrayList<Vector<String>> matriz = op.InventarioEstado(stado);
@@ -354,17 +322,16 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void JBAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAprobarActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Aprobar Compra", "Confirmación", JOptionPane.YES_NO_OPTION);
+        int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Procesar Compra", "Confirmación", JOptionPane.YES_NO_OPTION);
 
         if (opcion == JOptionPane.YES_OPTION) {
             String orden;
             orden = txtOrden.getText();
-            String stado = "Aprobado";
+            String stado = "Procesado";
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 op.ActualizarEstadoCompra(orden, stado);
-                JBAprobar.setVisible(false);
-                JBAnular.setVisible(false);
+                JBAprobar.setVisible(false);              
             } catch (SQLException err) {
                 err.printStackTrace();
             }
@@ -375,7 +342,6 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBAnular;
     private javax.swing.JButton JBAprobar;
     private javax.swing.JTable TablaAprobar;
     private javax.swing.JButton jButton1;

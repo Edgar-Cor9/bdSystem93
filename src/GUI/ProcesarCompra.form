@@ -261,20 +261,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBAprobarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="JBAnular">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/borrar.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Anular"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBAnularActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="jButton5">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -293,7 +279,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Realizar Aprobacion o Anulaci&#xf3;n de Compra"/>
+            <Property name="text" type="java.lang.String" value="Proceso de Compra"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
