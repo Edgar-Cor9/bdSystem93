@@ -41,7 +41,9 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         labelUSuario.setText(usuario);
         OperarcionesCRUD ops = OperarcionesCRUD.getInstance();
         String coduser = ops.codigoUser(usuario);
-        labelID.setText(coduser);
+//        labelID.setText(coduser);
+        IdUserReg.setText(coduser);
+        UserRegistro.setText(usuario);
         jPanel6.setVisible(false);
 
         DefaultTableModel modelos = (DefaultTableModel) TablaProductos.getModel();
@@ -61,6 +63,10 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
 
                         for (Vector<String> vector : matriz) {
                             String codiPro, nombreProd, detaProd, tipoProd, fechRegistro, fechAc, prec, iva, rucPro, nombProve, apellProve, idProve, idUser, username;
+
+                            IdUserReg.setText(coduser);
+                            IdUserReg.setVisible(false);
+                            UserRegistro.setText(usuario);
 
                             codiPro = vector.get(0);
                             nombreProd = vector.get(1);
@@ -192,6 +198,8 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         jToolBar2 = new javax.swing.JToolBar();
         RegistroCompra = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        IdUserReg = new javax.swing.JLabel();
+        UserRegistro = new javax.swing.JLabel();
 
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar-producto.png"))); // NOI18N
 
@@ -586,7 +594,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtnombre, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                             .addComponent(txtOrden))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 570, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -599,8 +607,8 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                             .addComponent(labelFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(labelID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
                                 .addComponent(labelUSuario, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
@@ -689,6 +697,8 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
             }
         });
         jToolBar2.add(jButton8);
+        jToolBar2.add(IdUserReg);
+        jToolBar2.add(UserRegistro);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -900,7 +910,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String fechaAc = format.format(fecha);
 
-        String idCod, idUser,idProve, cantidad, totalCompra, orden;
+        String idCod, idUser, idProve, cantidad, totalCompra, orden, observacion;
         int contador = 0;
 
         orden = txtOrden.getText();
@@ -908,10 +918,10 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         String stado = "Ingresado";
 
         idCod = labelCodigo.getText();
-        idUser = labelID.getText();
+        idUser = IdUserReg.getText();
         idProve = LabelIDRuc.getText();
         cantidad = txtcantidad.getText();
-        
+        observacion = txtDetalle.getText();
 
         totalCompra = txtotal.getText();
 
@@ -921,7 +931,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         if (orden.equals("")) {
             contador++;
         }
-        
+
         if (contador == 0) {
             Vector<String> datos = new Vector<>();
 
@@ -981,11 +991,13 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ConsulatRucProveedor;
     private javax.swing.JButton ConsultarTipo;
+    private javax.swing.JLabel IdUserReg;
     private javax.swing.JLabel LabelIDRuc;
     private javax.swing.JLabel LabelTitulo;
     private javax.swing.JButton Limpiar;
     private javax.swing.JButton RegistroCompra;
     private javax.swing.JTable TablaProductos;
+    private javax.swing.JLabel UserRegistro;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;

@@ -8,6 +8,8 @@ import Logica_Operaciones_BD.OperarcionesCRUD;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -33,6 +35,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         String estado = "Ingresado";
         jPanel1.setVisible(false);
+        LocalDate fecha = LocalDate.now();
+        txtFecha.setText(fecha.format(DateTimeFormatter.ISO_DATE));
 
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
@@ -109,6 +113,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         txtNombreProveedor = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtOrden = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JLabel();
 
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
 
@@ -222,6 +228,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Orden:");
 
+        jLabel7.setText("Fecha Aprobación:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -237,14 +245,16 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
                         .addGap(26, 26, 26)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNombreProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTotalCompra, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                            .addComponent(txtOrden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtOrden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(698, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -254,11 +264,15 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
                     .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,15 +280,15 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(txtNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtTotalCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(139, Short.MAX_VALUE))
+                    .addComponent(txtTotalCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -315,13 +329,15 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
     private void JBAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAnularActionPerformed
         int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Anular Compra", "Confirmación", JOptionPane.YES_NO_OPTION);
+      
         if (opcion == JOptionPane.YES_OPTION) {
-            String orden;
+            String orden, fech;
+            fech = txtFecha.getText();
             orden = txtOrden.getText();
             String stado = "Anulado";
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                op.ActualizarEstadoCompra(orden, stado);
+                op.ActualizarEstadoCompra(orden, stado, fech);
                 JBAprobar.setVisible(false);
                 JBAnular.setVisible(false);
             } catch (SQLException err) {
@@ -355,14 +371,16 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
     private void JBAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAprobarActionPerformed
         int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Aprobar Compra", "Confirmación", JOptionPane.YES_NO_OPTION);
-
+        
         if (opcion == JOptionPane.YES_OPTION) {
-            String orden;
+            String orden, fech;
+
+            fech = txtFecha.getText();
             orden = txtOrden.getText();
             String stado = "Aprobado";
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                op.ActualizarEstadoCompra(orden, stado);
+                op.ActualizarEstadoCompra(orden, stado, fech);
                 JBAprobar.setVisible(false);
                 JBAnular.setVisible(false);
             } catch (SQLException err) {
@@ -387,12 +405,14 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel txtCantidad;
+    private javax.swing.JLabel txtFecha;
     private javax.swing.JLabel txtNombreProducto;
     private javax.swing.JLabel txtNombreProveedor;
     private javax.swing.JLabel txtOrden;

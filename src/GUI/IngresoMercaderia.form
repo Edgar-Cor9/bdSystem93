@@ -764,7 +764,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="570" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel5" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
                               <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -778,8 +778,8 @@
                                       <Component id="labelFecha1" alignment="0" min="-2" pref="106" max="-2" attributes="0"/>
                                       <Component id="labelFecha" min="-2" pref="106" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="labelID" min="-2" pref="43" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="labelID" min="-2" pref="37" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Component id="labelUSuario" min="-2" pref="106" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1029,6 +1029,10 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="IdUserReg">
+                </Component>
+                <Component class="javax.swing.JLabel" name="UserRegistro">
                 </Component>
               </SubComponents>
             </Container>

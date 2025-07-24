@@ -735,17 +735,17 @@ public final class OperarcionesCRUD {
 
                             String sql3 = "insert into inventario "
                                     + "(codproductos,idusuarios,idproveedor,orden,detalle, estado,"
-                                    + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                    + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
+                                    + " fecha_registro,fecha_aprobacion,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                    + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
                             stm.executeUpdate(sql3);
                             JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
 
                         } else {
                             stock = cantidad;
                             String sql = "insert into inventario "
-                                    + "(codproductos,idusuarios,detalle,"
-                                    + " fecha_registro,ingreso,stock,total) values ('" + codProd + "','" + idUser + "',"
-                                    + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
+                                    + "(codproductos,idusuarios,idproveedor,orden,detalle,estado,"
+                                    + " fecha_registro,fecha_aprobacion,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                    + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
                             stm.executeUpdate(sql);
                             JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
                             this.cerrarConexionBD();
@@ -803,7 +803,7 @@ public final class OperarcionesCRUD {
         }
     }
 
-    // Extraer los valores de un compra del inventario,
+    // Extraer los valores de un compra del inventario por Estado
     public ArrayList<Vector<String>> InventarioEstado(String estado) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
@@ -851,8 +851,56 @@ public final class OperarcionesCRUD {
         return matriz;
     }
 
-    // Eliminar una Compra al Inventario
-    public void ActualizarEstadoCompra(String orden, String stado) throws SQLException {
+    // Extraer los valores de un compra del inventario por fecha
+    public ArrayList<Vector<String>> InventarioFecha(String fecha, String estado) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        String sql = "SELECT i.codproductos,i.orden, i.detalle, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+                + "FROM bd_systema.inventario i\n"
+                + "INNER JOIN bd_systema.proveedor pro \n"
+                + "on i.idProveedor = pro.idProveedor\n"
+                + "INNER JOIN bd_systema.usuarios u \n"
+                + "on i.idusuarios = u.idusuarios\n"
+                + "INNER JOIN bd_systema.productos p \n"
+                + "on i.codproductos = p.codproductos\n"
+                + "where i.fecha_aprobacion = '" + fecha + "' and i.estado = '" + estado + "'";
+
+        ResultSet rst = stm.executeQuery(sql);
+        while (rst.next()) {
+            Vector<String> vector = new Vector<>();
+            String codProd, orden, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
+
+            codProd = rst.getString("codproductos");
+            orden = rst.getString("orden");
+            nombreProducto = rst.getString("nombre_producto");
+            usuario = rst.getString("username");
+            nombreProveedor = rst.getString("nombres");
+            detalle = rst.getString("detalle");
+            fecharesgitro = rst.getString("fecha_registro");
+            cantidad = rst.getString("ingreso");
+            totalcompra = rst.getString("total");
+
+            vector.add(codProd);
+            vector.add(orden);
+            vector.add(nombreProducto);
+            vector.add(usuario);
+            vector.add(nombreProveedor);
+            vector.add(detalle);
+            vector.add(fecharesgitro);
+            vector.add(cantidad);
+            vector.add(totalcompra);
+
+            matriz.add(vector);
+
+        }
+        this.cerrarConexionBD();
+        return matriz;
+    }
+
+    // Actualizar estado de una Compra al Inventario
+    public void ActualizarEstadoCompra(String orden, String stado, String fecha) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
 
@@ -873,7 +921,7 @@ public final class OperarcionesCRUD {
                     JOptionPane.showMessageDialog(null, "!! Compra Aprobada con Exito !!\n");
                     break;
                 case "Procesado":
-                    String sql4 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                    String sql4 = "update inventario set estado ='" + stado + "',fecha_aprobacion ='" + fecha + "' where orden = '" + orden + "'";
                     stm.executeUpdate(sql4);
                     JOptionPane.showMessageDialog(null, "!! Compra Procesada con Exito !!\n");
                     break;
@@ -1024,6 +1072,7 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
     }
 
+    //----------------------------------------------------------------------------------------------------------------------
     //transacciones
     public void realizarTransaccion(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
@@ -1127,8 +1176,8 @@ public final class OperarcionesCRUD {
         }
 
     }
-    //aqui consultamos los datos a la base de datos si el numero de cedula le pertenece a un cliente
 
+    //aqui consultamos los datos a la base de datos si el numero de cedula le pertenece a un cliente
     public ArrayList<Vector<String>> OperacionesTransacciones(String p_cedula) throws SQLException {
         this.iniciarConexionBD();
 
