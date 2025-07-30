@@ -102,10 +102,11 @@
         <Component class="javax.swing.JTable" name="TablaAprobar">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="9" rowCount="4">
+              <Table columnCount="10" rowCount="4">
                 <Column editable="false" title="Codproductos" type="java.lang.Object"/>
                 <Column editable="false" title="Orden Compra" type="java.lang.Object"/>
                 <Column editable="false" title="Nombre Producto" type="java.lang.Object"/>
+                <Column editable="false" title="Obsevaci&#xf3;n" type="java.lang.Object"/>
                 <Column editable="false" title="Usuario" type="java.lang.Object"/>
                 <Column editable="false" title="Proveedor" type="java.lang.Object"/>
                 <Column editable="false" title="Detalle" type="java.lang.Object"/>
@@ -116,6 +117,11 @@
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
@@ -188,19 +194,21 @@
                               <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtNombreProducto" max="32767" attributes="0"/>
-                              <Component id="txtNombreProveedor" alignment="0" pref="210" max="32767" attributes="0"/>
-                              <Component id="txtCantidad" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtTotalCompra" alignment="0" pref="210" max="32767" attributes="0"/>
+                              <Component id="txtNombreProveedor" alignment="0" pref="426" max="32767" attributes="0"/>
+                              <Component id="txtCantidad" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
                               <Component id="txtOrden" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtFecha" alignment="0" min="-2" pref="194" max="-2" attributes="0"/>
+                              <Component id="txtTotalCompra" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="txtObbservacion" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="698" max="32767" attributes="0"/>
+                  <EmptySpace pref="482" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -232,16 +240,21 @@
                       <Component id="txtNombreProveedor" min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtObbservacion" min="-2" pref="31" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtCantidad" min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="txtCantidad" alignment="0" min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txtTotalCompra" min="-2" pref="16" max="-2" attributes="0"/>
+                  <EmptySpace pref="9" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTotalCompra" min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="121" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -344,6 +357,13 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="txtFecha">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel8">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Observaci&#xf3;n:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="txtObbservacion">
         </Component>
       </SubComponents>
     </Container>

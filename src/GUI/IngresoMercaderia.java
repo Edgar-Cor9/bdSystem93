@@ -940,6 +940,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
             datos.add(idProve);
             datos.add(orden);
             datos.add(detalleCompra);
+            datos.add(observacion);
             datos.add(stado);
             datos.add(fechaAc);
             datos.add(cantidad);

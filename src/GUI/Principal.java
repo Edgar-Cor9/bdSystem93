@@ -33,6 +33,7 @@ public class Principal extends javax.swing.JFrame {
     AprobarCompra aprCom;
     ProcesarCompra procCom;
     ComprasDiarias compDia;
+    IngresarAnulacionCompra ingreAnuCom;
 
     /**
      * Creates new form Principal
@@ -588,7 +589,17 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_ProcesarCompraActionPerformed
 
     private void IngresoAnulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoAnulacionActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (cerrado(ingreAnuCom)) {
+                ingreAnuCom = new IngresarAnulacionCompra();
+                jTabbedPane1.add("Ingreso Anulación Compra", ingreAnuCom);
+                ingreAnuCom.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Ingreso Anulación Compra ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Ingreso Anulación Compra" + e);
+        }
     }//GEN-LAST:event_IngresoAnulacionActionPerformed
 
     private void RegistroProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroProducto1ActionPerformed

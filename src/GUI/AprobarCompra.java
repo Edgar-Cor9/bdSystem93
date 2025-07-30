@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  * @author USUARIO
  */
 public class AprobarCompra extends javax.swing.JInternalFrame {
-
+    
     String usuario;
 
     /**
@@ -37,49 +37,52 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         jPanel1.setVisible(false);
         LocalDate fecha = LocalDate.now();
         txtFecha.setText(fecha.format(DateTimeFormatter.ISO_DATE));
-
+        
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
             ArrayList<Vector<String>> matriz = op.InventarioEstado(estado);
-
+            
             DefaultTableModel modelo = (DefaultTableModel) TablaAprobar.getModel();
             modelo.setRowCount(0);
-
+            
             for (Vector<String> vector : matriz) {
                 modelo.addRow(vector);
-
+                
                 TablaAprobar.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-
+                        
                         int fila_point = TablaAprobar.rowAtPoint(e.getPoint());
                         int columna_point = 0;
-
+                        
                         if (fila_point > -1) {
                             jPanel1.setVisible(true);
-                            String nombreProd, orden, nombreProveee, cantidad, totaCompra;
-
-                            nombreProd = vector.get(2);
+                            String nombreProd, orden, nombreProveee, cantidad, totaCompra, observacion;
+                            
                             orden = vector.get(1);
-                            nombreProveee = vector.get(4);
-                            cantidad = vector.get(7);
-                            totaCompra = vector.get(8);
-
+                            nombreProd = vector.get(2);
+                            observacion = vector.get(3);
+                            
+                            nombreProveee = vector.get(5);
+                            cantidad = vector.get(8);
+                            totaCompra = vector.get(9);
+                            
                             txtNombreProducto.setText(nombreProd);
                             txtOrden.setText(orden);
                             txtNombreProveedor.setText(nombreProveee);
                             txtCantidad.setText(cantidad);
                             txtTotalCompra.setText(totaCompra);
-
+                            txtObbservacion.setText(observacion);
+                            
                         }
-
+                        
                     }
                 });
             }
         } catch (SQLException err) {
             err.printStackTrace();
         }
-
+        
     }
 
     /**
@@ -115,6 +118,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         txtOrden = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtObbservacion = new javax.swing.JLabel();
 
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
 
@@ -147,17 +152,17 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
         TablaAprobar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codproductos", "Orden Compra", "Nombre Producto", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Cantidad", "Total"
+                "Codproductos", "Orden Compra", "Nombre Producto", "Obsevación", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Cantidad", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -176,6 +181,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
             TablaAprobar.getColumnModel().getColumn(6).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(7).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(8).setResizable(false);
+            TablaAprobar.getColumnModel().getColumn(9).setResizable(false);
         }
 
         jToolBar2.setRollover(true);
@@ -230,6 +236,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Fecha Aprobación:");
 
+        jLabel8.setText("Observación:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -246,16 +254,18 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
                         .addGap(26, 26, 26)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNombreProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTotalCompra, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(txtNombreProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtOrden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(698, Short.MAX_VALUE))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTotalCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtObbservacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(482, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,14 +291,18 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(txtObbservacion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtTotalCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtTotalCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(87, 87, 87))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -329,7 +343,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
     private void JBAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAnularActionPerformed
         int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Anular Compra", "Confirmación", JOptionPane.YES_NO_OPTION);
-      
+        
         if (opcion == JOptionPane.YES_OPTION) {
             String orden, fech;
             fech = txtFecha.getText();
@@ -344,26 +358,26 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                 err.printStackTrace();
             }
         } else if (opcion == JOptionPane.NO_OPTION) {
-
+            
         }
     }//GEN-LAST:event_JBAnularActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+        
         try {
             String stado = "Ingresado";
             jPanel1.setVisible(false);
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
             ArrayList<Vector<String>> matriz = op.InventarioEstado(stado);
-
+            
             DefaultTableModel modelo = (DefaultTableModel) TablaAprobar.getModel();
             modelo.setRowCount(0);
-
+            
             for (Vector<String> vector : matriz) {
                 modelo.addRow(vector);
-
+                
             }
-
+            
         } catch (SQLException err) {
             err.printStackTrace();
         }
@@ -374,7 +388,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         
         if (opcion == JOptionPane.YES_OPTION) {
             String orden, fech;
-
+            
             fech = txtFecha.getText();
             orden = txtOrden.getText();
             String stado = "Aprobado";
@@ -387,7 +401,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                 err.printStackTrace();
             }
         } else if (opcion == JOptionPane.NO_OPTION) {
-
+            
         }
     }//GEN-LAST:event_JBAprobarActionPerformed
 
@@ -406,6 +420,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
@@ -415,6 +430,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtFecha;
     private javax.swing.JLabel txtNombreProducto;
     private javax.swing.JLabel txtNombreProveedor;
+    private javax.swing.JLabel txtObbservacion;
     private javax.swing.JLabel txtOrden;
     private javax.swing.JLabel txtTotalCompra;
     // End of variables declaration//GEN-END:variables

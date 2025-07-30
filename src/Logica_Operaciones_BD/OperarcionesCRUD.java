@@ -696,7 +696,7 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = datos;
 
         for (Vector<String> vector : matriz) {
-            String codProd, idUser, idProve, orden, detalle, stado, fechIngre, cantidad, stock, total;
+            String codProd, idUser, idProve, orden, detalle, stado, fechIngre, observacion, cantidad, stock, total;
             int saldo;
             int resultado;
 
@@ -705,10 +705,11 @@ public final class OperarcionesCRUD {
             idProve = vector.get(2);
             orden = vector.get(3);
             detalle = vector.get(4);
-            stado = vector.get(5);
-            fechIngre = vector.get(6);
-            cantidad = vector.get(7);
-            total = vector.get(8);
+            observacion = vector.get(5);
+            stado = vector.get(6);
+            fechIngre = vector.get(7);
+            cantidad = vector.get(8);
+            total = vector.get(9);
 
             switch (detalle) {
                 case "Compra":
@@ -734,18 +735,18 @@ public final class OperarcionesCRUD {
                             resultado = saldo + canti;
 
                             String sql3 = "insert into inventario "
-                                    + "(codproductos,idusuarios,idproveedor,orden,detalle, estado,"
+                                    + "(codproductos,idusuarios,idproveedor,orden,detalle, observacion, estado,"
                                     + " fecha_registro,fecha_aprobacion,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                    + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
+                                    + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
                             stm.executeUpdate(sql3);
                             JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
 
                         } else {
                             stock = cantidad;
                             String sql = "insert into inventario "
-                                    + "(codproductos,idusuarios,idproveedor,orden,detalle,estado,"
+                                    + "(codproductos,idusuarios,idproveedor,orden,detalle,observacion, estado,"
                                     + " fecha_registro,fecha_aprobacion,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                    + "'" + detalle + "', '" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
+                                    + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
                             stm.executeUpdate(sql);
                             JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
                             this.cerrarConexionBD();
@@ -809,7 +810,7 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
 
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "SELECT i.codproductos,i.orden, i.detalle, i.estado, i.fecha_registro, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+        String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
                 + "FROM bd_systema.inventario i\n"
                 + "INNER JOIN bd_systema.proveedor pro \n"
                 + "on i.idProveedor = pro.idProveedor\n"
@@ -822,11 +823,12 @@ public final class OperarcionesCRUD {
         ResultSet rst = stm.executeQuery(sql);
         while (rst.next()) {
             Vector<String> vector = new Vector<>();
-            String codProd, orden, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
+            String codProd, orden, detalle, stado, fecharesgitro, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto;
 
             codProd = rst.getString("codproductos");
             orden = rst.getString("orden");
             nombreProducto = rst.getString("nombre_producto");
+            observacion = rst.getString("observacion");
             usuario = rst.getString("username");
             nombreProveedor = rst.getString("nombres");
             detalle = rst.getString("detalle");
@@ -837,6 +839,7 @@ public final class OperarcionesCRUD {
             vector.add(codProd);
             vector.add(orden);
             vector.add(nombreProducto);
+            vector.add(observacion);
             vector.add(usuario);
             vector.add(nombreProveedor);
             vector.add(detalle);
@@ -914,7 +917,6 @@ public final class OperarcionesCRUD {
                     stm.executeUpdate(sql2);
                     JOptionPane.showMessageDialog(null, "!! Compra Anulada con Exito !!\n");
                     break;
-
                 case "Aprobado":
                     String sql3 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
                     stm.executeUpdate(sql3);
@@ -925,11 +927,67 @@ public final class OperarcionesCRUD {
                     stm.executeUpdate(sql4);
                     JOptionPane.showMessageDialog(null, "!! Compra Procesada con Exito !!\n");
                     break;
+                case "IngresoAnular":
+                    String sql5 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                    stm.executeUpdate(sql5);
+                    JOptionPane.showMessageDialog(null, "!! Compra En Espera de Aprobación para Anulación con Exito !!\n");
+                    break;
                 default:
                     throw new AssertionError();
             }
         }
         this.cerrarConexionBD();
+    }
+
+    //busqueda en el inventario por Numero de Orden
+    public ArrayList<Vector<String>> InventarioPorOrden(String orden, String fecha, String stado) throws SQLException {
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "SELECT i.codproductos, i.orden, i.observacion, i.estado, i.fecha_aprobacion, i.ingreso, i.total, u.username,  pro.nombres, p.nombre_producto\n"
+                + "FROM bd_systema.inventario i\n"
+                + "INNER JOIN bd_systema.usuarios u \n"
+                + "on i.idusuarios = u.idusuarios\n"
+                + "INNER JOIN bd_systema.proveedor pro \n"
+                + "on i.idproveedor = pro.idProveedor\n"
+                + "INNER JOIN bd_systema.productos p \n"
+                + "on i.codproductos = p.codproductos\n"
+                + "where i.estado = '" + stado + "' and i.fecha_aprobacion = '" + fecha + "' and i.orden = '" + orden + "'";
+
+        ResultSet rst = stm.executeQuery(sql);
+
+        if (rst.next()) {
+            Vector<String> datos = new Vector<>();
+
+            String ordenCompr, nomProdcuto, observacion, fechaComp, cantidaCompra, valor, usuario, nombrProvee;
+
+            ordenCompr = rst.getString("orden");
+            nomProdcuto = rst.getString("nombre_producto");
+            observacion = rst.getString("observacion");
+            fechaComp = rst.getString("fecha_aprobacion");
+            cantidaCompra = rst.getString("ingreso");
+            valor = rst.getString("total");
+            usuario = rst.getString("username");
+            nombrProvee = rst.getString("nombres");
+
+            datos.add(ordenCompr);
+            datos.add(nomProdcuto);
+            datos.add(observacion);
+            datos.add(fechaComp);
+            datos.add(cantidaCompra);
+            datos.add(valor);
+            datos.add(usuario);
+            datos.add(nombrProvee);
+
+            matriz.add(datos);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "!! Orden no se encuentra Registrado !!\n");
+        }
+        this.cerrarConexionBD();
+        return matriz;
     }
 
     //-----------------------------------------------------------------------------------------------------------------
