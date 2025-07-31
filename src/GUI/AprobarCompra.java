@@ -64,8 +64,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                             observacion = vector.get(3);
                             
                             nombreProveee = vector.get(5);
-                            cantidad = vector.get(8);
-                            totaCompra = vector.get(9);
+                            cantidad = vector.get(9);
+                            totaCompra = vector.get(10);
                             
                             txtNombreProducto.setText(nombreProd);
                             txtOrden.setText(orden);
@@ -152,17 +152,17 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
 
         TablaAprobar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codproductos", "Orden Compra", "Nombre Producto", "Obsevación", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Cantidad", "Total"
+                "Codproductos", "Orden Compra", "Nombre Producto", "Obsevación", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Fecha Aprobacion", "Cantidad", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -182,6 +182,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
             TablaAprobar.getColumnModel().getColumn(7).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(8).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(9).setResizable(false);
+            TablaAprobar.getColumnModel().getColumn(10).setResizable(false);
         }
 
         jToolBar2.setRollover(true);

@@ -63,8 +63,8 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
                             nombreProd = vector.get(2);
                             orden = vector.get(1);
                             nombreProveee = vector.get(4);
-                            cantidad = vector.get(7);
-                            totaCompra = vector.get(8);
+                            cantidad = vector.get(9);
+                            totaCompra = vector.get(10);
 
                             txtNombreProducto.setText(nombreProd);
                             txtOrden.setText(orden);
@@ -147,17 +147,17 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
 
         TablaAprobar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codproductos", "Orden Compra", "Nombre Producto", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Cantidad", "Total"
+                "Codproductos", "Orden Compra", "Nombre Producto", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Fecha Aprobacion", "Cantidad", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -176,6 +176,7 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
             TablaAprobar.getColumnModel().getColumn(6).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(7).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(8).setResizable(false);
+            TablaAprobar.getColumnModel().getColumn(9).setResizable(false);
         }
 
         jToolBar2.setRollover(true);

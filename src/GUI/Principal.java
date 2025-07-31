@@ -34,6 +34,8 @@ public class Principal extends javax.swing.JFrame {
     ProcesarCompra procCom;
     ComprasDiarias compDia;
     IngresarAnulacionCompra ingreAnuCom;
+    AprobacionAnulacionCompra1 aproAnulCom;
+    ProcesarAnulacionCompra proAnulCom;
 
     /**
      * Creates new form Principal
@@ -252,10 +254,20 @@ public class Principal extends javax.swing.JFrame {
 
         AprobarAnulacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
         AprobarAnulacion.setText("Aprobar");
+        AprobarAnulacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AprobarAnulacionActionPerformed(evt);
+            }
+        });
         AnulacioCompra.add(AprobarAnulacion);
 
         ProcesarAnulacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugar.png"))); // NOI18N
         ProcesarAnulacion.setText("Procesar");
+        ProcesarAnulacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProcesarAnulacionActionPerformed(evt);
+            }
+        });
         AnulacioCompra.add(ProcesarAnulacion);
 
         Procesos.add(AnulacioCompra);
@@ -639,6 +651,34 @@ public class Principal extends javax.swing.JFrame {
             System.err.println("Error al cargar ventana ompras Diarias" + e);
         }
     }//GEN-LAST:event_ComprasDiariasActionPerformed
+
+    private void AprobarAnulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AprobarAnulacionActionPerformed
+        try {
+            if (cerrado(aproAnulCom)) {
+                aproAnulCom = new AprobacionAnulacionCompra1();
+                jTabbedPane1.add("Aprobacion Anulacion Compra", aproAnulCom);
+                aproAnulCom.show();
+            }else{
+                JOptionPane.showMessageDialog(this, "La Ventana Aprobacion Anulacion Compra ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Aprobacion Anulacion Compras" + e);
+        }
+    }//GEN-LAST:event_AprobarAnulacionActionPerformed
+
+    private void ProcesarAnulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcesarAnulacionActionPerformed
+        try {
+            if (cerrado(proAnulCom)) {
+                proAnulCom = new ProcesarAnulacionCompra();
+                jTabbedPane1.add("Procesar Anulacion Compra" ,proAnulCom);
+                proAnulCom.show();
+            }else{
+                JOptionPane.showMessageDialog(this, "La Ventana Procesar Anulacion Compra ya se Encuentra abierta");                
+            }
+        } catch (Exception e) {
+             System.err.println("Error al cargar ventana Procesar Anulacion Compras" + e);
+        }
+    }//GEN-LAST:event_ProcesarAnulacionActionPerformed
 
     /**
      * @param args the command line arguments

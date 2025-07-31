@@ -21,19 +21,57 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author USUARIO
  */
-public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
+public class ProcesarAnulacionCompra extends javax.swing.JInternalFrame {
 
     String usuario;
 
     /**
      * Creates new form IngresarAnulacionCompra
      */
-    public IngresarAnulacionCompra() {
+    public ProcesarAnulacionCompra() {
         initComponents();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        LabelTitulo.setText("Mercadería>Procesos>AnulaciónCompra>Ingreso");
+        LabelTitulo.setText("Mercadería>Procesos>AnulaciónCompra>Procesar Anulación");
         usuario = Login.user;
         panel.setVisible(false);
+
+        String stado = "AprobadoAnular";
+        try {
+            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+            ArrayList<Vector<String>> matriz = op.InventarioEstado(stado);
+
+            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+            modelo.setRowCount(0);
+
+            for (Vector<String> vector : matriz) {
+                modelo.addRow(vector);
+
+                tabla.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        int fila_point = tabla.rowAtPoint(e.getPoint());
+                        int columna_point = 0;
+
+                        panel.setVisible(true);
+
+                        String orden, nombrePro, cantidad;
+
+                        orden = vector.get(1);
+                        nombrePro = vector.get(2);
+                        cantidad = vector.get(10);
+
+                        labelOrden.setText(orden);
+                        labelNombreProducto.setText(nombrePro);
+                        labelCAntidad.setText(cantidad);
+                    }
+
+                });
+
+            }
+
+        } catch (SQLException err) {
+            err.printStackTrace();
+        }
 
     }
 
@@ -48,14 +86,8 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
-        LabelTitulo = new javax.swing.JLabel();
-        txtOrden = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        txtSeleccion = new javax.swing.JComboBox<>();
+        LabelTitulo = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
         jButton3 = new javax.swing.JButton();
@@ -65,7 +97,9 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
         labelNombreProducto = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         labelCAntidad = new javax.swing.JLabel();
-        Guardar = new javax.swing.JButton();
+        botonAprobar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
 
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/anadir.png"))); // NOI18N
 
@@ -82,53 +116,19 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(jButton2);
-        jToolBar1.add(LabelTitulo);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/consulta.png"))); // NOI18N
-        jButton1.setText("Buscar");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-flecha.png"))); // NOI18N
+        jButton1.setToolTipText("ActualizarTabla");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("#Orden:");
-
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Orden", "Nombre Producto", "Observación", "Fecha Aprobación", "Cantidad Comprada", "Valor ", "Usuario", "Nombre Proveedor"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabla.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tabla);
-        if (tabla.getColumnModel().getColumnCount() > 0) {
-            tabla.getColumnModel().getColumn(0).setResizable(false);
-            tabla.getColumnModel().getColumn(1).setResizable(false);
-            tabla.getColumnModel().getColumn(2).setResizable(false);
-            tabla.getColumnModel().getColumn(3).setResizable(false);
-            tabla.getColumnModel().getColumn(4).setResizable(false);
-            tabla.getColumnModel().getColumn(5).setResizable(false);
-            tabla.getColumnModel().getColumn(6).setResizable(false);
-            tabla.getColumnModel().getColumn(7).setResizable(false);
-        }
-
-        jLabel2.setText("Estado:");
-
-        txtSeleccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingresado", "Procesado" }));
+        jToolBar1.add(jButton1);
+        jToolBar1.add(LabelTitulo);
 
         jToolBar2.setRollover(true);
 
@@ -150,11 +150,11 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Cantidad:");
 
-        Guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
-        Guardar.setText("Guardar");
-        Guardar.addActionListener(new java.awt.event.ActionListener() {
+        botonAprobar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
+        botonAprobar.setText("Guardar");
+        botonAprobar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GuardarActionPerformed(evt);
+                botonAprobarActionPerformed(evt);
             }
         });
 
@@ -183,7 +183,7 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
                                     .addComponent(labelCAntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGap(226, 226, 226)
-                                .addComponent(Guardar)))
+                                .addComponent(botonAprobar)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -205,9 +205,44 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(labelCAntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
-                .addComponent(Guardar)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addComponent(botonAprobar)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
+
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Codproductos", "Orden Compra", "Nombre Producto", "Obsevación", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Fecha Aprobacion", "Cantidad", "Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabla.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabla);
+        if (tabla.getColumnModel().getColumnCount() > 0) {
+            tabla.getColumnModel().getColumn(0).setResizable(false);
+            tabla.getColumnModel().getColumn(1).setResizable(false);
+            tabla.getColumnModel().getColumn(2).setResizable(false);
+            tabla.getColumnModel().getColumn(3).setResizable(false);
+            tabla.getColumnModel().getColumn(4).setResizable(false);
+            tabla.getColumnModel().getColumn(5).setResizable(false);
+            tabla.getColumnModel().getColumn(6).setResizable(false);
+            tabla.getColumnModel().getColumn(7).setResizable(false);
+            tabla.getColumnModel().getColumn(8).setResizable(false);
+            tabla.getColumnModel().getColumn(9).setResizable(false);
+            tabla.getColumnModel().getColumn(10).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -216,23 +251,10 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton1)
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 373, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))))
+                        .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1059, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -240,16 +262,9 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(txtSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
@@ -261,94 +276,84 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String orden = txtOrden.getText();
-        int validacion = 0;
-        String seleccion = txtSeleccion.getSelectedItem().toString();
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        panel.setVisible(false);        // TODO add your handling code here:
 
-        LocalDate fecha = LocalDate.now();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-        String fechaAc = fecha.format(DateTimeFormatter.ISO_DATE);
+    private void botonAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAprobarActionPerformed
 
-        if (orden.equals("")) {
-            validacion++;
-        }
+        int opc = JOptionPane.showConfirmDialog(null, "Esta seguro de Guardar Anulacion de Compra", "Confirmación", JOptionPane.YES_NO_OPTION);
 
-        if (validacion == 0) {
+        if (opc == JOptionPane.YES_OPTION) {
+            String orden = labelOrden.getText();
+            String stado = "Anulado";
+
+            LocalDate fecha = LocalDate.now();
+            String fechaa = fecha.format(DateTimeFormatter.ISO_DATE);
 
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                ArrayList<Vector<String>> matriz = op.InventarioPorOrden(orden, fechaAc, seleccion);
-
-                DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-                modelo.setRowCount(0);
-
-                for (Vector<String> vector : matriz) {
-                    modelo.addRow(vector);
-
-                    tabla.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            int fila_point = tabla.rowAtPoint(e.getPoint());
-                            int columna_point = 0;
-
-                            panel.setVisible(true);
-
-                            String orden, nombrePro, cantidad;
-
-                            orden = vector.get(0);
-                            nombrePro = vector.get(1);
-                            cantidad = vector.get(4);
-
-                            labelOrden.setText(orden);
-                            labelNombreProducto.setText(nombrePro);
-                            labelCAntidad.setText(cantidad);
-                        }
-
-                    });
-
-                }
+                op.ActualizarEstadoCompra(orden, stado, fechaa);
+                botonAprobar.setEnabled(false);
 
             } catch (SQLException err) {
                 err.printStackTrace();
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un # de Orden");
+        } else if (opc == JOptionPane.NO_OPTION) {
+
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        panel.setVisible(false);        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_botonAprobarActionPerformed
 
-    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        String orden = labelOrden.getText();
-        String stado = "IngresoAnular";
-
-        LocalDate fecha = LocalDate.now();
-        String fechaa = fecha.format(DateTimeFormatter.ISO_DATE);
-
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String stado = "AprobadoAnular";
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            op.ActualizarEstadoCompra(orden, stado, fechaa);
-            Guardar.setEnabled(false);
+            ArrayList<Vector<String>> matriz = op.InventarioEstado(stado);
+
+            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+            modelo.setRowCount(0);
+
+            for (Vector<String> vector : matriz) {
+                modelo.addRow(vector);
+
+                tabla.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        int fila_point = tabla.rowAtPoint(e.getPoint());
+                        int columna_point = 0;
+
+                        panel.setVisible(true);
+
+                        String orden, nombrePro, cantidad;
+
+                        orden = vector.get(1);
+                        nombrePro = vector.get(2);
+                        cantidad = vector.get(10);
+
+                        labelOrden.setText(orden);
+                        labelNombreProducto.setText(nombrePro);
+                        labelCAntidad.setText(cantidad);
+                    }
+
+                });
+
+            }
+
         } catch (SQLException err) {
             err.printStackTrace();
         }
-
-    }//GEN-LAST:event_GuardarActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Guardar;
     private javax.swing.JLabel LabelTitulo;
+    private javax.swing.JButton botonAprobar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -360,7 +365,5 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelOrden;
     private javax.swing.JPanel panel;
     private javax.swing.JTable tabla;
-    private javax.swing.JTextField txtOrden;
-    private javax.swing.JComboBox<String> txtSeleccion;
     // End of variables declaration//GEN-END:variables
 }
