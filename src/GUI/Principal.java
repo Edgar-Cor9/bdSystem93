@@ -36,6 +36,7 @@ public class Principal extends javax.swing.JFrame {
     IngresarAnulacionCompra ingreAnuCom;
     AprobacionAnulacionCompra1 aproAnulCom;
     ProcesarAnulacionCompra proAnulCom;
+    IngresoMercaderiaPorLote ingreMercLote;
 
     /**
      * Creates new form Principal
@@ -216,6 +217,11 @@ public class Principal extends javax.swing.JFrame {
 
         IngresoCompraLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro-de-la-carretilla.png"))); // NOI18N
         IngresoCompraLote.setText("Compra por Lote");
+        IngresoCompraLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IngresoCompraLoteActionPerformed(evt);
+            }
+        });
         IngresoPorLote.add(IngresoCompraLote);
 
         AprobarCompraLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
@@ -658,7 +664,7 @@ public class Principal extends javax.swing.JFrame {
                 aproAnulCom = new AprobacionAnulacionCompra1();
                 jTabbedPane1.add("Aprobacion Anulacion Compra", aproAnulCom);
                 aproAnulCom.show();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "La Ventana Aprobacion Anulacion Compra ya se Encuentra abierta");
             }
         } catch (Exception e) {
@@ -670,15 +676,29 @@ public class Principal extends javax.swing.JFrame {
         try {
             if (cerrado(proAnulCom)) {
                 proAnulCom = new ProcesarAnulacionCompra();
-                jTabbedPane1.add("Procesar Anulacion Compra" ,proAnulCom);
+                jTabbedPane1.add("Procesar Anulacion Compra", proAnulCom);
                 proAnulCom.show();
-            }else{
-                JOptionPane.showMessageDialog(this, "La Ventana Procesar Anulacion Compra ya se Encuentra abierta");                
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Procesar Anulacion Compra ya se Encuentra abierta");
             }
         } catch (Exception e) {
-             System.err.println("Error al cargar ventana Procesar Anulacion Compras" + e);
+            System.err.println("Error al cargar ventana Procesar Anulacion Compras" + e);
         }
     }//GEN-LAST:event_ProcesarAnulacionActionPerformed
+
+    private void IngresoCompraLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoCompraLoteActionPerformed
+        try {
+            if (cerrado(ingreMercLote)) {
+                ingreMercLote = new IngresoMercaderiaPorLote();
+                jTabbedPane1.add("Ingreso Mercaderia Por Lote", ingreMercLote);
+                ingreMercLote.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Ingreso Mercaderia Por Lote ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Ingreso Mercaderi por Lote" + e);
+        }
+    }//GEN-LAST:event_IngresoCompraLoteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -705,6 +725,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

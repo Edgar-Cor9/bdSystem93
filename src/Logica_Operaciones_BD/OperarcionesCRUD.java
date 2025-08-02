@@ -473,7 +473,7 @@ public final class OperarcionesCRUD {
         Statement smt = this.conexion.createStatement();
 
         // String sql = "select tipo_producto from productos where tipo_producto ='" + tipo + "'";
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, u.username\n"
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, u.username\n"
                 + "FROM bd_systema.productos p \n"
                 + "INNER JOIN bd_systema.proveedor pro \n"
                 + "on p.idusuarios = pro.idusuarios \n"
@@ -485,11 +485,12 @@ public final class OperarcionesCRUD {
         while (rs.next()) {
             Vector<String> datos = new Vector<>();
 
-            String codproductos, username, nombProducto, tiproducto, ruc, nombresPro, fechIngre, precio, iva;
+            String codproductos, username, nombProducto, tiproducto, detalle, ruc, nombresPro, fechIngre, precio, iva;
 
             codproductos = rs.getString("codproductos");
             nombProducto = rs.getString("nombre_producto");
             tiproducto = rs.getString("tipo_producto");
+            detalle = rs.getString("detalle_producto");
             fechIngre = rs.getString("fecha_ingreso");
             precio = rs.getString("precio");
             iva = rs.getString("iva");
@@ -501,6 +502,7 @@ public final class OperarcionesCRUD {
             datos.add(codproductos);
             datos.add(nombProducto);
             datos.add(tiproducto);
+            datos.add(detalle);
             datos.add(fechIngre);
             datos.add(precio);
             datos.add(iva);
@@ -522,7 +524,7 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement stm = this.conexion.createStatement();
 
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, pro.idProveedor, u.username\n"
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, pro.idProveedor, u.username\n"
                 + "FROM bd_systema.productos p \n"
                 + "INNER JOIN bd_systema.proveedor pro \n"
                 + "on p.idProveedor = pro.idProveedor \n"
@@ -534,11 +536,12 @@ public final class OperarcionesCRUD {
         while (rs.next()) {
             Vector<String> datos = new Vector<>();
 
-            String codproductos, username, nombProducto, tiproducto, rucPro, nombresPro, fechIngre, precio, iva;
+            String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
 
             codproductos = rs.getString("codproductos");
             nombProducto = rs.getString("nombre_producto");
             tiproducto = rs.getString("tipo_producto");
+            detalle = rs.getString("detalle_producto");
             fechIngre = rs.getString("fecha_ingreso");
             precio = rs.getString("precio");
             iva = rs.getString("iva");
@@ -550,6 +553,57 @@ public final class OperarcionesCRUD {
             datos.add(codproductos);
             datos.add(nombProducto);
             datos.add(tiproducto);
+            datos.add(detalle);
+            datos.add(fechIngre);
+            datos.add(precio);
+            datos.add(iva);
+            datos.add(rucPro);
+            datos.add(nombresPro);
+            //  datos.add(idusuario);
+            datos.add(username);
+            matriz.add(datos);
+
+        }
+
+        return matriz;
+    }
+
+    //busqueda de producto por nombre Proveedor
+    public ArrayList<Vector<String>> BusquedaNombresProveedor(String nombre, String apellido) throws SQLException {
+        this.iniciarConexionBD();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres,pro.apellidos, pro.idProveedor, u.username\n"
+                + "FROM bd_systema.productos p \n"
+                + "INNER JOIN bd_systema.proveedor pro \n"
+                + "on p.idProveedor = pro.idProveedor \n"
+                + "INNER JOIN bd_systema.usuarios u \n"
+                + "on p.idusuarios = u.idusuarios\n"
+                + "where pro.nombres = '" + nombre + "' and pro.apellidos ='" + apellido + "'";
+
+        ResultSet rs = stm.executeQuery(sql);
+        while (rs.next()) {
+            Vector<String> datos = new Vector<>();
+
+            String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
+
+            codproductos = rs.getString("codproductos");
+            nombProducto = rs.getString("nombre_producto");
+            tiproducto = rs.getString("tipo_producto");
+            detalle = rs.getString("detalle_producto");
+            fechIngre = rs.getString("fecha_ingreso");
+            precio = rs.getString("precio");
+            iva = rs.getString("iva");
+            rucPro = rs.getString("ruc");
+            nombresPro = rs.getString("nombres");
+            //  idusuario = rs.getString("idusuarios");
+            username = rs.getString("username");
+
+            datos.add(codproductos);
+            datos.add(nombProducto);
+            datos.add(tiproducto);
+            datos.add(detalle);
             datos.add(fechIngre);
             datos.add(precio);
             datos.add(iva);
@@ -684,6 +738,25 @@ public final class OperarcionesCRUD {
 
         }
         this.cerrarConexionBD();
+    }
+
+    //Extraer el tipo de producto ingresado
+    public Vector<String> TipoProducto() throws SQLException {
+        Vector<String> vector = new Vector<>();
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        String sql = "SELECT distinct tipo_producto as tipo_pr FROM bd_systema.productos";
+
+        ResultSet rst = stm.executeQuery(sql);
+
+        while (rst.next()) {
+            String nombre = rst.getString("tipo_pr");
+            vector.add(nombre);
+        }
+        this.cerrarConexionBD();
+
+        return vector;
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -1150,6 +1223,30 @@ public final class OperarcionesCRUD {
 
         }
         this.cerrarConexionBD();
+    }
+
+    //Extraer los Proveedores Registrados
+    public ArrayList<Vector<String>> NombresCompletosProveedor() throws SQLException {
+        ArrayList<Vector<String>> nombre = new ArrayList<>();
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        String sql = "SELECT distinct nombres as nomb , apellidos as aplle FROM bd_systema.proveedor";
+
+        ResultSet rst = stm.executeQuery(sql);
+
+        while (rst.next()) {
+            Vector<String> datos = new Vector<>();
+            String nombres, apellidos;
+            nombres = rst.getString("nomb");
+            apellidos = rst.getString("aplle");
+
+            datos.add(nombres);
+            datos.add(apellidos);
+
+            nombre.add(datos);
+        }
+        this.cerrarConexionBD();
+        return nombre;
     }
 
     //----------------------------------------------------------------------------------------------------------------------

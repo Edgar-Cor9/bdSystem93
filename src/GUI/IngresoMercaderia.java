@@ -230,11 +230,11 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Codigo", "Nombre Producto", "Tipo", "Fecha", "Precio", "Iva", "Ruc Proveedor", "Nombre Proveedor", "Usuario"
+                "Codigo", "Nombre Producto", "Tipo", "Detalle", "Fecha", "Precio", "Iva", "Ruc Proveedor", "Nombre Proveedor", "Usuario"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -258,6 +258,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
             TablaProductos.getColumnModel().getColumn(6).setResizable(false);
             TablaProductos.getColumnModel().getColumn(7).setResizable(false);
             TablaProductos.getColumnModel().getColumn(8).setResizable(false);
+            TablaProductos.getColumnModel().getColumn(9).setResizable(false);
         }
 
         ConsultarTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/consulta.png"))); // NOI18N
