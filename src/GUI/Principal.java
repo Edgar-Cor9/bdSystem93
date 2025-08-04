@@ -696,7 +696,8 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "La Ventana Ingreso Mercaderia Por Lote ya se Encuentra abierta");
             }
         } catch (Exception e) {
-            System.err.println("Error al cargar ventana Ingreso Mercaderi por Lote" + e);
+            System.err.println("Error al cargar ventana Ingreso Mercaderia por Lote" + e);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_IngresoCompraLoteActionPerformed
 

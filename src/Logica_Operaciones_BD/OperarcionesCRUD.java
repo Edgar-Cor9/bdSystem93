@@ -44,50 +44,56 @@ public final class OperarcionesCRUD {
     // Para consultar si esta ingresado un usuario
     public ArrayList<Vector<String>> cedulaUsuario(String cedula) throws SQLException {
         this.iniciarConexionBD();
-
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, tipo_nivel, status, registrado_por, fecha_registro, ultima_actualizacion from usuarios where cedula = '" + cedula + "'";
-        ResultSet rst = stm.executeQuery(sql);
 
-        if (rst.next()) {
+        try {
+            String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, tipo_nivel, status, registrado_por, fecha_registro, ultima_actualizacion from usuarios where cedula = '" + cedula + "'";
+            ResultSet rst = stm.executeQuery(sql);
 
-            Vector<String> datos = new Vector<>();
-            String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
+            if (rst.next()) {
 
-            iduser = rst.getString("idusuarios");
-            cedul = rst.getString("cedula");
-            nombres = rst.getString("nombres_usuario");
-            apellidos = rst.getString("apellidos_usuario");
-            email = rst.getString("email");
-            telefono = rst.getString("telefono");
-            username = rst.getString("username");
-            pass = rst.getString("password");
-            tipo_niv = rst.getString("tipo_nivel");
-            status = rst.getString("status");
-            registradox = rst.getString("registrado_por");
-            fecha_regis = rst.getString("fecha_registro");
-            ult_actua = rst.getString("ultima_actualizacion");
+                Vector<String> datos = new Vector<>();
+                String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
 
-            datos.add(iduser);
-            datos.add(cedul);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(email);
-            datos.add(telefono);
-            datos.add(username);
-            datos.add(pass);
-            datos.add(tipo_niv);
-            datos.add(status);
-            datos.add(registradox);
-            datos.add(fecha_regis);
-            datos.add(ult_actua);
+                iduser = rst.getString("idusuarios");
+                cedul = rst.getString("cedula");
+                nombres = rst.getString("nombres_usuario");
+                apellidos = rst.getString("apellidos_usuario");
+                email = rst.getString("email");
+                telefono = rst.getString("telefono");
+                username = rst.getString("username");
+                pass = rst.getString("password");
+                tipo_niv = rst.getString("tipo_nivel");
+                status = rst.getString("status");
+                registradox = rst.getString("registrado_por");
+                fecha_regis = rst.getString("fecha_registro");
+                ult_actua = rst.getString("ultima_actualizacion");
 
-            matriz.add(datos);
+                datos.add(iduser);
+                datos.add(cedul);
+                datos.add(nombres);
+                datos.add(apellidos);
+                datos.add(email);
+                datos.add(telefono);
+                datos.add(username);
+                datos.add(pass);
+                datos.add(tipo_niv);
+                datos.add(status);
+                datos.add(registradox);
+                datos.add(fecha_regis);
+                datos.add(ult_actua);
 
-        } else {
-            JOptionPane.showMessageDialog(null, "!! Usuario no se encuentra Registrado / Debe ir a la ventana Registro !!\n");
+                matriz.add(datos);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "!! Usuario no se encuentra Registrado / Debe ir a la ventana Registro !!\n");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Consultar Usuario" + e);
+            System.out.println("Error al consultar usuario" + e);
         }
+
         this.cerrarConexionBD();
         return matriz;
     }
@@ -98,38 +104,44 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
 
-        for (Vector<String> vector : matriz) {
-            String cedula, nombres, apellidos, email, telefono, username, password, tipo_nivel, status, registradox, fecharegis;
+        try {
+            for (Vector<String> vector : matriz) {
+                String cedula, nombres, apellidos, email, telefono, username, password, tipo_nivel, status, registradox, fecharegis;
 
-            cedula = vector.get(0);
-            nombres = vector.get(1);
-            apellidos = vector.get(2);
-            email = vector.get(3);
-            telefono = vector.get(4);
-            username = vector.get(5);
-            password = vector.get(6);
-            tipo_nivel = vector.get(7);
-            status = vector.get(8);
-            registradox = vector.get(9);
-            fecharegis = vector.get(10);
+                cedula = vector.get(0);
+                nombres = vector.get(1);
+                apellidos = vector.get(2);
+                email = vector.get(3);
+                telefono = vector.get(4);
+                username = vector.get(5);
+                password = vector.get(6);
+                tipo_nivel = vector.get(7);
+                status = vector.get(8);
+                registradox = vector.get(9);
+                fecharegis = vector.get(10);
 
-            String sql = "select cedula from usuarios where cedula = '" + cedula + "'";
+                String sql = "select cedula from usuarios where cedula = '" + cedula + "'";
 
-            ResultSet rst = stm.executeQuery(sql);
+                ResultSet rst = stm.executeQuery(sql);
 
-            if (rst.next()) {
-                JOptionPane.showMessageDialog(null, "!! No puede Guardar Usuario ya se encuentra Registrado !!\n");
+                if (rst.next()) {
+                    JOptionPane.showMessageDialog(null, "!! No puede Guardar Usuario ya se encuentra Registrado !!\n");
+                    this.cerrarConexionBD();
+                } else {
+                    this.iniciarConexionBD();
+                    Statement stm2 = this.conexion.createStatement();
+                    String sql2 = " INSERT INTO USUARIOS (CEDULA, NOMBRES_USUARIO, APELLIDOS_USUARIO, EMAIL, TELEFONO, USERNAME, PASSWORD, TIPO_NIVEL, STATUS, REGISTRADO_POR, FECHA_REGISTRO) VALUES ('" + cedula + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + telefono + "','" + username + "', '" + password + "' , '" + tipo_nivel + "'  , '" + status + "' , '" + registradox + "', '" + fecharegis + "')";
+                    // ResultSet rst2 = stm2.executeQuery(sql2);
+                    stm2.executeUpdate(sql2);
+                    JOptionPane.showMessageDialog(null, "!! Usuario Guardado con Exito !!\n");
+                }
                 this.cerrarConexionBD();
-            } else {
-                this.iniciarConexionBD();
-                Statement stm2 = this.conexion.createStatement();
-                String sql2 = " INSERT INTO USUARIOS (CEDULA, NOMBRES_USUARIO, APELLIDOS_USUARIO, EMAIL, TELEFONO, USERNAME, PASSWORD, TIPO_NIVEL, STATUS, REGISTRADO_POR, FECHA_REGISTRO) VALUES ('" + cedula + "', '" + nombres + "', '" + apellidos + "', '" + email + "', '" + telefono + "','" + username + "', '" + password + "' , '" + tipo_nivel + "'  , '" + status + "' , '" + registradox + "', '" + fecharegis + "')";
-                // ResultSet rst2 = stm2.executeQuery(sql2);
-                stm2.executeUpdate(sql2);
-                JOptionPane.showMessageDialog(null, "!! Usuario Guardado con Exito !!\n");
             }
-            this.cerrarConexionBD();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Crear Usuario" + e);
+            System.out.println("Error al Crear usuario" + e);
         }
+
     }
 
     // Actualizar datos Usuario    
@@ -140,32 +152,38 @@ public final class OperarcionesCRUD {
         Statement stm2 = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
 
-        for (Vector<String> vector : matriz) {
-            String cedula, nombres, apellidos, email, telefono, username, tipo_nivel, status, usuario, fecha;
+        try {
+            for (Vector<String> vector : matriz) {
+                String cedula, nombres, apellidos, email, telefono, username, tipo_nivel, status, usuario, fecha;
 
-            cedula = vector.get(0);
-            nombres = vector.get(1);
-            apellidos = vector.get(2);
-            email = vector.get(3);
-            telefono = vector.get(4);
-            username = vector.get(5);
-            tipo_nivel = vector.get(6);
-            status = vector.get(7);
-            usuario = vector.get(8);
-            fecha = vector.get(9);
+                cedula = vector.get(0);
+                nombres = vector.get(1);
+                apellidos = vector.get(2);
+                email = vector.get(3);
+                telefono = vector.get(4);
+                username = vector.get(5);
+                tipo_nivel = vector.get(6);
+                status = vector.get(7);
+                usuario = vector.get(8);
+                fecha = vector.get(9);
 
-            String sql2 = "select cedula from usuarios where cedula ='" + cedula + "'";
-            ResultSet rs = stm2.executeQuery(sql2);
+                String sql2 = "select cedula from usuarios where cedula ='" + cedula + "'";
+                ResultSet rs = stm2.executeQuery(sql2);
 
-            if (rs.next()) {
-                String sql = "update usuarios set nombres_usuario ='" + nombres + "',apellidos_usuario = '" + apellidos + "', email = '" + email + "', telefono ='" + telefono + "',username = '" + username + "',tipo_nivel = '" + tipo_nivel + "', status = '" + status + "', registrado_por ='" + usuario + "', ultima_actualizacion = '" + fecha + "' where cedula = '" + cedula + "'";
-                stm.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
-            } else {
-                JOptionPane.showMessageDialog(null, "!! No se puede Actualizar usuario no Registrado !!\n");
+                if (rs.next()) {
+                    String sql = "update usuarios set nombres_usuario ='" + nombres + "',apellidos_usuario = '" + apellidos + "', email = '" + email + "', telefono ='" + telefono + "',username = '" + username + "',tipo_nivel = '" + tipo_nivel + "', status = '" + status + "', registrado_por ='" + usuario + "', ultima_actualizacion = '" + fecha + "' where cedula = '" + cedula + "'";
+                    stm.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
+                } else {
+                    JOptionPane.showMessageDialog(null, "!! No se puede Actualizar usuario no Registrado !!\n");
+                }
+
             }
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Actualizar datos de Usuario" + e);
+            System.out.println("Error al Actualizar datos de Usuario" + e);
         }
+
         this.cerrarConexionBD();
     }
 
@@ -179,25 +197,30 @@ public final class OperarcionesCRUD {
 
         int intentos = 3;
         Statement stm = this.conexion.createStatement();
-        String sql = "select status from usuarios where username = '" + user
-                + "' and password = '" + pass + "'and  status = '" + status + "'";
+        try {
+            String sql = "select status from usuarios where username = '" + user
+                    + "' and password = '" + pass + "'and  status = '" + status + "'";
 
-        ResultSet rst = stm.executeQuery(sql);
+            ResultSet rst = stm.executeQuery(sql);
 
-        if (rst.next()) {
-            lg.dispose();
-            new Principal().setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "PASSWORD INCORRECTOS");
-            intentos--;
-            System.out.println(intentos);
-            lg.show(true);
-        }
+            if (rst.next()) {
+                lg.dispose();
+                new Principal().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "PASSWORD INCORRECTOS");
+                intentos--;
+                System.out.println(intentos);
+                lg.show(true);
+            }
 
-        if (intentos == 0) {
-            JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
-            ActEstadoUser(user, statusActual);
+            if (intentos == 0) {
+                JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
+                ActEstadoUser(user, statusActual);
 
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Acesso del Usuario" + e);
+            System.out.println("Error al Acceso del Usuario" + e);
         }
 
 //         if (rst.next()) {
@@ -225,9 +248,14 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
 
         Statement stm = this.conexion.createStatement();
-        String sql = "update usuarios set status ='" + status + "' where username = '" + user + "'";
+        try {
+            String sql = "update usuarios set status ='" + status + "' where username = '" + user + "'";
+            stm.executeUpdate(sql);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Actualizar estado del Usuario" + e);
+            System.out.println("Error al Actualizar estado del Usuario" + e);
+        }
 
-        stm.executeUpdate(sql);
         this.cerrarConexionBD();
     }
 
@@ -237,11 +265,16 @@ public final class OperarcionesCRUD {
         String usuario = user;
 
         this.iniciarConexionBD();
-
         Statement stm = this.conexion.createStatement();
 
-        String sql = "update usuarios set tipo_nivel = '" + tiponivel + "', status = '" + status + "' where username = '" + usuario + "'";
-        stm.executeUpdate(sql);
+        try {
+            String sql = "update usuarios set tipo_nivel = '" + tiponivel + "', status = '" + status + "' where username = '" + usuario + "'";
+            stm.executeUpdate(sql);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Actualizar Perfil del Usuario" + e);
+            System.out.println("Error al Actualizar Perfil del Usuario" + e);
+        }
+
         this.cerrarConexionBD();
 
     }
@@ -256,17 +289,22 @@ public final class OperarcionesCRUD {
         String status = "Activo";
         Statement stm = this.conexion.createStatement();
 
-        String sql = "select status from usuarios where username ='" + user + "' and status = '" + status + "'";
+        try {
+            String sql = "select status from usuarios where username ='" + user + "' and status = '" + status + "'";
+            ResultSet rst = stm.executeQuery(sql);
 
-        ResultSet rst = stm.executeQuery(sql);
+            if (rst.next()) {
+                login(user, pass);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario no se encuentra Activo, contacte con el administrador !!!!");
+                lg.show(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Consultar si Usuario esta Activo" + e);
+            System.out.println("Error al Consultar si Usuario esta Activo" + e);
 
-        if (rst.next()) {
-            login(user, pass);
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario no se encuentra Activo, contacte con el administrador !!!!");
-            lg.show(true);
         }
-
+        this.cerrarConexionBD();
     }
 
     //para consultar si el usuario se encuentra registrado 
@@ -276,18 +314,23 @@ public final class OperarcionesCRUD {
 
         String user = usuario;
         String pass = password;
-
         Statement stm = this.conexion.createStatement();
-        String sql = "select username from usuarios where username = '" + user + "'";
 
-        ResultSet rs = stm.executeQuery(sql);
+        try {
+            String sql = "select username from usuarios where username = '" + user + "'";
+            ResultSet rs = stm.executeQuery(sql);
 
-        if (rs.next()) {
-            EstadoUsuario(usuario, password);
-        } else {
-            JOptionPane.showMessageDialog(null, "USUARIO NO SE ENCUENTRA REGISTRADO");
-            lg.show(true);
+            if (rs.next()) {
+                EstadoUsuario(usuario, password);
+            } else {
+                JOptionPane.showMessageDialog(null, "USUARIO NO SE ENCUENTRA REGISTRADO");
+                lg.show(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Consultar si Usuario esta Registrado" + e);
+            System.out.println("Error al Consultar si Usuario esta Registrado" + e);
         }
+
         this.cerrarConexionBD();
 
     }
@@ -299,9 +342,14 @@ public final class OperarcionesCRUD {
         String user = usuario;
         String pass = password;
         Statement stm = this.conexion.createStatement();
-        String sql = "update usuarios set password = '" + pass + "' where username = '" + user + "'";
+        try {
+            String sql = "update usuarios set password = '" + pass + "' where username = '" + user + "'";
+            stm.executeUpdate(sql);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Actualizar Password del Usuario" + e);
+            System.out.println("Error al Actualizar Password del Usuario" + e);
+        }
 
-        stm.executeUpdate(sql);
         this.cerrarConexionBD();
     }
 
@@ -312,16 +360,19 @@ public final class OperarcionesCRUD {
         String coduser = "";
         Statement stm = this.conexion.createStatement();
 
-        String sql = "select idusuarios from usuarios where username = '" + username + "'";
-        ResultSet rst = stm.executeQuery(sql);
-        if (rst.next()) {
-
-            coduser = rst.getString("idusuarios");
+        try {
+            String sql = "select idusuarios from usuarios where username = '" + username + "'";
+            ResultSet rst = stm.executeQuery(sql);
+            if (rst.next()) {
+                coduser = rst.getString("idusuarios");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Consultar codigo del Usuario" + e);
+            System.out.println("Error al Consultar codigo del Usuario" + e);
         }
+
         this.cerrarConexionBD();
-
         return coduser;
-
     }
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -333,45 +384,51 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "select idclientes, cedula_cliente, nombres_cliente, apellidos_cliente, email_cliente, direccion_cliente, edad, username, idusuarios, fecha_ingreso,username_Actu, fecha_actualizacion, comentario from clientes where cedula_cliente = '" + cedula + "'";
-        ResultSet rst = stm.executeQuery(sql);
+        try {
+            String sql = "select idclientes, cedula_cliente, nombres_cliente, apellidos_cliente, email_cliente, direccion_cliente, edad, username, idusuarios, fecha_ingreso,username_Actu, fecha_actualizacion, comentario from clientes where cedula_cliente = '" + cedula + "'";
+            ResultSet rst = stm.executeQuery(sql);
 
-        while (rst.next()) {
+            while (rst.next()) {
 
-            Vector<String> datos = new Vector<>();
-            String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userActu, fechaAct, comentario;
+                Vector<String> datos = new Vector<>();
+                String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userActu, fechaAct, comentario;
 
-            idclient = rst.getString("idclientes");
-            cedul = rst.getString("cedula_cliente");
-            nombres = rst.getString("nombres_cliente");
-            apellidos = rst.getString("apellidos_cliente");
-            email = rst.getString("email_cliente");
-            direccion = rst.getString("direccion_cliente");
-            edad = rst.getString("edad");
-            username = rst.getString("username");
-            idusuario = rst.getString("idusuarios");
-            fechaIngr = rst.getString("fecha_ingreso");
-            userActu = rst.getString("username_Actu");
-            fechaAct = rst.getString("fecha_actualizacion");
-            comentario = rst.getString("comentario");
+                idclient = rst.getString("idclientes");
+                cedul = rst.getString("cedula_cliente");
+                nombres = rst.getString("nombres_cliente");
+                apellidos = rst.getString("apellidos_cliente");
+                email = rst.getString("email_cliente");
+                direccion = rst.getString("direccion_cliente");
+                edad = rst.getString("edad");
+                username = rst.getString("username");
+                idusuario = rst.getString("idusuarios");
+                fechaIngr = rst.getString("fecha_ingreso");
+                userActu = rst.getString("username_Actu");
+                fechaAct = rst.getString("fecha_actualizacion");
+                comentario = rst.getString("comentario");
 
-            datos.add(idclient);
-            datos.add(cedul);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(email);
-            datos.add(direccion);
-            datos.add(edad);
-            datos.add(username);
-            datos.add(idusuario);
-            datos.add(fechaIngr);
-            datos.add(userActu);
-            datos.add(fechaAct);
-            datos.add(comentario);
+                datos.add(idclient);
+                datos.add(cedul);
+                datos.add(nombres);
+                datos.add(apellidos);
+                datos.add(email);
+                datos.add(direccion);
+                datos.add(edad);
+                datos.add(username);
+                datos.add(idusuario);
+                datos.add(fechaIngr);
+                datos.add(userActu);
+                datos.add(fechaAct);
+                datos.add(comentario);
 
-            matriz.add(datos);
+                matriz.add(datos);
 
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Consultar datos del Socio" + e);
+            System.out.println("Error al Consultar datos del Socio" + e);
         }
+
         this.cerrarConexionBD();
         return matriz;
     }
@@ -381,38 +438,43 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
-        for (Vector<String> vector : matriz) {
-            String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngreso, fechaActual, comentario;
+        try {
+            for (Vector<String> vector : matriz) {
+                String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngreso, fechaActual, comentario;
 
-            cedul = vector.get(0);
-            nombres = vector.get(1);
-            apellidos = vector.get(2);
-            email = vector.get(3);
-            direccion = vector.get(4);
-            edad = vector.get(5);
-            username = vector.get(6);
-            idusuario = vector.get(7);
-            fechaIngreso = vector.get(8);
-            comentario = vector.get(9);
+                cedul = vector.get(0);
+                nombres = vector.get(1);
+                apellidos = vector.get(2);
+                email = vector.get(3);
+                direccion = vector.get(4);
+                edad = vector.get(5);
+                username = vector.get(6);
+                idusuario = vector.get(7);
+                fechaIngreso = vector.get(8);
+                comentario = vector.get(9);
 
-            String sql = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
+                String sql = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
 
-            ResultSet rst = stm.executeQuery(sql);
-            if (rst.next()) {
-                JOptionPane.showMessageDialog(null, "!! No puede Guardar a esta Persona ya se encuentra Registrado !!\n");
+                ResultSet rst = stm.executeQuery(sql);
+                if (rst.next()) {
+                    JOptionPane.showMessageDialog(null, "!! No puede Guardar a esta Persona ya se encuentra Registrado !!\n");
+                    this.cerrarConexionBD();
+                } else {
+                    this.iniciarConexionBD();
+                    Statement stm2 = this.conexion.createStatement();
+                    String sql1 = " INSERT INTO clientes (CEDULA_CLIENTE, NOMBRES_CLIENTE,"
+                            + " APELLIDOS_CLIENTE, EMAIL_CLIENTE, DIRECCION_CLIENTE,EDAD,USERNAME, "
+                            + "IDUSUARIOS, FECHA_INGRESO, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "',"
+                            + " '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', "
+                            + "'" + idusuario + "', '" + fechaIngreso + "','" + comentario + "')";
+                    stm2.executeUpdate(sql1);
+                    JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
+                }
                 this.cerrarConexionBD();
-            } else {
-                this.iniciarConexionBD();
-                Statement stm2 = this.conexion.createStatement();
-                String sql1 = " INSERT INTO clientes (CEDULA_CLIENTE, NOMBRES_CLIENTE,"
-                        + " APELLIDOS_CLIENTE, EMAIL_CLIENTE, DIRECCION_CLIENTE,EDAD,USERNAME, "
-                        + "IDUSUARIOS, FECHA_INGRESO, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "',"
-                        + " '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', "
-                        + "'" + idusuario + "', '" + fechaIngreso + "','" + comentario + "')";
-                stm2.executeUpdate(sql1);
-                JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
             }
-            this.cerrarConexionBD();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al crear Persona" + e);
+            System.out.println("Error al crear Persona" + e);
         }
 
     }
@@ -422,42 +484,44 @@ public final class OperarcionesCRUD {
 
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
-
         ArrayList<Vector<String>> matriz = datos;
 
-        for (Vector<String> vector : matriz) {
+        try {
+            for (Vector<String> vector : matriz) {
+                String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaA, comentario;
 
-            String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaA, comentario;
+                cedul = vector.get(0);
+                nombres = vector.get(1);
+                apellidos = vector.get(2);
+                email = vector.get(3);
+                direccion = vector.get(4);
+                edad = vector.get(5);
+                username = vector.get(6);
+                idusuario = vector.get(7);
+                fechaA = vector.get(8);
+                comentario = vector.get(9);
 
-            cedul = vector.get(0);
-            nombres = vector.get(1);
-            apellidos = vector.get(2);
-            email = vector.get(3);
-            direccion = vector.get(4);
-            edad = vector.get(5);
-            username = vector.get(6);
-            idusuario = vector.get(7);
-            fechaA = vector.get(8);
-            comentario = vector.get(9);
+                String sql1 = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
+                ResultSet rs = stm.executeQuery(sql1);
 
-            String sql1 = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
-            ResultSet rs = stm.executeQuery(sql1);
+                if (rs.next()) {
 
-            if (rs.next()) {
+                    String sql = "update clientes set nombres_cliente ='" + nombres + "', "
+                            + "apellidos_cliente ='" + apellidos + "', email_cliente ='" + email + "', "
+                            + "edad ='" + edad + "', username_Actu ='" + username + "', fecha_actualizacion ='" + fechaA + "',"
+                            + " comentario = '" + comentario + "' where cedula_cliente = '" + cedul + "'";
 
-                String sql = "update clientes set nombres_cliente ='" + nombres + "', "
-                        + "apellidos_cliente ='" + apellidos + "', email_cliente ='" + email + "', "
-                        + "edad ='" + edad + "', username_Actu ='" + username + "', fecha_actualizacion ='" + fechaA + "',"
-                        + " comentario = '" + comentario + "' where cedula_cliente = '" + cedul + "'";
+                    stm.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
+                } else {
+                    JOptionPane.showMessageDialog(null, "!! No puede Actualizar personsa no se encuentra Registrado !!\n");
+                }
 
-                stm.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
-            } else {
-                JOptionPane.showMessageDialog(null, "!! No puede Actualizar personsa no se encuentra Registrado !!\n");
             }
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al actualizar datos de Persona" + e);
+            System.out.println("Error al actualizar datos de Persona" + e);
         }
-
         this.cerrarConexionBD();
 
     }
@@ -472,46 +536,52 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement smt = this.conexion.createStatement();
 
-        // String sql = "select tipo_producto from productos where tipo_producto ='" + tipo + "'";
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, u.username\n"
-                + "FROM bd_systema.productos p \n"
-                + "INNER JOIN bd_systema.proveedor pro \n"
-                + "on p.idusuarios = pro.idusuarios \n"
-                + "INNER JOIN bd_systema.usuarios u \n"
-                + "on p.idusuarios = u.idusuarios\n"
-                + "where p.tipo_producto ='" + tipo + "'";
+        try {
+            // String sql = "select tipo_producto from productos where tipo_producto ='" + tipo + "'";
+            String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, u.username\n"
+                    + "FROM bd_systema.productos p \n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on p.idusuarios = pro.idusuarios \n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on p.idusuarios = u.idusuarios\n"
+                    + "where p.tipo_producto ='" + tipo + "'";
 
-        ResultSet rs = smt.executeQuery(sql);
-        while (rs.next()) {
-            Vector<String> datos = new Vector<>();
+            ResultSet rs = smt.executeQuery(sql);
+            while (rs.next()) {
+                Vector<String> datos = new Vector<>();
 
-            String codproductos, username, nombProducto, tiproducto, detalle, ruc, nombresPro, fechIngre, precio, iva;
+                String codproductos, username, nombProducto, tiproducto, detalle, ruc, nombresPro, fechIngre, precio, iva;
 
-            codproductos = rs.getString("codproductos");
-            nombProducto = rs.getString("nombre_producto");
-            tiproducto = rs.getString("tipo_producto");
-            detalle = rs.getString("detalle_producto");
-            fechIngre = rs.getString("fecha_ingreso");
-            precio = rs.getString("precio");
-            iva = rs.getString("iva");
-            ruc = rs.getString("ruc");
-            nombresPro = rs.getString("nombres");
-            //  idusuario = rs.getString("idusuarios");
-            username = rs.getString("username");
+                codproductos = rs.getString("codproductos");
+                nombProducto = rs.getString("nombre_producto");
+                tiproducto = rs.getString("tipo_producto");
+                detalle = rs.getString("detalle_producto");
+                fechIngre = rs.getString("fecha_ingreso");
+                precio = rs.getString("precio");
+                iva = rs.getString("iva");
+                ruc = rs.getString("ruc");
+                nombresPro = rs.getString("nombres");
+                //  idusuario = rs.getString("idusuarios");
+                username = rs.getString("username");
 
-            datos.add(codproductos);
-            datos.add(nombProducto);
-            datos.add(tiproducto);
-            datos.add(detalle);
-            datos.add(fechIngre);
-            datos.add(precio);
-            datos.add(iva);
-            datos.add(ruc);
-            datos.add(nombresPro);
-            //  datos.add(idusuario);
-            datos.add(username);
-            matriz.add(datos);
+                datos.add(codproductos);
+                datos.add(nombProducto);
+                datos.add(tiproducto);
+                datos.add(detalle);
+                datos.add(fechIngre);
+                datos.add(precio);
+                datos.add(iva);
+                datos.add(ruc);
+                datos.add(nombresPro);
+                //  datos.add(idusuario);
+                datos.add(username);
+                matriz.add(datos);
 
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Buscar producto por tipo de Producto" + e);
+            System.out.println("Error al Buscar producto por tipo de Producto" + e);
         }
 
         this.cerrarConexionBD();
@@ -524,45 +594,51 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement stm = this.conexion.createStatement();
 
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, pro.idProveedor, u.username\n"
-                + "FROM bd_systema.productos p \n"
-                + "INNER JOIN bd_systema.proveedor pro \n"
-                + "on p.idProveedor = pro.idProveedor \n"
-                + "INNER JOIN bd_systema.usuarios u \n"
-                + "on p.idusuarios = u.idusuarios\n"
-                + "where pro.ruc = '" + ruc + "'";
+        try {
+            String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres, pro.idProveedor, u.username\n"
+                    + "FROM bd_systema.productos p \n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on p.idProveedor = pro.idProveedor \n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on p.idusuarios = u.idusuarios\n"
+                    + "where pro.ruc = '" + ruc + "'";
 
-        ResultSet rs = stm.executeQuery(sql);
-        while (rs.next()) {
-            Vector<String> datos = new Vector<>();
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                Vector<String> datos = new Vector<>();
 
-            String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
+                String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
 
-            codproductos = rs.getString("codproductos");
-            nombProducto = rs.getString("nombre_producto");
-            tiproducto = rs.getString("tipo_producto");
-            detalle = rs.getString("detalle_producto");
-            fechIngre = rs.getString("fecha_ingreso");
-            precio = rs.getString("precio");
-            iva = rs.getString("iva");
-            rucPro = rs.getString("ruc");
-            nombresPro = rs.getString("nombres");
-            //  idusuario = rs.getString("idusuarios");
-            username = rs.getString("username");
+                codproductos = rs.getString("codproductos");
+                nombProducto = rs.getString("nombre_producto");
+                tiproducto = rs.getString("tipo_producto");
+                detalle = rs.getString("detalle_producto");
+                fechIngre = rs.getString("fecha_ingreso");
+                precio = rs.getString("precio");
+                iva = rs.getString("iva");
+                rucPro = rs.getString("ruc");
+                nombresPro = rs.getString("nombres");
+                //  idusuario = rs.getString("idusuarios");
+                username = rs.getString("username");
 
-            datos.add(codproductos);
-            datos.add(nombProducto);
-            datos.add(tiproducto);
-            datos.add(detalle);
-            datos.add(fechIngre);
-            datos.add(precio);
-            datos.add(iva);
-            datos.add(rucPro);
-            datos.add(nombresPro);
-            //  datos.add(idusuario);
-            datos.add(username);
-            matriz.add(datos);
+                datos.add(codproductos);
+                datos.add(nombProducto);
+                datos.add(tiproducto);
+                datos.add(detalle);
+                datos.add(fechIngre);
+                datos.add(precio);
+                datos.add(iva);
+                datos.add(rucPro);
+                datos.add(nombresPro);
+                //  datos.add(idusuario);
+                datos.add(username);
+                matriz.add(datos);
 
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Buscar producto por Ruc Proveedor" + e);
+            System.out.println("Error al Buscar producto por Ruc Proveedor" + e);
         }
 
         return matriz;
@@ -574,45 +650,50 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement stm = this.conexion.createStatement();
 
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres,pro.apellidos, pro.idProveedor, u.username\n"
-                + "FROM bd_systema.productos p \n"
-                + "INNER JOIN bd_systema.proveedor pro \n"
-                + "on p.idProveedor = pro.idProveedor \n"
-                + "INNER JOIN bd_systema.usuarios u \n"
-                + "on p.idusuarios = u.idusuarios\n"
-                + "where pro.nombres = '" + nombre + "' and pro.apellidos ='" + apellido + "'";
+        try {
+            String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres,pro.apellidos, pro.idProveedor, u.username\n"
+                    + "FROM bd_systema.productos p \n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on p.idProveedor = pro.idProveedor \n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on p.idusuarios = u.idusuarios\n"
+                    + "where pro.nombres = '" + nombre + "' and pro.apellidos ='" + apellido + "'";
 
-        ResultSet rs = stm.executeQuery(sql);
-        while (rs.next()) {
-            Vector<String> datos = new Vector<>();
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                Vector<String> datos = new Vector<>();
 
-            String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
+                String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
 
-            codproductos = rs.getString("codproductos");
-            nombProducto = rs.getString("nombre_producto");
-            tiproducto = rs.getString("tipo_producto");
-            detalle = rs.getString("detalle_producto");
-            fechIngre = rs.getString("fecha_ingreso");
-            precio = rs.getString("precio");
-            iva = rs.getString("iva");
-            rucPro = rs.getString("ruc");
-            nombresPro = rs.getString("nombres");
-            //  idusuario = rs.getString("idusuarios");
-            username = rs.getString("username");
+                codproductos = rs.getString("codproductos");
+                nombProducto = rs.getString("nombre_producto");
+                tiproducto = rs.getString("tipo_producto");
+                detalle = rs.getString("detalle_producto");
+                fechIngre = rs.getString("fecha_ingreso");
+                precio = rs.getString("precio");
+                iva = rs.getString("iva");
+                rucPro = rs.getString("ruc");
+                nombresPro = rs.getString("nombres");
+                //  idusuario = rs.getString("idusuarios");
+                username = rs.getString("username");
 
-            datos.add(codproductos);
-            datos.add(nombProducto);
-            datos.add(tiproducto);
-            datos.add(detalle);
-            datos.add(fechIngre);
-            datos.add(precio);
-            datos.add(iva);
-            datos.add(rucPro);
-            datos.add(nombresPro);
-            //  datos.add(idusuario);
-            datos.add(username);
-            matriz.add(datos);
+                datos.add(codproductos);
+                datos.add(nombProducto);
+                datos.add(tiproducto);
+                datos.add(detalle);
+                datos.add(fechIngre);
+                datos.add(precio);
+                datos.add(iva);
+                datos.add(rucPro);
+                datos.add(nombresPro);
+                //  datos.add(idusuario);
+                datos.add(username);
+                matriz.add(datos);
 
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Buscar producto por Nombre Proveedor" + e);
+            System.out.println("Error al Buscar producto por Nombre Proveedor" + e);
         }
 
         return matriz;
@@ -624,30 +705,34 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
 
-        for (Vector<String> vector : matriz) {
-            String iduser, idProve, nombre, tipo, detalle, fechaIn, precio, iva;
+        try {
+            for (Vector<String> vector : matriz) {
+                String iduser, idProve, nombre, tipo, detalle, fechaIn, precio, iva;
 
-            iduser = vector.get(0);
-            idProve = vector.get(1);
-            nombre = vector.get(2);
-            tipo = vector.get(3);
-            detalle = vector.get(4);
-            fechaIn = vector.get(5);
-            precio = vector.get(6);
-            iva = vector.get(7);
+                iduser = vector.get(0);
+                idProve = vector.get(1);
+                nombre = vector.get(2);
+                tipo = vector.get(3);
+                detalle = vector.get(4);
+                fechaIn = vector.get(5);
+                precio = vector.get(6);
+                iva = vector.get(7);
 
-            String sql = "INSERT into productos "
-                    + "(idusuarios, idProveedor, nombre_producto,"
-                    + " tipo_producto, detalle_producto,"
-                    + "fecha_ingreso,"
-                    + "precio, iva) VALUES ('" + iduser + "','" + idProve + "', "
-                    + "'" + nombre + "', '" + tipo + "', '" + detalle + "',"
-                    + "'" + fechaIn + "', '" + precio + "', '" + iva + "')";
-            JOptionPane.showMessageDialog(null, "!! Producto Guardado con Exito !!\n");
-            stm.executeUpdate(sql);
+                String sql = "INSERT into productos "
+                        + "(idusuarios, idProveedor, nombre_producto,"
+                        + " tipo_producto, detalle_producto,"
+                        + "fecha_ingreso,"
+                        + "precio, iva) VALUES ('" + iduser + "','" + idProve + "', "
+                        + "'" + nombre + "', '" + tipo + "', '" + detalle + "',"
+                        + "'" + fechaIn + "', '" + precio + "', '" + iva + "')";
+                JOptionPane.showMessageDialog(null, "!! Producto Guardado con Exito !!\n");
+                stm.executeUpdate(sql);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Registrar producto" + e);
+            System.out.println("Error al Registrar producto" + e);
         }
         this.cerrarConexionBD();
-
     }
 
     //consultar un producto por codigo
@@ -656,53 +741,57 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Statement stm = this.conexion.createStatement();
 
-        String sql = "SELECT p.codproductos, p.nombre_producto, p.detalle_producto, p.tipo_producto,"
-                + " p.fecha_ingreso, p.fecha_Actualizacion, p.precio, p.iva, pro.ruc, pro.nombres, "
-                + "pro.apellidos, pro.idProveedor, u.username, u.idusuarios\n"
-                + "FROM bd_systema.productos p \n"
-                + "INNER JOIN bd_systema.proveedor pro \n"
-                + "on p.idProveedor = pro.idProveedor\n"
-                + "INNER JOIN bd_systema.usuarios u \n"
-                + "on p.idusuarios = u.idusuarios\n"
-                + "where p.codproductos = '" + codProdu + "'";
-        ResultSet rst = stm.executeQuery(sql);
+        try {
+            String sql = "SELECT p.codproductos, p.nombre_producto, p.detalle_producto, p.tipo_producto,"
+                    + " p.fecha_ingreso, p.fecha_Actualizacion, p.precio, p.iva, pro.ruc, pro.nombres, "
+                    + "pro.apellidos, pro.idProveedor, u.username, u.idusuarios\n"
+                    + "FROM bd_systema.productos p \n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on p.idProveedor = pro.idProveedor\n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on p.idusuarios = u.idusuarios\n"
+                    + "where p.codproductos = '" + codProdu + "'";
+            ResultSet rst = stm.executeQuery(sql);
 
-        while (rst.next()) {
-            Vector<String> datos = new Vector<>();
-            String codiPro, nombreProd, detaProd, tipoProd, fechRegistro, fechAc, prec, iva, rucPro, nombProve, apellProve, idProve, idUser, username;
-            codiPro = rst.getString("codproductos");
-            nombreProd = rst.getString("nombre_producto");
-            detaProd = rst.getString("detalle_producto");
-            tipoProd = rst.getString("tipo_producto");
-            fechRegistro = rst.getString("fecha_ingreso");
-            fechAc = rst.getString("fecha_Actualizacion");
-            prec = rst.getString("precio");
-            iva = rst.getString("iva");
-            rucPro = rst.getString("ruc");
-            nombProve = rst.getString("nombres");
-            apellProve = rst.getString("apellidos");
-            idProve = rst.getString("idProveedor");
-            username = rst.getString("username");
-            idUser = rst.getString("idusuarios");
+            while (rst.next()) {
+                Vector<String> datos = new Vector<>();
+                String codiPro, nombreProd, detaProd, tipoProd, fechRegistro, fechAc, prec, iva, rucPro, nombProve, apellProve, idProve, idUser, username;
+                codiPro = rst.getString("codproductos");
+                nombreProd = rst.getString("nombre_producto");
+                detaProd = rst.getString("detalle_producto");
+                tipoProd = rst.getString("tipo_producto");
+                fechRegistro = rst.getString("fecha_ingreso");
+                fechAc = rst.getString("fecha_Actualizacion");
+                prec = rst.getString("precio");
+                iva = rst.getString("iva");
+                rucPro = rst.getString("ruc");
+                nombProve = rst.getString("nombres");
+                apellProve = rst.getString("apellidos");
+                idProve = rst.getString("idProveedor");
+                username = rst.getString("username");
+                idUser = rst.getString("idusuarios");
 
-            datos.add(codiPro);
-            datos.add(nombreProd);
-            datos.add(detaProd);
-            datos.add(tipoProd);
-            datos.add(fechRegistro);
-            datos.add(fechAc);
-            datos.add(prec);
-            datos.add(iva);
-            datos.add(rucPro);
-            datos.add(nombProve);
-            datos.add(apellProve);
-            datos.add(idProve);
-            datos.add(username);
-            datos.add(idUser);
-            matriz.add(datos);
+                datos.add(codiPro);
+                datos.add(nombreProd);
+                datos.add(detaProd);
+                datos.add(tipoProd);
+                datos.add(fechRegistro);
+                datos.add(fechAc);
+                datos.add(prec);
+                datos.add(iva);
+                datos.add(rucPro);
+                datos.add(nombProve);
+                datos.add(apellProve);
+                datos.add(idProve);
+                datos.add(username);
+                datos.add(idUser);
+                matriz.add(datos);
 
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Consultar un producto por código" + e);
+            System.out.println("Error al Consultar un producto por código" + e);
         }
-
         return matriz;
     }
 
@@ -711,32 +800,39 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
-        for (Vector<String> vector : matriz) {
-            String codiPro, idProve, nombreProd, detaProd, tipoProd, fechAc, prec, iva;
 
-            codiPro = vector.get(0);
-            idProve = vector.get(1);
-            nombreProd = vector.get(2);
-            detaProd = vector.get(3);
-            tipoProd = vector.get(4);
-            fechAc = vector.get(5);
-            prec = vector.get(6);
-            iva = vector.get(7);
+        try {
+            for (Vector<String> vector : matriz) {
+                String codiPro, idProve, nombreProd, detaProd, tipoProd, fechAc, prec, iva;
 
-            String sql = "select codproductos from productos where codproductos = '" + codiPro + "'";
+                codiPro = vector.get(0);
+                idProve = vector.get(1);
+                nombreProd = vector.get(2);
+                detaProd = vector.get(3);
+                tipoProd = vector.get(4);
+                fechAc = vector.get(5);
+                prec = vector.get(6);
+                iva = vector.get(7);
 
-            ResultSet rst = stm.executeQuery(sql);
+                String sql = "select codproductos from productos where codproductos = '" + codiPro + "'";
 
-            if (rst.next()) {
-                String sql2 = "update productos set idProveedor ='" + idProve + "', "
-                        + "nombre_producto = '" + nombreProd + "', tipo_producto = '" + tipoProd + "',"
-                        + "detalle_producto = '" + detaProd + "', fecha_Actualizacion = '" + fechAc + "',"
-                        + "precio = '" + prec + "', iva = '" + iva + "' where codproductos = '" + codiPro + "'";
-                stm.executeUpdate(sql2);
-                JOptionPane.showMessageDialog(null, "!! Producto Actualizado con Exito !!\n");
+                ResultSet rst = stm.executeQuery(sql);
+
+                if (rst.next()) {
+                    String sql2 = "update productos set idProveedor ='" + idProve + "', "
+                            + "nombre_producto = '" + nombreProd + "', tipo_producto = '" + tipoProd + "',"
+                            + "detalle_producto = '" + detaProd + "', fecha_Actualizacion = '" + fechAc + "',"
+                            + "precio = '" + prec + "', iva = '" + iva + "' where codproductos = '" + codiPro + "'";
+                    stm.executeUpdate(sql2);
+                    JOptionPane.showMessageDialog(null, "!! Producto Actualizado con Exito !!\n");
+                }
+
             }
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Editar un producto" + e);
+            System.out.println("Error al Editar un producto" + e);
         }
+
         this.cerrarConexionBD();
     }
 
@@ -746,16 +842,19 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
 
-        String sql = "SELECT distinct tipo_producto as tipo_pr FROM bd_systema.productos";
+        try {
+            String sql = "SELECT distinct tipo_producto as tipo_pr FROM bd_systema.productos";
+            ResultSet rst = stm.executeQuery(sql);
 
-        ResultSet rst = stm.executeQuery(sql);
-
-        while (rst.next()) {
-            String nombre = rst.getString("tipo_pr");
-            vector.add(nombre);
+            while (rst.next()) {
+                String nombre = rst.getString("tipo_pr");
+                vector.add(nombre);
+            }
+            this.cerrarConexionBD();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer el tipo de un producto" + e);
+            System.out.println("Error al Extraer el tipo de un producto" + e);
         }
-        this.cerrarConexionBD();
-
         return vector;
     }
 
@@ -881,51 +980,56 @@ public final class OperarcionesCRUD {
     public ArrayList<Vector<String>> InventarioEstado(String estado) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
-
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
-                + "FROM bd_systema.inventario i\n"
-                + "INNER JOIN bd_systema.proveedor pro \n"
-                + "on i.idProveedor = pro.idProveedor\n"
-                + "INNER JOIN bd_systema.usuarios u \n"
-                + "on i.idusuarios = u.idusuarios\n"
-                + "INNER JOIN bd_systema.productos p \n"
-                + "on i.codproductos = p.codproductos\n"
-                + "where i.estado = '" + estado + "'";
+        try {
+            String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+                    + "FROM bd_systema.inventario i\n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on i.idProveedor = pro.idProveedor\n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on i.idusuarios = u.idusuarios\n"
+                    + "INNER JOIN bd_systema.productos p \n"
+                    + "on i.codproductos = p.codproductos\n"
+                    + "where i.estado = '" + estado + "'";
 
-        ResultSet rst = stm.executeQuery(sql);
-        while (rst.next()) {
-            Vector<String> vector = new Vector<>();
-            String codProd, orden, detalle, stado, fecharesgitro, fechaAproba, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto;
+            ResultSet rst = stm.executeQuery(sql);
+            while (rst.next()) {
+                Vector<String> vector = new Vector<>();
+                String codProd, orden, detalle, stado, fecharesgitro, fechaAproba, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto;
 
-            codProd = rst.getString("codproductos");
-            orden = rst.getString("orden");
-            nombreProducto = rst.getString("nombre_producto");
-            observacion = rst.getString("observacion");
-            usuario = rst.getString("username");
-            nombreProveedor = rst.getString("nombres");
-            detalle = rst.getString("detalle");
-            fecharesgitro = rst.getString("fecha_registro");
-            fechaAproba = rst.getString("fecha_aprobacion");
-            cantidad = rst.getString("ingreso");
-            totalcompra = rst.getString("total");
+                codProd = rst.getString("codproductos");
+                orden = rst.getString("orden");
+                nombreProducto = rst.getString("nombre_producto");
+                observacion = rst.getString("observacion");
+                usuario = rst.getString("username");
+                nombreProveedor = rst.getString("nombres");
+                detalle = rst.getString("detalle");
+                fecharesgitro = rst.getString("fecha_registro");
+                fechaAproba = rst.getString("fecha_aprobacion");
+                cantidad = rst.getString("ingreso");
+                totalcompra = rst.getString("total");
 
-            vector.add(codProd);
-            vector.add(orden);
-            vector.add(nombreProducto);
-            vector.add(observacion);
-            vector.add(usuario);
-            vector.add(nombreProveedor);
-            vector.add(detalle);
-            vector.add(fecharesgitro);
-            vector.add(fechaAproba);
-            vector.add(cantidad);
-            vector.add(totalcompra);
+                vector.add(codProd);
+                vector.add(orden);
+                vector.add(nombreProducto);
+                vector.add(observacion);
+                vector.add(usuario);
+                vector.add(nombreProveedor);
+                vector.add(detalle);
+                vector.add(fecharesgitro);
+                vector.add(fechaAproba);
+                vector.add(cantidad);
+                vector.add(totalcompra);
 
-            matriz.add(vector);
+                matriz.add(vector);
 
+            }
+            this.cerrarConexionBD();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer los valores de una compra del inventario por estado" + e);
+            System.out.println("Error al Extraer los valores de una compra del inventario por estado" + e);
         }
-        this.cerrarConexionBD();
+
         return matriz;
     }
 
@@ -933,47 +1037,53 @@ public final class OperarcionesCRUD {
     public ArrayList<Vector<String>> InventarioFecha(String fecha, String estado) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
-
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "SELECT i.codproductos,i.orden, i.detalle, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
-                + "FROM bd_systema.inventario i\n"
-                + "INNER JOIN bd_systema.proveedor pro \n"
-                + "on i.idProveedor = pro.idProveedor\n"
-                + "INNER JOIN bd_systema.usuarios u \n"
-                + "on i.idusuarios = u.idusuarios\n"
-                + "INNER JOIN bd_systema.productos p \n"
-                + "on i.codproductos = p.codproductos\n"
-                + "where i.fecha_aprobacion = '" + fecha + "' and i.estado = '" + estado + "'";
 
-        ResultSet rst = stm.executeQuery(sql);
-        while (rst.next()) {
-            Vector<String> vector = new Vector<>();
-            String codProd, orden, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
+        try {
+            String sql = "SELECT i.codproductos,i.orden, i.detalle, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+                    + "FROM bd_systema.inventario i\n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on i.idProveedor = pro.idProveedor\n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on i.idusuarios = u.idusuarios\n"
+                    + "INNER JOIN bd_systema.productos p \n"
+                    + "on i.codproductos = p.codproductos\n"
+                    + "where i.fecha_aprobacion = '" + fecha + "' and i.estado = '" + estado + "'";
 
-            codProd = rst.getString("codproductos");
-            orden = rst.getString("orden");
-            nombreProducto = rst.getString("nombre_producto");
-            usuario = rst.getString("username");
-            nombreProveedor = rst.getString("nombres");
-            detalle = rst.getString("detalle");
-            fecharesgitro = rst.getString("fecha_registro");
-            cantidad = rst.getString("ingreso");
-            totalcompra = rst.getString("total");
+            ResultSet rst = stm.executeQuery(sql);
+            while (rst.next()) {
+                Vector<String> vector = new Vector<>();
+                String codProd, orden, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
 
-            vector.add(codProd);
-            vector.add(orden);
-            vector.add(nombreProducto);
-            vector.add(usuario);
-            vector.add(nombreProveedor);
-            vector.add(detalle);
-            vector.add(fecharesgitro);
-            vector.add(cantidad);
-            vector.add(totalcompra);
+                codProd = rst.getString("codproductos");
+                orden = rst.getString("orden");
+                nombreProducto = rst.getString("nombre_producto");
+                usuario = rst.getString("username");
+                nombreProveedor = rst.getString("nombres");
+                detalle = rst.getString("detalle");
+                fecharesgitro = rst.getString("fecha_registro");
+                cantidad = rst.getString("ingreso");
+                totalcompra = rst.getString("total");
 
-            matriz.add(vector);
+                vector.add(codProd);
+                vector.add(orden);
+                vector.add(nombreProducto);
+                vector.add(usuario);
+                vector.add(nombreProveedor);
+                vector.add(detalle);
+                vector.add(fecharesgitro);
+                vector.add(cantidad);
+                vector.add(totalcompra);
 
+                matriz.add(vector);
+
+            }
+            this.cerrarConexionBD();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer los valores de una compra del inventario por fecha" + e);
+            System.out.println("Error al Extraer los valores de una compra del inventario por fecha" + e);
         }
-        this.cerrarConexionBD();
+
         return matriz;
     }
 
@@ -982,9 +1092,7 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         try {
             Statement stm = this.conexion.createStatement();
-
             String sql = "select * from inventario where orden = '" + orden + "'";
-
             ResultSet rst = stm.executeQuery(sql);
 
             if (rst.next()) {
@@ -1019,9 +1127,9 @@ public final class OperarcionesCRUD {
                 }
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al guardar estado Compra" + e);
             System.out.println("Error al guardar estado Compra" + e);
         }
-
         this.cerrarConexionBD();
     }
 
@@ -1032,55 +1140,59 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
 
-        String status = "IngresoAnular";
-        String sql2 = "select orden from inventario where orden = '" + orden + "' and fecha_aprobacion = '" + fecha + "' and estado = '" + status + "'";
+        try {
+            String status = "IngresoAnular";
+            String sql2 = "select orden from inventario where orden = '" + orden + "' and fecha_aprobacion = '" + fecha + "' and estado = '" + status + "'";
 
-        ResultSet rst2 = stm.executeQuery(sql2);
-        if (rst2.next()) {
-            JOptionPane.showMessageDialog(null, "!! Orden En Espera de Aprobacion !!\n");
-        } else {
-            String sql = "SELECT i.codproductos, i.orden, i.observacion, i.estado, i.fecha_aprobacion, i.ingreso, i.total, u.username,  pro.nombres, p.nombre_producto\n"
-                    + "FROM bd_systema.inventario i\n"
-                    + "INNER JOIN bd_systema.usuarios u \n"
-                    + "on i.idusuarios = u.idusuarios\n"
-                    + "INNER JOIN bd_systema.proveedor pro \n"
-                    + "on i.idproveedor = pro.idProveedor\n"
-                    + "INNER JOIN bd_systema.productos p \n"
-                    + "on i.codproductos = p.codproductos\n"
-                    + "where i.estado = '" + stado + "' and i.fecha_aprobacion = '" + fecha + "' and i.orden = '" + orden + "'";
-
-            ResultSet rst = stm.executeQuery(sql);
-
-            if (rst.next()) {
-                Vector<String> datos = new Vector<>();
-
-                String ordenCompr, nomProdcuto, observacion, fechaComp, cantidaCompra, valor, usuario, nombrProvee;
-
-                ordenCompr = rst.getString("orden");
-                nomProdcuto = rst.getString("nombre_producto");
-                observacion = rst.getString("observacion");
-                fechaComp = rst.getString("fecha_aprobacion");
-                cantidaCompra = rst.getString("ingreso");
-                valor = rst.getString("total");
-                usuario = rst.getString("username");
-                nombrProvee = rst.getString("nombres");
-
-                datos.add(ordenCompr);
-                datos.add(nomProdcuto);
-                datos.add(observacion);
-                datos.add(fechaComp);
-                datos.add(cantidaCompra);
-                datos.add(valor);
-                datos.add(usuario);
-                datos.add(nombrProvee);
-
-                matriz.add(datos);
-
+            ResultSet rst2 = stm.executeQuery(sql2);
+            if (rst2.next()) {
+                JOptionPane.showMessageDialog(null, "!! Orden En Espera de Aprobacion !!\n");
             } else {
-                JOptionPane.showMessageDialog(null, "!! Orden no se encuentra Registrado !!\n");
-            }
-        }
+                String sql = "SELECT i.codproductos, i.orden, i.observacion, i.estado, i.fecha_aprobacion, i.ingreso, i.total, u.username,  pro.nombres, p.nombre_producto\n"
+                        + "FROM bd_systema.inventario i\n"
+                        + "INNER JOIN bd_systema.usuarios u \n"
+                        + "on i.idusuarios = u.idusuarios\n"
+                        + "INNER JOIN bd_systema.proveedor pro \n"
+                        + "on i.idproveedor = pro.idProveedor\n"
+                        + "INNER JOIN bd_systema.productos p \n"
+                        + "on i.codproductos = p.codproductos\n"
+                        + "where i.estado = '" + stado + "' and i.fecha_aprobacion = '" + fecha + "' and i.orden = '" + orden + "'";
 
+                ResultSet rst = stm.executeQuery(sql);
+
+                if (rst.next()) {
+                    Vector<String> datos = new Vector<>();
+
+                    String ordenCompr, nomProdcuto, observacion, fechaComp, cantidaCompra, valor, usuario, nombrProvee;
+
+                    ordenCompr = rst.getString("orden");
+                    nomProdcuto = rst.getString("nombre_producto");
+                    observacion = rst.getString("observacion");
+                    fechaComp = rst.getString("fecha_aprobacion");
+                    cantidaCompra = rst.getString("ingreso");
+                    valor = rst.getString("total");
+                    usuario = rst.getString("username");
+                    nombrProvee = rst.getString("nombres");
+
+                    datos.add(ordenCompr);
+                    datos.add(nomProdcuto);
+                    datos.add(observacion);
+                    datos.add(fechaComp);
+                    datos.add(cantidaCompra);
+                    datos.add(valor);
+                    datos.add(usuario);
+                    datos.add(nombrProvee);
+
+                    matriz.add(datos);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "!! Orden no se encuentra Registrado !!\n");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al buscar en el invetario por numero de Orden" + e);
+            System.out.println("Error al buscar en el invetario por numero de Orden" + e);
+        }
         this.cerrarConexionBD();
         return matriz;
     }
@@ -1093,48 +1205,53 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        String sql = "select idProveedor,"
-                + " ruc,idusuarios, nombres,"
-                + " apellidos, email, direccion,fecha_registro,"
-                + " fecha_actualizacion, comentario, userRegistro,"
-                + "userActualizacion from proveedor where ruc ='" + ruc + "'";
-        ResultSet rst = stm.executeQuery(sql);
-        if (rst.next()) {
-            Vector<String> datos = new Vector<>();
-            String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
 
-            idprovee = rst.getString("idProveedor");
-            rucPro = rst.getString("ruc");
-            iduser = rst.getString("idusuarios");
-            nombres = rst.getString("nombres");
-            apellidos = rst.getString("apellidos");
-            email = rst.getString("email");
-            direccion = rst.getString("direccion");
-            fech_regis = rst.getString("fecha_registro");
-            fecha_actu = rst.getString("fecha_actualizacion");
-            comentario = rst.getString("comentario");
-            userRegis = rst.getString("userRegistro");
-            userActual = rst.getString("userActualizacion");
+        try {
+            String sql = "select idProveedor,"
+                    + " ruc,idusuarios, nombres,"
+                    + " apellidos, email, direccion,fecha_registro,"
+                    + " fecha_actualizacion, comentario, userRegistro,"
+                    + "userActualizacion from proveedor where ruc ='" + ruc + "'";
+            ResultSet rst = stm.executeQuery(sql);
+            if (rst.next()) {
+                Vector<String> datos = new Vector<>();
+                String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
 
-            datos.add(idprovee);
-            datos.add(rucPro);
-            datos.add(iduser);
-            datos.add(nombres);
-            datos.add(apellidos);
-            datos.add(email);
-            datos.add(direccion);
-            datos.add(fech_regis);
-            datos.add(fecha_actu);
-            datos.add(comentario);
-            datos.add(userRegis);
-            datos.add(userActual);
+                idprovee = rst.getString("idProveedor");
+                rucPro = rst.getString("ruc");
+                iduser = rst.getString("idusuarios");
+                nombres = rst.getString("nombres");
+                apellidos = rst.getString("apellidos");
+                email = rst.getString("email");
+                direccion = rst.getString("direccion");
+                fech_regis = rst.getString("fecha_registro");
+                fecha_actu = rst.getString("fecha_actualizacion");
+                comentario = rst.getString("comentario");
+                userRegis = rst.getString("userRegistro");
+                userActual = rst.getString("userActualizacion");
 
-            matriz.add(datos);
+                datos.add(idprovee);
+                datos.add(rucPro);
+                datos.add(iduser);
+                datos.add(nombres);
+                datos.add(apellidos);
+                datos.add(email);
+                datos.add(direccion);
+                datos.add(fech_regis);
+                datos.add(fecha_actu);
+                datos.add(comentario);
+                datos.add(userRegis);
+                datos.add(userActual);
 
-        } else {
-            JOptionPane.showMessageDialog(null, "!! Proveedor no se encuentra Registrado !!\n");
+                matriz.add(datos);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "!! Proveedor no se encuentra Registrado !!\n");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Consultar si Proveedor se encuentra Registrado" + e);
+            System.out.println("Error al Consultar si Proveedor se encuentra Registrado" + e);
         }
-
         this.cerrarConexionBD();
         return matriz;
     }
@@ -1143,47 +1260,51 @@ public final class OperarcionesCRUD {
     public void InsertarProveedor(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
-
         ArrayList<Vector<String>> matriz = datos;
 
-        for (Vector<String> vector : matriz) {
-            String rucPro, iduser, nombres, apellidos, email, direccion, fecha_registro, comentario, userRegis;
+        try {
+            for (Vector<String> vector : matriz) {
+                String rucPro, iduser, nombres, apellidos, email, direccion, fecha_registro, comentario, userRegis;
 
-            rucPro = vector.get(0);
-            iduser = vector.get(1);
-            nombres = vector.get(2);
-            apellidos = vector.get(3);
-            email = vector.get(4);
-            direccion = vector.get(5);
-            fecha_registro = vector.get(6);
-            comentario = vector.get(7);
-            userRegis = vector.get(8);
+                rucPro = vector.get(0);
+                iduser = vector.get(1);
+                nombres = vector.get(2);
+                apellidos = vector.get(3);
+                email = vector.get(4);
+                direccion = vector.get(5);
+                fecha_registro = vector.get(6);
+                comentario = vector.get(7);
+                userRegis = vector.get(8);
 
-            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
+                String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
 
-            ResultSet rst = stm.executeQuery(sql);
+                ResultSet rst = stm.executeQuery(sql);
 
-            if (rst.next()) {
-                JOptionPane.showMessageDialog(null, "!! No puede Guardar a este Proveedor ya se encuentra Registrado !!\n");
-                this.cerrarConexionBD();
-            } else {
-                this.iniciarConexionBD();
-                Statement stm1 = this.conexion.createStatement();
-                String sql1 = " INSERT INTO proveedor (RUC, "
-                        + "IDUSUARIOS, NOMBRES, "
-                        + "APELLIDOS, EMAIL,DIRECCION,"
-                        + "FECHA_REGISTRO, COMENTARIO, "
-                        + "USERREGISTRO) VALUES ('" + rucPro + "', '" + iduser + "',"
-                        + " '" + nombres + "', '" + apellidos + "', '" + email + "', "
-                        + "'" + direccion + "','" + fecha_registro + "', "
-                        + "'" + comentario + "', '" + userRegis + "')";
-                stm1.executeUpdate(sql1);
-                JOptionPane.showMessageDialog(null, "!! Proveedor Guardado con Exito !!\n");
+                if (rst.next()) {
+                    JOptionPane.showMessageDialog(null, "!! No puede Guardar a este Proveedor ya se encuentra Registrado !!\n");
+                    this.cerrarConexionBD();
+                } else {
+                    this.iniciarConexionBD();
+                    Statement stm1 = this.conexion.createStatement();
+                    String sql1 = " INSERT INTO proveedor (RUC, "
+                            + "IDUSUARIOS, NOMBRES, "
+                            + "APELLIDOS, EMAIL,DIRECCION,"
+                            + "FECHA_REGISTRO, COMENTARIO, "
+                            + "USERREGISTRO) VALUES ('" + rucPro + "', '" + iduser + "',"
+                            + " '" + nombres + "', '" + apellidos + "', '" + email + "', "
+                            + "'" + direccion + "','" + fecha_registro + "', "
+                            + "'" + comentario + "', '" + userRegis + "')";
+                    stm1.executeUpdate(sql1);
+                    JOptionPane.showMessageDialog(null, "!! Proveedor Guardado con Exito !!\n");
+                }
+
             }
-            this.cerrarConexionBD();
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Registrar un proveedor" + e);
+            System.out.println("Error al Registrar un proveedor" + e);
         }
 
+        this.cerrarConexionBD();
     }
 
     //aqui Actualizamos un proveedor
@@ -1191,37 +1312,44 @@ public final class OperarcionesCRUD {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = datos;
-        for (Vector<String> vector : matriz) {
-            String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
-            rucPro = vector.get(0);
-            iduser = vector.get(1);
-            nombres = vector.get(2);
-            apellidos = vector.get(3);
-            email = vector.get(4);
-            direccion = vector.get(5);
-            fechaActual = vector.get(6);
-            comentario = vector.get(7);
-            userActual = vector.get(8);
 
-            String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
+        try {
+            for (Vector<String> vector : matriz) {
+                String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
+                rucPro = vector.get(0);
+                iduser = vector.get(1);
+                nombres = vector.get(2);
+                apellidos = vector.get(3);
+                email = vector.get(4);
+                direccion = vector.get(5);
+                fechaActual = vector.get(6);
+                comentario = vector.get(7);
+                userActual = vector.get(8);
 
-            ResultSet rst = stm.executeQuery(sql);
+                String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
 
-            if (rst.next()) {
-                String sql2 = "update proveedor set nombres ='" + nombres + "', "
-                        + "apellidos ='" + apellidos + "',"
-                        + " email ='" + email + "', direccion ='" + direccion + "', "
-                        + "fecha_actualizacion ='" + fechaActual + "', "
-                        + "comentario ='" + comentario + "',"
-                        + " userActualizacion = '" + userActual + "' where ruc = '" + rucPro + "'";
-                stm.executeUpdate(sql2);
-                JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
+                ResultSet rst = stm.executeQuery(sql);
 
-            } else {
-                JOptionPane.showMessageDialog(null, "!! No puede Actualizar Proveedor no se encuentra Registrado !!\n");
+                if (rst.next()) {
+                    String sql2 = "update proveedor set nombres ='" + nombres + "', "
+                            + "apellidos ='" + apellidos + "',"
+                            + " email ='" + email + "', direccion ='" + direccion + "', "
+                            + "fecha_actualizacion ='" + fechaActual + "', "
+                            + "comentario ='" + comentario + "',"
+                            + " userActualizacion = '" + userActual + "' where ruc = '" + rucPro + "'";
+                    stm.executeUpdate(sql2);
+                    JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "!! No puede Actualizar Proveedor no se encuentra Registrado !!\n");
+                }
+
             }
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Actualizar un proveedor" + e);
+            System.out.println("Error al Actualizar un proveedor" + e);
         }
+
         this.cerrarConexionBD();
     }
 
@@ -1230,21 +1358,26 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> nombre = new ArrayList<>();
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
-        String sql = "SELECT distinct nombres as nomb , apellidos as aplle FROM bd_systema.proveedor";
 
-        ResultSet rst = stm.executeQuery(sql);
+        try {
+            String sql = "SELECT distinct nombres as nomb , apellidos as aplle FROM bd_systema.proveedor";
+            ResultSet rst = stm.executeQuery(sql);
+            while (rst.next()) {
+                Vector<String> datos = new Vector<>();
+                String nombres, apellidos;
+                nombres = rst.getString("nomb");
+                apellidos = rst.getString("aplle");
 
-        while (rst.next()) {
-            Vector<String> datos = new Vector<>();
-            String nombres, apellidos;
-            nombres = rst.getString("nomb");
-            apellidos = rst.getString("aplle");
+                datos.add(nombres);
+                datos.add(apellidos);
 
-            datos.add(nombres);
-            datos.add(apellidos);
-
-            nombre.add(datos);
+                nombre.add(datos);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer los proveedores Registrados" + e);
+            System.out.println("Error al Extraer los proveedores Registrados" + e);
         }
+
         this.cerrarConexionBD();
         return nombre;
     }
