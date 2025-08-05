@@ -868,7 +868,7 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = datos;
 
         for (Vector<String> vector : matriz) {
-            String codProd, idUser, idProve, orden, detalle, stado, fechIngre, observacion, cantidad, stock, total;
+            String codProd, idUser, idProve, orden, detalle, stado, fechIngre, observacion, cantidad, stock, total, formapago, plazo, fechaVenc, cuota, sald;
             int saldo;
             int resultado;
 
@@ -882,6 +882,12 @@ public final class OperarcionesCRUD {
             fechIngre = vector.get(7);
             cantidad = vector.get(8);
             total = vector.get(9);
+
+            formapago = vector.get(10);
+            plazo = vector.get(11);
+            fechaVenc = vector.get(12);
+            cuota = vector.get(13);
+            sald = vector.get(14);
 
             switch (detalle) {
                 case "Compra":
@@ -901,28 +907,61 @@ public final class OperarcionesCRUD {
                                 + ") AS inv LIMIT 1";
 
                         ResultSet rst = stm.executeQuery(sql2);
+
                         if (rst.next()) {
                             saldo = rst.getInt("stock");
                             int canti = (Integer.parseInt(cantidad));
                             resultado = saldo + canti;
 
-                            String sql3 = "insert into inventario "
-                                    + "(codproductos,idusuarios,idproveedor,orden,detalle, observacion, estado,"
-                                    + " fecha_registro,fecha_aprobacion,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                    + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
-                            stm.executeUpdate(sql3);
-                            JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                            switch (formapago) {
+                                case "Crédito":
+                                    String sql3 = "insert into inventario "
+                                            + "(codproductos,idusuarios,idproveedor,orden,detalle, observacion, estado,"
+                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago,plazo,fecha_vencimiento_plazo,valor_cuota,saldo) "
+                                            + "values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "',"
+                                            + "'" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "','" + formapago + "','" + plazo + "', '" + fechaVenc + "','" + cuota + "','" + sald + "')";
+                                    stm.executeUpdate(sql3);
+                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                                    break;
+                                case "Contado":
+                                    String sql4 = "insert into inventario "
+                                            + "(codproductos,idusuarios,idproveedor,orden,detalle, observacion, estado,"
+                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago) "
+                                            + "values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "','" + formapago + "')";
+                                    stm.executeUpdate(sql4);
+                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+
+                                    break;
+                            }
 
                         } else {
-                            stock = cantidad;
-                            String sql = "insert into inventario "
-                                    + "(codproductos,idusuarios,idproveedor,orden,detalle,observacion, estado,"
-                                    + " fecha_registro,fecha_aprobacion,ingreso,stock,total) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                    + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
-                            stm.executeUpdate(sql);
-                            JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
-                            this.cerrarConexionBD();
+                            switch (formapago) {
+                                case "Crédito":
+                                    stock = cantidad;
+                                    String sql = "insert into inventario "
+                                            + "(codproductos,idusuarios,idproveedor,orden,detalle,observacion, estado,"
+                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago,plazo,fecha_vencimiento_plazo,valor_cuota,saldo)"
+                                            + " values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "',"
+                                            + "'" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "','" + formapago + "','" + plazo + "', '" + fechaVenc + "','" + cuota + "','" + sald + "')";
+                                    stm.executeUpdate(sql);
+                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                                    break;
+                                case "Contado":
+                                    stock = cantidad;
+                                    String sql5 = "insert into inventario "
+                                            + "(codproductos,idusuarios,idproveedor,orden,detalle,observacion, estado,"
+                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "','" + formapago + "')";
+                                    stm.executeUpdate(sql5);
+                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                                    break;
+                            }
+
                         }
+                        this.cerrarConexionBD();
                     }
 
                 } catch (Exception e) {

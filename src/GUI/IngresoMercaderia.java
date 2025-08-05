@@ -14,6 +14,8 @@ import java.awt.event.MouseEvent;
 import static java.lang.System.exit;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -46,11 +48,15 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         String coduser = ops.codigoUser(usuario);
 //        labelID.setText(coduser);
         IdUserReg.setText(coduser);
-        UserRegistro.setText(usuario);
+        labelID.setText(coduser);
+        labelUSuario.setText(usuario);
         jPanel6.setVisible(false);
 
         DefaultTableModel modelos = (DefaultTableModel) TablaProductos.getModel();
 
+        LocalDate fecha = LocalDate.now();
+
+        String fechRegistro = fecha.format(DateTimeFormatter.ISO_DATE);
         TablaProductos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -65,17 +71,13 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                         ArrayList<Vector<String>> matriz = ops.CodigoProduto(codPro);
 
                         for (Vector<String> vector : matriz) {
-                            String codiPro, nombreProd, detaProd, tipoProd, fechRegistro, fechAc, prec, iva, rucPro, nombProve, apellProve, idProve, idUser, username;
-
-                            IdUserReg.setText(coduser);
-                            IdUserReg.setVisible(false);
-                            UserRegistro.setText(usuario);
+                            String codiPro, nombreProd, detaProd, tipoProd, fechAc, prec, iva, rucPro, nombProve, apellProve, idProve, idUser, username;
 
                             codiPro = vector.get(0);
                             nombreProd = vector.get(1);
                             detaProd = vector.get(2);
                             tipoProd = vector.get(3);
-                            fechRegistro = vector.get(4);
+                            //  fechRegistro = vector.get(4);
                             fechAc = vector.get(5);
                             prec = vector.get(6);
                             iva = vector.get(7);
@@ -91,15 +93,15 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                             txtDetalle.setText(detaProd);
                             jComboBox1.setText(tipoProd);
                             labelFecha1.setText(fechRegistro);
-                            labelFecha.setText(fechAc);
+                            labelFecha.setText(fechRegistro);
                             txtprecio.setText(prec);
                             txtiva.setText(iva);
                             txtRuc.setText(rucPro);
                             jLabelNombres.setText(nombProve);
                             jLabelApellidos.setText(apellProve);
                             LabelIDRuc.setText(idProve);
-                            labelID.setText(idUser);
-                            labelUSuario.setText(username);
+//                            labelID.setText(idUser);
+//                            labelUSuario.setText(username);
 
                         }
 
@@ -139,6 +141,9 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         txtotalplazo.setVisible(false);
         jlalabelSubTotal.setVisible(false);
         labelSubTotal.setVisible(false);
+        labelFechaVEn.setVisible(false);
+        txtFechaVencimiento.setVisible(false);
+        calcularplazo.setVisible(false);
 
         comboformapago.addItemListener(new ItemListener() {
             @Override
@@ -155,6 +160,9 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                         txtotal.setVisible(false);
                         jlalabelSubTotal.setVisible(true);
                         labelSubTotal.setVisible(true);
+                        labelFechaVEn.setVisible(true);
+                        txtFechaVencimiento.setVisible(true);
+                        calcularplazo.setVisible(true);
                     } else {
                         labelPlazo.setVisible(false);
                         comboplazo.setVisible(false);
@@ -164,6 +172,9 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                         txtotal.setVisible(true);
                         jlalabelSubTotal.setVisible(false);
                         labelSubTotal.setVisible(false);
+                        labelFechaVEn.setVisible(false);
+                        txtFechaVencimiento.setVisible(false);
+                        calcularplazo.setVisible(false);
                     }
                 }
             }
@@ -217,6 +228,8 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         txtotalplazo = new javax.swing.JLabel();
         jlalabelSubTotal = new javax.swing.JLabel();
         labelSubTotal = new javax.swing.JLabel();
+        labelFechaVEn = new javax.swing.JLabel();
+        txtFechaVencimiento = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -481,6 +494,8 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
 
         jlalabelSubTotal.setText("Sub Total:");
 
+        labelFechaVEn.setText("Fecha Vencimiento:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -522,12 +537,16 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Calcular))
-                        .addGap(37, 37, 37))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(Calcular)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calcularplazo)
-                        .addContainerGap())))
+                        .addComponent(calcularplazo))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelFechaVEn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtFechaVencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -566,11 +585,13 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlalabelSubTotal)
-                    .addComponent(labelSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelFechaVEn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelplazo)
-                    .addComponent(txtotalplazo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtotalplazo, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(txtFechaVencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -754,7 +775,6 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                             .addComponent(labelFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
                             .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -995,6 +1015,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         jPanel6.setVisible(false);
+        RegistroCompra.setEnabled(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1013,26 +1034,31 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         valirCalcular();
 
-        Date fecha = new Date();
+        LocalDate fechaAc = LocalDate.now();
+        String formapago = "", plazo = "";
+        String fechAC = fechaAc.format(DateTimeFormatter.ISO_DATE);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String fechaAc = format.format(fecha);
-
-        String idCod, idUser, idProve, cantidad, totalCompra, orden, observacion;
+        String idCod, idUser, idProve, cantidad, totalCompra, fechaVen, cuota, orden, valorCuota, observacion, saldo;
         int contador = 0;
+        cuota = txtotalplazo.getText().trim().replace(",", ".");
 
+        double precio = Double.parseDouble(cuota);
+
+        valorCuota = (String.valueOf(precio));
         orden = txtOrden.getText();
         String detalleCompra = "Compra";
         String stado = "Ingresado";
 
         idCod = labelCodigo.getText();
-        idUser = IdUserReg.getText();
+        idUser = labelID.getText();
         idProve = LabelIDRuc.getText();
         cantidad = txtcantidad.getText();
         observacion = txtDetalle.getText();
 
+        fechaVen = txtFechaVencimiento.getText();
         totalCompra = txtotal.getText();
 
+        saldo = txtotal.getText();
         if (totalCompra.equals("")) {
             contador++;
         }
@@ -1041,32 +1067,79 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         }
 
         if (contador == 0) {
-            Vector<String> datos = new Vector<>();
 
-            datos.add(idCod);
-            datos.add(idUser);
-            datos.add(idProve);
-            datos.add(orden);
-            datos.add(detalleCompra);
-            datos.add(observacion);
-            datos.add(stado);
-            datos.add(fechaAc);
-            datos.add(cantidad);
-            datos.add(totalCompra);
+            Object seleccion = comboformapago.getSelectedItem();
+            Object selplazo = comboplazo.getSelectedItem();
 
-            matriz.add(datos);
+            if ("Crédito".equals(seleccion)) {
+                formapago = "Crédito";
+                if ("12 meses".equals(selplazo)) {
+                    plazo = "12 meses";
+                } else if ("6 meses".equals(selplazo)) {
+                    plazo = "6 meses";
+                } else if ("3 meses".equals(selplazo)) {
+                    plazo = "3 meses";
+                } else if ("1 mes".equals(selplazo)) {
+                    plazo = "1 mes";
+                }
+
+                Vector<String> datos = new Vector<>();
+
+                datos.add(idCod);
+                datos.add(idUser);
+                datos.add(idProve);
+                datos.add(orden);
+                datos.add(detalleCompra);
+                datos.add(observacion);
+                datos.add(stado);
+                datos.add(fechAC);
+                datos.add(cantidad);
+                datos.add(totalCompra);
+
+                datos.add(formapago);
+                datos.add(plazo);
+                datos.add(fechaVen);
+                datos.add(valorCuota);
+                datos.add(saldo);
+
+                matriz.add(datos);
+
+            } else {
+                formapago = "Contado";
+                Vector<String> datos = new Vector<>();
+
+                datos.add(idCod);
+                datos.add(idUser);
+                datos.add(idProve);
+                datos.add(orden);
+                datos.add(detalleCompra);
+                datos.add(observacion);
+                datos.add(stado);
+                datos.add(fechAC);
+                datos.add(cantidad);
+                datos.add(totalCompra);
+
+                matriz.add(datos);
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
         }
-
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            op.Mercaderia(matriz);
-            LimpiarCalculadora();
+
+            int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Registar Compra a " + formapago, "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                op.Mercaderia(matriz);
+                LimpiarCalculadora();
+                RegistroCompra.setEnabled(false);
+            } else if (opcion == JOptionPane.NO_OPTION) {
+
+            }
+
         } catch (SQLException err) {
             err.printStackTrace();
         }
-
 
     }//GEN-LAST:event_RegistroCompraActionPerformed
 
@@ -1101,6 +1174,12 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboplazoActionPerformed
 
     public void ActualizarValores() {
+
+        LocalDate fechaAc = LocalDate.now();
+        LocalDate fechaVence = LocalDate.now();
+        String formapago = "", plazo = "";
+        int diasCredito = 0;
+
         Object seleccionado = comboformapago.getSelectedItem();
         Object seleccion = comboplazo.getSelectedItem();
 
@@ -1112,19 +1191,37 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
             if ("Crédito".equals(seleccionado)) {
                 labelPlazo.setVisible(true);
                 comboplazo.setVisible(true);
+                labelFechaVEn.setVisible(true);
+                txtFechaVencimiento.setVisible(true);
 
+                formapago = "Crédito";
                 if ("12 meses".equals(seleccion)) {
                     diferido = sumaTotal / 12;
+                    plazo = "12 meses";
+                    diasCredito = 365;
+                    fechaVence = fechaAc.plusDays(diasCredito);
                 } else if ("6 meses".equals(seleccion)) {
                     diferido = sumaTotal / 6;
+                    plazo = "6 meses";
+                    diasCredito = 180;
+                    fechaVence = fechaAc.plusDays(diasCredito);
                 } else if ("3 meses".equals(seleccion)) {
                     diferido = sumaTotal / 3;
+                    plazo = "3 meses";
+                    diasCredito = 90;
+                    fechaVence = fechaAc.plusDays(diasCredito);
                 } else if ("1 mes".equals(seleccion)) {
                     diferido = sumaTotal / 1;
+                    plazo = "1 mes";
+                    diasCredito = 30;
+                    fechaVence = fechaAc.plusDays(diasCredito);
                 }
 
                 labelSubTotal.setText(sumaTo);
                 txtotalplazo.setText(String.format("%.2f", diferido));
+
+                String fechaVencimiento = (String) fechaVence.toString();
+                txtFechaVencimiento.setText(fechaVencimiento);
             } else {
 //                labelPlazo.setVisible(false);
 //                comboplazo.setVisible(false);
@@ -1195,12 +1292,14 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelContado;
     private javax.swing.JLabel labelFecha;
     private javax.swing.JLabel labelFecha1;
+    private javax.swing.JLabel labelFechaVEn;
     private javax.swing.JLabel labelID;
     private javax.swing.JLabel labelPlazo;
     private javax.swing.JLabel labelSubTotal;
     private javax.swing.JLabel labelUSuario;
     private javax.swing.JLabel labelplazo;
     private javax.swing.JLabel txtDetalle;
+    private javax.swing.JLabel txtFechaVencimiento;
     private javax.swing.JTextField txtOrden;
     private javax.swing.JLabel txtRuc;
     private javax.swing.JTextField txtRucConsultaPRo;
