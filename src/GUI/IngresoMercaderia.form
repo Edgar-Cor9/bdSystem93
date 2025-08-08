@@ -714,7 +714,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelplazo">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Total Plazo:"/>
+                    <Property name="text" type="java.lang.String" value="Valor Cuota:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="txtotalplazo">

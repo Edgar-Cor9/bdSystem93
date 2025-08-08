@@ -98,6 +98,11 @@ public class Login extends javax.swing.JFrame {
 
         txtpassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtpassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtpassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtpasswordActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 160, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/wallpaperPrincipal.jpg"))); // NOI18N
@@ -110,7 +115,7 @@ public class Login extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void Ingreso() {
         String pass, stado = null;
         int validarion = 0;
         user = txtusuario.getText().toString();
@@ -134,8 +139,14 @@ public class Login extends javax.swing.JFrame {
                 err.printStackTrace();
             }
         }
-
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Ingreso();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
+        Ingreso();
+    }//GEN-LAST:event_txtpasswordActionPerformed
 
     /**
      * @param args the command line arguments

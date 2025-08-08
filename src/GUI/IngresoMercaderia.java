@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package GUI;
 
 import Logica_Operaciones_BD.OperarcionesCRUD;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -18,9 +15,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -100,9 +102,9 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                             jLabelNombres.setText(nombProve);
                             jLabelApellidos.setText(apellProve);
                             LabelIDRuc.setText(idProve);
-//                            labelID.setText(idUser);
-//                            labelUSuario.setText(username);
 
+                            LimpiarCalculadora();
+                            ActualizarValores();
                         }
 
                     } catch (SQLException err) {
@@ -134,16 +136,30 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
             }
         });
 
+        //----------------------------------------------
+        String orden = txtOrden.getText().toString();
+        txtOrden.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
         //esto es para activar el combo a credito
-        labelPlazo.setVisible(false);
-        comboplazo.setVisible(false);
-        labelplazo.setVisible(false);
-        txtotalplazo.setVisible(false);
-        jlalabelSubTotal.setVisible(false);
-        labelSubTotal.setVisible(false);
-        labelFechaVEn.setVisible(false);
-        txtFechaVencimiento.setVisible(false);
-        calcularplazo.setVisible(false);
+        actualizarVisibilidadPorFormaDePago(comboformapago);
 
         comboformapago.addItemListener(new ItemListener() {
             @Override
@@ -151,32 +167,10 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                 Object seleccionado = comboformapago.getSelectedItem();
 
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    if ("Crédito".equals(seleccionado)) {
-                        labelPlazo.setVisible(true);
-                        comboplazo.setVisible(true);
-                        labelplazo.setVisible(true);
-                        txtotalplazo.setVisible(true);
-                        labelContado.setVisible(false);
-                        txtotal.setVisible(false);
-                        jlalabelSubTotal.setVisible(true);
-                        labelSubTotal.setVisible(true);
-                        labelFechaVEn.setVisible(true);
-                        txtFechaVencimiento.setVisible(true);
-                        calcularplazo.setVisible(true);
-                    } else {
-                        labelPlazo.setVisible(false);
-                        comboplazo.setVisible(false);
-                        labelplazo.setVisible(false);
-                        txtotalplazo.setVisible(false);
-                        labelContado.setVisible(true);
-                        txtotal.setVisible(true);
-                        jlalabelSubTotal.setVisible(false);
-                        labelSubTotal.setVisible(false);
-                        labelFechaVEn.setVisible(false);
-                        txtFechaVencimiento.setVisible(false);
-                        calcularplazo.setVisible(false);
-                    }
+                    actualizarVisibilidadPorFormaDePago(seleccionado);
+                    ActualizarValores();
                 }
+
             }
         });
 
@@ -490,7 +484,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
 
         labelPlazo.setText("Plazo:");
 
-        labelplazo.setText("Total Plazo:");
+        labelplazo.setText("Valor Cuota:");
 
         jlalabelSubTotal.setText("Sub Total:");
 
@@ -900,6 +894,21 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void actualizarVisibilidadPorFormaDePago(Object seleccionado) {
+        boolean esCredito = "Crédito".equals(seleccionado);
+
+        labelPlazo.setVisible(esCredito);
+        comboplazo.setVisible(esCredito);
+        labelplazo.setVisible(esCredito);
+        txtotalplazo.setVisible(esCredito);
+        labelContado.setVisible(!esCredito);
+        txtotal.setVisible(!esCredito);
+        jlalabelSubTotal.setVisible(esCredito);
+        labelSubTotal.setVisible(esCredito);
+        labelFechaVEn.setVisible(esCredito);
+        txtFechaVencimiento.setVisible(esCredito);
+        calcularplazo.setVisible(esCredito);
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -923,35 +932,6 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_ConsultarTipoActionPerformed
-
-    public void valirCalcular() {
-        String cantidad, precio, iva, total;
-
-        cantidad = txtcantidad.getText();
-        precio = txtprecio.getText();
-        iva = txtiva.getText();
-        int validacion = 0;
-
-        total = txtotal.getText();
-
-        if (precio.equals("")) {
-            validacion++;
-        }
-        if (iva.equals("")) {
-            validacion++;
-        }
-        if (cantidad.equals("")) {
-            validacion++;
-        }
-        if (total.equals("")) {
-            validacion++;
-        }
-
-        if (validacion >= 1) {
-            JOptionPane.showMessageDialog(null, "Ingrese los valores para calculo Producto");
-
-        }
-    }
 
     public void LimpiarRucPro() {
         jLabelNombres.setText("");
@@ -1007,7 +987,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
     public void LimpiarCalculadora() {
         txtcantidad.setText("");
         txtotal.setText("");
-
+        txtOrden.setText("");
     }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         LimpiarCalculadora();
@@ -1029,10 +1009,57 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TablaProductosMouseClicked
 
+    public boolean valirOden() {
+        String orden = txtOrden.getText().trim();
+        int longitud = 15;
+        int valor = orden.length();
+
+        if (valor > longitud) {
+            JOptionPane.showMessageDialog(null, "No puede Exceder los 15 Caracteres en la Orden");
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean valirCalcular() {
+        String cantidad, precio, iva, total, orden;
+
+        orden = txtOrden.getText().trim();
+        cantidad = txtcantidad.getText().trim();
+        precio = txtprecio.getText().trim();
+        iva = txtiva.getText().trim();
+        total = txtotal.getText().trim();
+        int validacion = 0;
+        
+  
+
+        if (orden.isEmpty()) {     
+            JOptionPane.showMessageDialog(null, "Ingrese un # de Orden");
+        }
+        if (precio.isEmpty()) {
+            validacion++;
+        }
+        if (iva.isEmpty()) {
+            validacion++;
+        }
+        if (cantidad.isEmpty()) {
+            validacion++;
+        }
+        if (total.isEmpty()) {
+            validacion++;
+        }
+
+        if (validacion >= 1) {
+            JOptionPane.showMessageDialog(null, "Ingrese los valores para calculo Producto");
+            return false;
+        }
+
+        return true;
+    }
 
     private void RegistroCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroCompraActionPerformed
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        valirCalcular();
 
         LocalDate fechaAc = LocalDate.now();
         String formapago = "", plazo = "";
@@ -1040,39 +1067,44 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
 
         String idCod, idUser, idProve, cantidad, totalCompra, fechaVen, cuota, orden, valorCuota, observacion, saldo;
         int contador = 0;
-        cuota = txtotalplazo.getText().trim().replace(",", ".");
 
-        double precio = Double.parseDouble(cuota);
-
-        valorCuota = (String.valueOf(precio));
-        orden = txtOrden.getText();
+        valorCuota = txtotalplazo.getText().toString().trim();
+        orden = txtOrden.getText().trim();
         String detalleCompra = "Compra";
         String stado = "Ingresado";
 
-        idCod = labelCodigo.getText();
-        idUser = labelID.getText();
-        idProve = LabelIDRuc.getText();
-        cantidad = txtcantidad.getText();
-        observacion = txtDetalle.getText();
+        idCod = labelCodigo.getText().trim();
+        idUser = labelID.getText().trim();
+        idProve = LabelIDRuc.getText().trim();
+        cantidad = txtcantidad.getText().trim();
+        observacion = txtDetalle.getText().trim();
 
-        fechaVen = txtFechaVencimiento.getText();
-        totalCompra = txtotal.getText();
+        fechaVen = txtFechaVencimiento.getText().trim();
+        totalCompra = txtotal.getText().trim();
 
-        saldo = txtotal.getText();
-        if (totalCompra.equals("")) {
-            contador++;
-        }
-        if (orden.equals("")) {
-            contador++;
-        }
+        saldo = totalCompra;
 
-        if (contador == 0) {
+        if (valirCalcular() && valirOden()) {
 
             Object seleccion = comboformapago.getSelectedItem();
             Object selplazo = comboplazo.getSelectedItem();
 
+            Vector<String> datos = new Vector<>();
+
+            datos.add(idCod);
+            datos.add(idUser);
+            datos.add(idProve);
+            datos.add(orden);
+            datos.add(detalleCompra);
+            datos.add(observacion);
+            datos.add(stado);
+            datos.add(fechAC);
+            datos.add(cantidad);
+            datos.add(totalCompra);
+
             if ("Crédito".equals(seleccion)) {
                 formapago = "Crédito";
+
                 if ("12 meses".equals(selplazo)) {
                     plazo = "12 meses";
                 } else if ("6 meses".equals(selplazo)) {
@@ -1083,69 +1115,46 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                     plazo = "1 mes";
                 }
 
-                Vector<String> datos = new Vector<>();
-
-                datos.add(idCod);
-                datos.add(idUser);
-                datos.add(idProve);
-                datos.add(orden);
-                datos.add(detalleCompra);
-                datos.add(observacion);
-                datos.add(stado);
-                datos.add(fechAC);
-                datos.add(cantidad);
-                datos.add(totalCompra);
-
-                datos.add(formapago);
-                datos.add(plazo);
-                datos.add(fechaVen);
-                datos.add(valorCuota);
-                datos.add(saldo);
-
-                matriz.add(datos);
-
             } else {
                 formapago = "Contado";
-                Vector<String> datos = new Vector<>();
-
-                datos.add(idCod);
-                datos.add(idUser);
-                datos.add(idProve);
-                datos.add(orden);
-                datos.add(detalleCompra);
-                datos.add(observacion);
-                datos.add(stado);
-                datos.add(fechAC);
-                datos.add(cantidad);
-                datos.add(totalCompra);
-
-                matriz.add(datos);
             }
 
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
-        }
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+            datos.add(formapago);
+            datos.add(plazo);
+            datos.add(fechaVen);
+            datos.add(valorCuota);
+            datos.add(saldo);
 
-            int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Registar Compra a " + formapago, "Confirmación", JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.YES_OPTION) {
-                op.Mercaderia(matriz);
-                LimpiarCalculadora();
-                RegistroCompra.setEnabled(false);
-            } else if (opcion == JOptionPane.NO_OPTION) {
+            matriz.add(datos);
 
+            try {
+                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+
+                if (formapago.equals("Crédito")) {
+                    JOptionPane.showMessageDialog(null, "Recuerde haber hecho un Calculo del plazo antes de Guardar");
+                    int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de Registar Compra a " + formapago, "Confirmación", JOptionPane.YES_NO_OPTION);
+                    if (opcion == JOptionPane.YES_OPTION) {
+
+                        op.Mercaderia(matriz);
+                        LimpiarCalculadora();
+                        RegistroCompra.setEnabled(false);
+                    } else if (opcion == JOptionPane.NO_OPTION) {
+
+                    }
+                } else {
+                    op.Mercaderia(matriz);
+                    LimpiarCalculadora();
+                    RegistroCompra.setEnabled(false);
+                }
+
+            } catch (SQLException err) {
+                err.printStackTrace();
             }
-
-        } catch (SQLException err) {
-            err.printStackTrace();
         }
+
 
     }//GEN-LAST:event_RegistroCompraActionPerformed
-
-
-    private void CalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularActionPerformed
-
+    public void Calculo() {
         String cantida, precio, iva;
 
         cantida = txtcantidad.getText();
@@ -1165,7 +1174,10 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         } else {
             valirCalcular();
         }
+    }
 
+    private void CalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularActionPerformed
+        Calculo();
 
     }//GEN-LAST:event_CalcularActionPerformed
 
@@ -1184,7 +1196,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         Object seleccion = comboplazo.getSelectedItem();
 
         String sumaTo = txtotal.getText();
-        double diferido = 0.0;
+        double diferido = 0.00;
         if (sumaTo != null && !sumaTo.trim().isEmpty()) {
             double sumaTotal = (Double.parseDouble(sumaTo));
 
@@ -1218,16 +1230,13 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                 }
 
                 labelSubTotal.setText(sumaTo);
-                txtotalplazo.setText(String.format("%.2f", diferido));
+//Solución recomendada: Forzar el formato con punto decimal
+//Usa Locale.US para asegurarte de que el número se formatee con punto decimal:
+
+                txtotalplazo.setText(String.format(Locale.US, "%.2f", diferido));
 
                 String fechaVencimiento = (String) fechaVence.toString();
                 txtFechaVencimiento.setText(fechaVencimiento);
-            } else {
-//                labelPlazo.setVisible(false);
-//                comboplazo.setVisible(false);
-//
-//                txtotal.setText(String.format("%.2f", sumaTotal));
-
             }
         }
 

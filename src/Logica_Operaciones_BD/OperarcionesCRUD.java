@@ -1021,7 +1021,7 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         try {
-            String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+            String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.ingreso, i.total, i.forma_pago, i.plazo, i.fecha_vencimiento_plazo, i.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
                     + "FROM bd_systema.inventario i\n"
                     + "INNER JOIN bd_systema.proveedor pro \n"
                     + "on i.idProveedor = pro.idProveedor\n"
@@ -1034,7 +1034,7 @@ public final class OperarcionesCRUD {
             ResultSet rst = stm.executeQuery(sql);
             while (rst.next()) {
                 Vector<String> vector = new Vector<>();
-                String codProd, orden, detalle, stado, fecharesgitro, fechaAproba, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto;
+                String codProd, orden, detalle, stado, fecharesgitro, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto, forpago, plazo, fechavence, valorcuota;
 
                 codProd = rst.getString("codproductos");
                 orden = rst.getString("orden");
@@ -1044,21 +1044,27 @@ public final class OperarcionesCRUD {
                 nombreProveedor = rst.getString("nombres");
                 detalle = rst.getString("detalle");
                 fecharesgitro = rst.getString("fecha_registro");
-                fechaAproba = rst.getString("fecha_aprobacion");
                 cantidad = rst.getString("ingreso");
                 totalcompra = rst.getString("total");
+                forpago = rst.getString("forma_pago");
+                plazo = rst.getString("plazo");
+                fechavence = rst.getString("fecha_vencimiento_plazo");
+                valorcuota = rst.getString("valor_cuota");
 
                 vector.add(codProd);
                 vector.add(orden);
                 vector.add(nombreProducto);
-                vector.add(observacion);
-                vector.add(usuario);
-                vector.add(nombreProveedor);
                 vector.add(detalle);
+                vector.add(observacion);
+                vector.add(nombreProveedor);
+                vector.add(usuario);
                 vector.add(fecharesgitro);
-                vector.add(fechaAproba);
+                vector.add(forpago);
                 vector.add(cantidad);
                 vector.add(totalcompra);
+                vector.add(plazo);
+                vector.add(fechavence);
+                vector.add(valorcuota);
 
                 matriz.add(vector);
 
@@ -1072,14 +1078,13 @@ public final class OperarcionesCRUD {
         return matriz;
     }
 
-    // Extraer los valores de un compra del inventario por fecha
-    public ArrayList<Vector<String>> InventarioFecha(String fecha, String estado) throws SQLException {
+    // Extraer los valores de un compra del inventario por Orden
+    public ArrayList<Vector<String>> InventarioOrden(String orde) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-
         try {
-            String sql = "SELECT i.codproductos,i.orden, i.detalle, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total, u.username, pro.nombres, p.nombre_producto\n"
+            String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.ingreso, i.total, i.forma_pago, i.plazo, i.fecha_vencimiento_plazo, i.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
                     + "FROM bd_systema.inventario i\n"
                     + "INNER JOIN bd_systema.proveedor pro \n"
                     + "on i.idProveedor = pro.idProveedor\n"
@@ -1087,89 +1092,53 @@ public final class OperarcionesCRUD {
                     + "on i.idusuarios = u.idusuarios\n"
                     + "INNER JOIN bd_systema.productos p \n"
                     + "on i.codproductos = p.codproductos\n"
-                    + "where i.fecha_aprobacion = '" + fecha + "' and i.estado = '" + estado + "'";
+                    + "where i.orden = '" + orde + "'";
 
             ResultSet rst = stm.executeQuery(sql);
             while (rst.next()) {
                 Vector<String> vector = new Vector<>();
-                String codProd, orden, detalle, stado, fecharesgitro, cantidad, totalcompra, usuario, nombreProveedor, nombreProducto;
+                String codProd, orden, detalle, stado, fecharesgitro, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto, forpago, plazo, fechavence, valorcuota;
 
                 codProd = rst.getString("codproductos");
                 orden = rst.getString("orden");
                 nombreProducto = rst.getString("nombre_producto");
+                observacion = rst.getString("observacion");
                 usuario = rst.getString("username");
                 nombreProveedor = rst.getString("nombres");
                 detalle = rst.getString("detalle");
                 fecharesgitro = rst.getString("fecha_registro");
                 cantidad = rst.getString("ingreso");
                 totalcompra = rst.getString("total");
+                forpago = rst.getString("forma_pago");
+                plazo = rst.getString("plazo");
+                fechavence = rst.getString("fecha_vencimiento_plazo");
+                valorcuota = rst.getString("valor_cuota");
 
                 vector.add(codProd);
                 vector.add(orden);
                 vector.add(nombreProducto);
-                vector.add(usuario);
-                vector.add(nombreProveedor);
                 vector.add(detalle);
+                vector.add(observacion);
+                vector.add(nombreProveedor);
+                vector.add(usuario);
                 vector.add(fecharesgitro);
+                vector.add(forpago);
                 vector.add(cantidad);
                 vector.add(totalcompra);
+                vector.add(plazo);
+                vector.add(fechavence);
+                vector.add(valorcuota);
 
                 matriz.add(vector);
 
             }
             this.cerrarConexionBD();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "!! Error al Extraer los valores de una compra del inventario por fecha" + e);
-            System.out.println("Error al Extraer los valores de una compra del inventario por fecha" + e);
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer los valores de una compra del inventario por estado" + e);
+            System.out.println("Error al Extraer los valores de una compra del inventario por estado" + e);
         }
 
         return matriz;
-    }
-
-    // Actualizar estado de una Compra al Inventario
-    public void ActualizarEstadoCompra(String orden, String stado, String fecha) throws SQLException {
-        this.iniciarConexionBD();
-        try {
-            Statement stm = this.conexion.createStatement();
-            String sql = "select * from inventario where orden = '" + orden + "'";
-            ResultSet rst = stm.executeQuery(sql);
-
-            if (rst.next()) {
-                switch (stado) {
-                    case "Anulado":
-                        String sql2 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
-                        stm.executeUpdate(sql2);
-                        JOptionPane.showMessageDialog(null, "!! Compra Anulada con Exito !!\n");
-                        break;
-                    case "Aprobado":
-                        String sql3 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
-                        stm.executeUpdate(sql3);
-                        JOptionPane.showMessageDialog(null, "!! Compra Aprobada con Exito !!\n");
-                        break;
-                    case "Procesado":
-                        String sql4 = "update inventario set estado ='" + stado + "',fecha_aprobacion ='" + fecha + "' where orden = '" + orden + "'";
-                        stm.executeUpdate(sql4);
-                        JOptionPane.showMessageDialog(null, "!! Compra Procesada con Exito !!\n");
-                        break;
-                    case "IngresoAnular":
-                        String sql5 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
-                        stm.executeUpdate(sql5);
-                        JOptionPane.showMessageDialog(null, "!! Compra En Espera de Aprobación para Anulación con Exito !!\n");
-                        break;
-                    case "AprobadoAnular":
-                        String sql6 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
-                        stm.executeUpdate(sql6);
-                        JOptionPane.showMessageDialog(null, "!! Aprobación de Anulación con Exito !!\n");
-                        break;
-                    default:
-                        throw new AssertionError();
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "!! Error al guardar estado Compra" + e);
-            System.out.println("Error al guardar estado Compra" + e);
-        }
-        this.cerrarConexionBD();
     }
 
     //busqueda en el inventario por Numero de Orden
@@ -1234,6 +1203,114 @@ public final class OperarcionesCRUD {
         }
         this.cerrarConexionBD();
         return matriz;
+    }
+
+    // Extraer los valores de un compra del inventario por fecha 
+    public ArrayList<Vector<String>> InventarioFecha(String fecha, String estado) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+
+        try {
+            String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total,i.forma_pago,i.plazo,i.fecha_vencimiento_plazo,i.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
+                    + "FROM bd_systema.inventario i\n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on i.idProveedor = pro.idProveedor\n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on i.idusuarios = u.idusuarios\n"
+                    + "INNER JOIN bd_systema.productos p \n"
+                    + "on i.codproductos = p.codproductos\n"
+                    + "where i.fecha_aprobacion = '" + fecha + "' and i.estado = '" + estado + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+            while (rst.next()) {
+                Vector<String> vector = new Vector<>();
+                String codProd, orden, stado, fecharesgitro, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto, forpago, plazo, fechavence, valorcuota;
+
+                orden = rst.getString("orden");
+                nombreProducto = rst.getString("nombre_producto");
+                usuario = rst.getString("username");
+                nombreProveedor = rst.getString("nombres");
+
+                fecharesgitro = rst.getString("fecha_registro");
+                cantidad = rst.getString("ingreso");
+                totalcompra = rst.getString("total");
+                observacion = rst.getString("observacion");
+
+                forpago = rst.getString("forma_pago");
+                plazo = rst.getString("plazo");
+                fechavence = rst.getString("fecha_vencimiento_plazo");
+                valorcuota = rst.getString("valor_cuota");
+
+                vector.add(orden);
+                vector.add(nombreProducto);
+                vector.add(observacion);
+                vector.add(nombreProveedor);
+                vector.add(usuario);
+                vector.add(fecharesgitro);
+                vector.add(forpago);
+                vector.add(cantidad);
+                vector.add(totalcompra);
+                vector.add(plazo);
+                vector.add(fechavence);
+                vector.add(valorcuota);
+
+                matriz.add(vector);
+
+            }
+            this.cerrarConexionBD();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer los valores de una compra del inventario por fecha" + e);
+            System.out.println("Error al Extraer los valores de una compra del inventario por fecha" + e);
+        }
+
+        return matriz;
+    }
+
+    // Actualizar estado de una Compra al Inventario
+    public void ActualizarEstadoCompra(String orden, String stado, String fecha) throws SQLException {
+        this.iniciarConexionBD();
+        try {
+            Statement stm = this.conexion.createStatement();
+            String sql = "select * from inventario where orden = '" + orden + "'";
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                switch (stado) {
+                    case "Anulado":
+                        String sql2 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                        stm.executeUpdate(sql2);
+                        JOptionPane.showMessageDialog(null, "!! Compra Anulada con Exito !!\n");
+                        break;
+                    case "Aprobado":
+                        String sql3 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                        stm.executeUpdate(sql3);
+                        JOptionPane.showMessageDialog(null, "!! Compra Aprobada con Exito !!\n");
+                        break;
+                    case "Procesado":
+                        String sql4 = "update inventario set estado ='" + stado + "',fecha_aprobacion ='" + fecha + "' where orden = '" + orden + "'";
+                        stm.executeUpdate(sql4);
+                        JOptionPane.showMessageDialog(null, "!! Compra Procesada con Exito !!\n");
+                        break;
+                    case "IngresoAnular":
+                        String sql5 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                        stm.executeUpdate(sql5);
+                        JOptionPane.showMessageDialog(null, "!! Compra En Espera de Aprobación para Anulación con Exito !!\n");
+                        break;
+                    case "AprobadoAnular":
+                        String sql6 = "update inventario set estado ='" + stado + "' where orden = '" + orden + "'";
+                        stm.executeUpdate(sql6);
+                        JOptionPane.showMessageDialog(null, "!! Aprobación de Anulación con Exito !!\n");
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al guardar estado Compra" + e);
+            System.out.println("Error al guardar estado Compra" + e);
+        }
+        this.cerrarConexionBD();
     }
 
     //-----------------------------------------------------------------------------------------------------------------

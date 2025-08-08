@@ -50,7 +50,7 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         LabelTitulo = new javax.swing.JLabel();
         txtOrden = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
@@ -84,11 +84,17 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
         jToolBar1.add(jButton2);
         jToolBar1.add(LabelTitulo);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/consulta.png"))); // NOI18N
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtOrden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtOrdenActionPerformed(evt);
+            }
+        });
+
+        Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/consulta.png"))); // NOI18N
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
             }
         });
 
@@ -222,7 +228,7 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
-                        .addComponent(jButton1)
+                        .addComponent(Buscar)
                         .addGap(60, 60, 60)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
@@ -243,7 +249,7 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(Buscar)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(txtSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -261,7 +267,33 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        Buscar();
+    }//GEN-LAST:event_BuscarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        panel.setVisible(false);        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        String orden = labelOrden.getText();
+        String stado = "IngresoAnular";
+
+        LocalDate fecha = LocalDate.now();
+        String fechaa = fecha.format(DateTimeFormatter.ISO_DATE);
+
+        try {
+            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+            op.ActualizarEstadoCompra(orden, stado, fechaa);
+            Guardar.setEnabled(false);
+        } catch (SQLException err) {
+            err.printStackTrace();
+        }
+
+    }//GEN-LAST:event_GuardarActionPerformed
+
+    public void Buscar() {
         String orden = txtOrden.getText();
         int validacion = 0;
         String seleccion = txtSeleccion.getSelectedItem().toString();
@@ -314,37 +346,17 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un # de Orden");
-        }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        panel.setVisible(false);        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        String orden = labelOrden.getText();
-        String stado = "IngresoAnular";
-
-        LocalDate fecha = LocalDate.now();
-        String fechaa = fecha.format(DateTimeFormatter.ISO_DATE);
-
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            op.ActualizarEstadoCompra(orden, stado, fechaa);
-            Guardar.setEnabled(false);
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
-
-    }//GEN-LAST:event_GuardarActionPerformed
+        }// TOD
+    }
+    private void txtOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrdenActionPerformed
+        Buscar();
+    }//GEN-LAST:event_txtOrdenActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
     private javax.swing.JButton Guardar;
     private javax.swing.JLabel LabelTitulo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

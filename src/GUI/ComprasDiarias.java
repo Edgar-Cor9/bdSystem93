@@ -51,34 +51,6 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
 
             for (Vector<String> vector : matriz) {
                 modelo.addRow(vector);
-
-//                TablaAprobar.addMouseListener(new MouseAdapter() {
-//                    @Override
-//                    public void mouseClicked(MouseEvent e) {
-//
-//                        int fila_point = TablaAprobar.rowAtPoint(e.getPoint());
-//                        int columna_point = 0;
-//
-//                        if (fila_point > -1) {
-//                            
-//                            String nombreProd, orden, nombreProveee, cantidad, totaCompra;
-//
-//                            nombreProd = vector.get(2);
-//                            orden = vector.get(1);
-//                            nombreProveee = vector.get(4);
-//                            cantidad = vector.get(7);
-//                            totaCompra = vector.get(8);
-//
-//                            txtNombreProducto.setText(nombreProd);
-//                            txtOrden.setText(orden);
-//                            txtNombreProveedor.setText(nombreProveee);
-//                            txtCantidad.setText(cantidad);
-//                            txtTotalCompra.setText(totaCompra);
-//
-//                        }
-//
-//                    }
-//                });
             }
         } catch (SQLException err) {
             err.printStackTrace();
@@ -133,17 +105,17 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
 
         TablaAprobar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codproductos", "Orden Compra", "Nombre Producto", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Cantidad", "Total"
+                "Orden Compra", "Nombre Producto", "Observacion", "Proveedor", "Usuario", "Fecha_registro", "Forma de Pago", "Cantidad", "Total", "Plazo", "Fecha Vencimiento", "Valor cuota"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -162,6 +134,9 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
             TablaAprobar.getColumnModel().getColumn(6).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(7).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(8).setResizable(false);
+            TablaAprobar.getColumnModel().getColumn(9).setResizable(false);
+            TablaAprobar.getColumnModel().getColumn(10).setResizable(false);
+            TablaAprobar.getColumnModel().getColumn(11).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
