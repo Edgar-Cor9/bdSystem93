@@ -46,29 +46,9 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
             for (Vector<String> vector : matriz) {
                 modelo.addRow(vector);
 
-                tabla.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        int fila_point = tabla.rowAtPoint(e.getPoint());
-                        int columna_point = 0;
-
-                        panel.setVisible(true);
-
-                        String orden, nombrePro, cantidad;
-
-                        orden = vector.get(1);
-                        nombrePro = vector.get(2);
-                        cantidad = vector.get(10);
-
-                        labelOrden.setText(orden);
-                        labelNombreProducto.setText(nombrePro);
-                        labelCAntidad.setText(cantidad);
-                    }
-
-                });
-
             }
 
+            MostrarAprobacion();
         } catch (SQLException err) {
             err.printStackTrace();
         }
@@ -200,28 +180,28 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(labelNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(31, 31, 31)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(labelCAntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(botonAprobar)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codproductos", "Orden Compra", "Nombre Producto", "Obsevación", "Usuario", "Proveedor", "Detalle", "Fecha_registro", "Fecha Aprobacion", "Cantidad", "Total"
+                "Cod Producto", "Orden Compra", "Nombre Producto", "Detalle", "Obsevación", "Proveedor", "Usuario", "Fecha Registro", "Forma Pago", "Cantidad", "Total", "Plazo", "Fecha Vencimiento", "Valor Cuota"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -242,6 +222,9 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
             tabla.getColumnModel().getColumn(8).setResizable(false);
             tabla.getColumnModel().getColumn(9).setResizable(false);
             tabla.getColumnModel().getColumn(10).setResizable(false);
+            tabla.getColumnModel().getColumn(11).setResizable(false);
+            tabla.getColumnModel().getColumn(12).setResizable(false);
+            tabla.getColumnModel().getColumn(13).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -281,6 +264,28 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    public void MostrarAprobacion() {
+
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        tabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = tabla.rowAtPoint(e.getPoint());
+
+                panel.setVisible(true);
+
+                String orden = (String) modelo.getValueAt(fila_point, 1);
+                String nombrePro = (String) modelo.getValueAt(fila_point, 2);
+
+                String cantidad = (String) modelo.getValueAt(fila_point, 9);
+
+                labelOrden.setText(orden);
+                labelNombreProducto.setText(nombrePro);
+                labelCAntidad.setText(cantidad);
+            }
+
+        });
+    }
     private void botonAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAprobarActionPerformed
 
         int opc = JOptionPane.showConfirmDialog(null, "Esta seguro de Aprobar Anulacion de Compra", "Confirmación", JOptionPane.YES_NO_OPTION);

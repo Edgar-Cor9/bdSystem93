@@ -16,43 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `clientes`
+-- Table structure for table `productos`
 --
 
-DROP TABLE IF EXISTS `clientes`;
+DROP TABLE IF EXISTS `productos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `clientes` (
-  `idclientes` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `productos` (
+  `codproductos` int NOT NULL AUTO_INCREMENT,
   `idusuarios` int NOT NULL,
-  `cedula_cliente` varchar(45) NOT NULL,
-  `nombres_cliente` varchar(45) NOT NULL,
-  `apellidos_cliente` varchar(45) NOT NULL,
-  `email_cliente` varchar(45) NOT NULL,
-  `direccion_cliente` varchar(45) NOT NULL,
-  `edad` varchar(45) NOT NULL,
-  `username` varchar(45) NOT NULL,
+  `idProveedor` int NOT NULL,
+  `nombre_producto` varchar(45) NOT NULL,
+  `tipo_producto` varchar(45) NOT NULL,
+  `detalle_producto` varchar(45) NOT NULL,
   `fecha_ingreso` date NOT NULL,
-  `username_Actu` varchar(45) DEFAULT NULL,
-  `fecha_actualizacion` date NOT NULL,
-  `comentario` longtext NOT NULL,
-  `idventa` int DEFAULT NULL,
-  PRIMARY KEY (`idclientes`),
-  KEY `idusuarios_idx` (`idusuarios`) /*!80000 INVISIBLE */,
-  KEY `idventa_idx` (`idventa`),
-  CONSTRAINT `idusuarios` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`),
-  CONSTRAINT `idventa` FOREIGN KEY (`idventa`) REFERENCES `ventas` (`codventa`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `fecha_Actualizacion` date DEFAULT NULL,
+  `precio` double NOT NULL,
+  `iva` double NOT NULL,
+  PRIMARY KEY (`codproductos`),
+  KEY `idusuarios_idx` (`idusuarios`),
+  KEY `idProveedor_idx` (`idProveedor`),
+  CONSTRAINT `idProveedor` FOREIGN KEY (`idProveedor`) REFERENCES `proveedor` (`idProveedor`),
+  CONSTRAINT `iduser` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `clientes`
+-- Dumping data for table `productos`
 --
 
-LOCK TABLES `clientes` WRITE;
-/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,2,'0706628393','EDGAR ANDRE','Martinez','eda','dad','31','EMARTINEZ','2025-07-01','bmartinez','2025-07-08','dasasdd',NULL);
-/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
+LOCK TABLES `productos` WRITE;
+/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+INSERT INTO `productos` VALUES (1,2,1,'Celular','Electronica','Honor Magit 20 mpx','2025-07-11','2025-07-14',17,12),(7,3,1,'ZAPATOS','Ropa','CASUALES','2025-07-12',NULL,25,12),(8,3,2,'vitamina c','Hogar','12 pastillas','2025-07-12','2025-07-30',7,8.1),(9,2,1,'Celular','Electronica','Honor Magit','2025-07-14','2025-07-14',10,14),(10,2,1,'TECLADO','Electronica','MARCA ASUS','2025-08-04',NULL,15,12);
+/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -64,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-14 18:53:44
+-- Dump completed on 2025-08-08 21:22:55

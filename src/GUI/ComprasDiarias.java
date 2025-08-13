@@ -35,27 +35,6 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
         labelTitulo.setText("Mercadería>ComprasDiarias");
         usuario = Login.user;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        LocalDate fechaAc = LocalDate.now();
-
-        String fecha;
-        String estado = "Procesado";
-        fecha = fechaAc.format(DateTimeFormatter.ISO_DATE);
-
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            ArrayList<Vector<String>> matriz = op.InventarioFecha(fecha, estado);
-
-            DefaultTableModel modelo = (DefaultTableModel) TablaAprobar.getModel();
-            modelo.setRowCount(0);
-
-            for (Vector<String> vector : matriz) {
-                modelo.addRow(vector);
-            }
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
-
     }
 
     /**
@@ -68,27 +47,29 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton4 = new javax.swing.JButton();
+        Buscar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaAprobar = new javax.swing.JTable();
+        txtipo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aprobado.png"))); // NOI18N
 
         jToolBar1.setRollover(true);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-flecha.png"))); // NOI18N
-        jButton4.setToolTipText("Actualizar Tabla");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/jugar.png"))); // NOI18N
+        Buscar.setToolTipText("Actualizar Tabla");
+        Buscar.setFocusable(false);
+        Buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                BuscarActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton4);
+        jToolBar1.add(Buscar);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
         jButton1.setToolTipText("Salir");
@@ -105,17 +86,17 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
 
         TablaAprobar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Orden Compra", "Nombre Producto", "Observacion", "Proveedor", "Usuario", "Fecha_registro", "Forma de Pago", "Cantidad", "Total", "Plazo", "Fecha Vencimiento", "Valor cuota"
+                "Orden Compra", "Nombre Producto", "Observacion", "Proveedor", "Usuario", "Forma de Pago", "Cantidad", "Total", "Plazo", "Fecha Vencimiento", "Valor cuota"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -136,8 +117,11 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
             TablaAprobar.getColumnModel().getColumn(8).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(9).setResizable(false);
             TablaAprobar.getColumnModel().getColumn(10).setResizable(false);
-            TablaAprobar.getColumnModel().getColumn(11).setResizable(false);
         }
+
+        txtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Compra", "Compra por Lote" }));
+
+        jLabel1.setText("Tipo de Compra:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,14 +134,24 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(203, 203, 203))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(txtipo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(384, Short.MAX_VALUE))
+                .addContainerGap(345, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,15 +161,16 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+    public void buscar() {
         try {
             LocalDate fechaA = LocalDate.now();
             String fecha = fechaA.format(DateTimeFormatter.ISO_DATE);
             String estado = "Procesado";
 
+            String tipo = txtipo.getSelectedItem().toString();
+
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            ArrayList<Vector<String>> matriz = op.InventarioFecha(fecha, estado);
+            ArrayList<Vector<String>> matriz = op.InventarioFecha(fecha, estado, tipo);
 
             DefaultTableModel modelo = (DefaultTableModel) TablaAprobar.getModel();
             modelo.setRowCount(0);
@@ -188,15 +183,20 @@ public class ComprasDiarias extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        buscar();
+    }//GEN-LAST:event_BuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
     private javax.swing.JTable TablaAprobar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JComboBox<String> txtipo;
     // End of variables declaration//GEN-END:variables
 }

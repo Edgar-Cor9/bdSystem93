@@ -5,6 +5,8 @@
 package GUI;
 
 import Logica_Operaciones_BD.OperarcionesCRUD;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -34,6 +36,28 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
         LabelTitulo.setText("Mercadería>Procesos>AnulaciónCompra>Ingreso");
         usuario = Login.user;
         panel.setVisible(false);
+        
+        String orden = txtOrden.getText().toString();
+        txtOrden.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+              char c = e.getKeyChar();
+              
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+              
+            }
+        });
 
     }
 
@@ -102,17 +126,17 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Orden", "Nombre Producto", "Observación", "Fecha Aprobación", "Cantidad Comprada", "Valor ", "Usuario", "Nombre Proveedor"
+                "Orden", "Nombre Producto", "Observación", "Nombre Proveedor", "Usuario", "Forma de Pago", "Cantidad Comprada", "Valor ", "Plazo", "Fecha Vencimiento", "Valor Cuota"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -130,6 +154,9 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
             tabla.getColumnModel().getColumn(5).setResizable(false);
             tabla.getColumnModel().getColumn(6).setResizable(false);
             tabla.getColumnModel().getColumn(7).setResizable(false);
+            tabla.getColumnModel().getColumn(8).setResizable(false);
+            tabla.getColumnModel().getColumn(9).setResizable(false);
+            tabla.getColumnModel().getColumn(10).setResizable(false);
         }
 
         jLabel2.setText("Estado:");
@@ -293,6 +320,7 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_GuardarActionPerformed
 
+   
     public void Buscar() {
         String orden = txtOrden.getText();
         int validacion = 0;

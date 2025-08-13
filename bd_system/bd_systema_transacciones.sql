@@ -16,38 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `transacciones`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `transacciones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
-  `idusuarios` int NOT NULL AUTO_INCREMENT,
-  `cedula` varchar(45) NOT NULL,
-  `nombres_usuario` varchar(45) NOT NULL,
-  `apellidos_usuario` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `tipo_nivel` varchar(45) NOT NULL,
-  `status` varchar(45) NOT NULL,
+CREATE TABLE `transacciones` (
+  `codventa` int NOT NULL AUTO_INCREMENT,
+  `idclientes` int NOT NULL,
+  `idsuarios` int NOT NULL,
+  `codproductos` int NOT NULL,
+  `cantidad` int NOT NULL,
+  `precio` decimal(10,0) NOT NULL,
+  `total_venta` decimal(10,0) NOT NULL,
+  `fecha_venta` date NOT NULL,
   `registrado_por` varchar(45) NOT NULL,
-  `fecha_registro` date NOT NULL,
-  `ultima_actualizacion` date DEFAULT NULL,
-  PRIMARY KEY (`idusuarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `idinvetario` int NOT NULL,
+  PRIMARY KEY (`codventa`),
+  KEY `idlcientes_idx` (`idclientes`),
+  KEY `idusuarios_idx` (`idsuarios`),
+  KEY `codproductos_idx` (`codproductos`),
+  CONSTRAINT `codproductos` FOREIGN KEY (`codproductos`) REFERENCES `productos` (`codproductos`),
+  CONSTRAINT `idsuarios` FOREIGN KEY (`idsuarios`) REFERENCES `usuarios` (`idusuarios`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `transacciones`
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (2,'0706628393','Edgar Andre','Martinez Romer','edandre_93@hotmail.com','0988525908','EMARTINEZ','1111','Usuario','Activo','','2025-06-24','2025-07-02'),(3,'0706157161','Bryan Santiago','martinez','dasdasads','222222221','BMARTINEZ','1111','Administrador','Activo','EMARTINEZ','2025-06-24','2025-06-28');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+LOCK TABLES `transacciones` WRITE;
+/*!40000 ALTER TABLE `transacciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transacciones` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-14 18:53:44
+-- Dump completed on 2025-08-08 21:22:55
