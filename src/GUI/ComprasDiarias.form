@@ -33,15 +33,27 @@
               <Component id="jToolBar1" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
           </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="txtipo" min="-2" pref="142" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="342" max="-2" attributes="0"/>
-              <EmptySpace pref="384" max="32767" attributes="0"/>
+              <EmptySpace pref="345" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,10 +66,10 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="Buscar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/actualizar-flecha.png"/>
+              <Image iconType="3" name="/images/jugar.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Actualizar Tabla"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -65,7 +77,7 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
@@ -96,13 +108,12 @@
         <Component class="javax.swing.JTable" name="TablaAprobar">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="12" rowCount="4">
+              <Table columnCount="11" rowCount="4">
                 <Column editable="false" title="Orden Compra" type="java.lang.Object"/>
                 <Column editable="false" title="Nombre Producto" type="java.lang.Object"/>
                 <Column editable="false" title="Observacion" type="java.lang.Object"/>
                 <Column editable="false" title="Proveedor" type="java.lang.Object"/>
                 <Column editable="false" title="Usuario" type="java.lang.Object"/>
-                <Column editable="false" title="Fecha_registro" type="java.lang.Object"/>
                 <Column editable="false" title="Forma de Pago" type="java.lang.Object"/>
                 <Column editable="false" title="Cantidad" type="java.lang.Object"/>
                 <Column editable="false" title="Total" type="java.lang.Object"/>
@@ -168,11 +179,6 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
               </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -182,5 +188,23 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JComboBox" name="txtipo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="Compra"/>
+            <StringItem index="1" value="Compra por Lote"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tipo de Compra:"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

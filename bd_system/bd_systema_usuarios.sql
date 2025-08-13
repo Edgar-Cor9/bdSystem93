@@ -16,41 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `productos`
+-- Table structure for table `usuarios`
 --
 
-DROP TABLE IF EXISTS `productos`;
+DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `productos` (
-  `codproductos` int NOT NULL AUTO_INCREMENT,
-  `idusuarios` int NOT NULL,
-  `idProveedor` int NOT NULL,
-  `nombre_producto` varchar(45) NOT NULL,
-  `tipo_producto` varchar(45) NOT NULL,
-  `detalle_producto` varchar(45) NOT NULL,
-  `fecha_ingreso` date NOT NULL,
-  `fecha_Actualizacion` date DEFAULT NULL,
-  `cantidad_producto` int DEFAULT NULL,
-  `precio` double NOT NULL,
-  `iva` double NOT NULL,
-  `total` double DEFAULT NULL,
-  PRIMARY KEY (`codproductos`),
-  KEY `idusuarios_idx` (`idusuarios`),
-  KEY `idProveedor_idx` (`idProveedor`),
-  CONSTRAINT `idProveedor` FOREIGN KEY (`idProveedor`) REFERENCES `proveedor` (`idProveedor`),
-  CONSTRAINT `iduser` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `usuarios` (
+  `idusuarios` int NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(45) NOT NULL,
+  `nombres_usuario` varchar(45) NOT NULL,
+  `apellidos_usuario` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `telefono` varchar(45) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `tipo_nivel` varchar(45) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `registrado_por` varchar(45) NOT NULL,
+  `fecha_registro` date NOT NULL,
+  `ultima_actualizacion` date DEFAULT NULL,
+  PRIMARY KEY (`idusuarios`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `productos`
+-- Dumping data for table `usuarios`
 --
 
-LOCK TABLES `productos` WRITE;
-/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (1,2,1,'Celular','Electronica','Honor Magit','2025-07-11',NULL,50,10,12,560),(7,3,1,'ZAPATOS','Ropa','CASUALES','2025-07-12',NULL,NULL,25,12,NULL),(8,3,2,'vitamina c','Salud','12 pastillas','2025-07-12',NULL,NULL,7,12,NULL);
-/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (2,'0706628393','Edgar Andre','Martinez Romer','edandre_93@hotmail.com','0988525908','EMARTINEZ','1111','Usuario','Activo','','2025-06-24','2025-07-02'),(3,'0706157161','Bryan Santiago','martinez','dasdasads','222222221','BMARTINEZ','1111','Administrador','Activo','EMARTINEZ','2025-06-24','2025-06-28');
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -62,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-14 18:53:44
+-- Dump completed on 2025-08-08 21:22:55

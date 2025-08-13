@@ -588,6 +588,61 @@ public final class OperarcionesCRUD {
         return matriz;
     }
 
+    //busqueda de producto por nombre Proveedor
+    public ArrayList<Vector<String>> BusquedaNombresProveedor(String nombre, String apellido) throws SQLException {
+        this.iniciarConexionBD();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+        Statement stm = this.conexion.createStatement();
+
+        try {
+            String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres,pro.apellidos, pro.idProveedor, u.username\n"
+                    + "FROM bd_systema.productos p \n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "on p.idProveedor = pro.idProveedor \n"
+                    + "INNER JOIN bd_systema.usuarios u \n"
+                    + "on p.idusuarios = u.idusuarios\n"
+                    + "where pro.nombres = '" + nombre + "' and pro.apellidos ='" + apellido + "'";
+
+            ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                Vector<String> datos = new Vector<>();
+
+                String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
+
+                codproductos = rs.getString("codproductos");
+                nombProducto = rs.getString("nombre_producto");
+                tiproducto = rs.getString("tipo_producto");
+                detalle = rs.getString("detalle_producto");
+                fechIngre = rs.getString("fecha_ingreso");
+                precio = rs.getString("precio");
+                iva = rs.getString("iva");
+                rucPro = rs.getString("ruc");
+                nombresPro = rs.getString("nombres");
+                //  idusuario = rs.getString("idusuarios");
+                username = rs.getString("username");
+
+                datos.add(codproductos);
+                datos.add(nombProducto);
+                datos.add(tiproducto);
+                datos.add(detalle);
+                datos.add(fechIngre);
+                datos.add(precio);
+                datos.add(iva);
+                datos.add(rucPro);
+                datos.add(nombresPro);
+                //  datos.add(idusuario);
+                datos.add(username);
+                matriz.add(datos);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Buscar producto por Nombre Proveedor" + e);
+            System.out.println("Error al Buscar producto por Nombre Proveedor" + e);
+        }
+
+        return matriz;
+    }
+
     //busqueda de producto por Proveedor
     public ArrayList<Vector<String>> BusquedaRucProveedor(String ruc) throws SQLException {
         this.iniciarConexionBD();
@@ -639,61 +694,6 @@ public final class OperarcionesCRUD {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "!! Error al Buscar producto por Ruc Proveedor" + e);
             System.out.println("Error al Buscar producto por Ruc Proveedor" + e);
-        }
-
-        return matriz;
-    }
-
-    //busqueda de producto por nombre Proveedor
-    public ArrayList<Vector<String>> BusquedaNombresProveedor(String nombre, String apellido) throws SQLException {
-        this.iniciarConexionBD();
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-        Statement stm = this.conexion.createStatement();
-
-        try {
-            String sql = "SELECT p.codproductos, p.nombre_producto, p.tipo_producto,p.detalle_producto, p.fecha_ingreso, p.precio, p.iva, pro.ruc, pro.nombres,pro.apellidos, pro.idProveedor, u.username\n"
-                    + "FROM bd_systema.productos p \n"
-                    + "INNER JOIN bd_systema.proveedor pro \n"
-                    + "on p.idProveedor = pro.idProveedor \n"
-                    + "INNER JOIN bd_systema.usuarios u \n"
-                    + "on p.idusuarios = u.idusuarios\n"
-                    + "where pro.nombres = '" + nombre + "' and pro.apellidos ='" + apellido + "'";
-
-            ResultSet rs = stm.executeQuery(sql);
-            while (rs.next()) {
-                Vector<String> datos = new Vector<>();
-
-                String codproductos, username, nombProducto, tiproducto, detalle, rucPro, nombresPro, fechIngre, precio, iva;
-
-                codproductos = rs.getString("codproductos");
-                nombProducto = rs.getString("nombre_producto");
-                tiproducto = rs.getString("tipo_producto");
-                detalle = rs.getString("detalle_producto");
-                fechIngre = rs.getString("fecha_ingreso");
-                precio = rs.getString("precio");
-                iva = rs.getString("iva");
-                rucPro = rs.getString("ruc");
-                nombresPro = rs.getString("nombres");
-                //  idusuario = rs.getString("idusuarios");
-                username = rs.getString("username");
-
-                datos.add(codproductos);
-                datos.add(nombProducto);
-                datos.add(tiproducto);
-                datos.add(detalle);
-                datos.add(fechIngre);
-                datos.add(precio);
-                datos.add(iva);
-                datos.add(rucPro);
-                datos.add(nombresPro);
-                //  datos.add(idusuario);
-                datos.add(username);
-                matriz.add(datos);
-
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "!! Error al Buscar producto por Nombre Proveedor" + e);
-            System.out.println("Error al Buscar producto por Nombre Proveedor" + e);
         }
 
         return matriz;
@@ -1142,6 +1142,7 @@ public final class OperarcionesCRUD {
     }
 
     //busqueda en el inventario por Numero de Orden
+
     public ArrayList<Vector<String>> InventarioPorOrden(String orden, String fecha, String stado) throws SQLException {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
@@ -1156,7 +1157,7 @@ public final class OperarcionesCRUD {
             if (rst2.next()) {
                 JOptionPane.showMessageDialog(null, "!! Orden En Espera de Aprobacion !!\n");
             } else {
-                String sql = "SELECT i.codproductos, i.orden, i.observacion, i.estado, i.fecha_aprobacion, i.ingreso, i.total, u.username,  pro.nombres, p.nombre_producto\n"
+                String sql = "SELECT i.codproductos, i.orden, i.observacion, i.estado, i.fecha_aprobacion, i.ingreso, i.total,i.forma_pago, i.plazo, i.fecha_vencimiento_plazo, i.valor_cuota, u.username,  pro.nombres, p.nombre_producto\n"
                         + "FROM bd_systema.inventario i\n"
                         + "INNER JOIN bd_systema.usuarios u \n"
                         + "on i.idusuarios = u.idusuarios\n"
@@ -1171,25 +1172,32 @@ public final class OperarcionesCRUD {
                 if (rst.next()) {
                     Vector<String> datos = new Vector<>();
 
-                    String ordenCompr, nomProdcuto, observacion, fechaComp, cantidaCompra, valor, usuario, nombrProvee;
+                    String ordenCompr, nomProdcuto, observacion, cantidaCompra, valor, usuario, nombrProvee, forpago, plazo, fechavence, valorcuota;
 
                     ordenCompr = rst.getString("orden");
                     nomProdcuto = rst.getString("nombre_producto");
                     observacion = rst.getString("observacion");
-                    fechaComp = rst.getString("fecha_aprobacion");
+                    nombrProvee = rst.getString("nombres");
+                    usuario = rst.getString("username");
+                    forpago = rst.getString("forma_pago");
                     cantidaCompra = rst.getString("ingreso");
                     valor = rst.getString("total");
-                    usuario = rst.getString("username");
-                    nombrProvee = rst.getString("nombres");
+
+                    plazo = rst.getString("plazo");
+                    fechavence = rst.getString("fecha_vencimiento_plazo");
+                    valorcuota = rst.getString("valor_cuota");
 
                     datos.add(ordenCompr);
                     datos.add(nomProdcuto);
                     datos.add(observacion);
-                    datos.add(fechaComp);
+                    datos.add(nombrProvee);
+                    datos.add(usuario);
+                    datos.add(forpago);
                     datos.add(cantidaCompra);
                     datos.add(valor);
-                    datos.add(usuario);
-                    datos.add(nombrProvee);
+                    datos.add(plazo);
+                    datos.add(fechavence);
+                    datos.add(valorcuota);
 
                     matriz.add(datos);
 
@@ -1206,7 +1214,7 @@ public final class OperarcionesCRUD {
     }
 
     // Extraer los valores de un compra del inventario por fecha 
-    public ArrayList<Vector<String>> InventarioFecha(String fecha, String estado) throws SQLException {
+    public ArrayList<Vector<String>> InventarioFecha(String fecha, String estado, String detalle) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
@@ -1220,19 +1228,18 @@ public final class OperarcionesCRUD {
                     + "on i.idusuarios = u.idusuarios\n"
                     + "INNER JOIN bd_systema.productos p \n"
                     + "on i.codproductos = p.codproductos\n"
-                    + "where i.fecha_aprobacion = '" + fecha + "' and i.estado = '" + estado + "'";
+                    + "where i.fecha_aprobacion = '" + fecha + "' and i.estado = '" + estado + "' and i.detalle = '" + detalle + "'";
 
             ResultSet rst = stm.executeQuery(sql);
             while (rst.next()) {
                 Vector<String> vector = new Vector<>();
-                String codProd, orden, stado, fecharesgitro, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto, forpago, plazo, fechavence, valorcuota;
+                String codProd, orden, stado, cantidad, observacion, totalcompra, usuario, nombreProveedor, nombreProducto, forpago, plazo, fechavence, valorcuota;
 
                 orden = rst.getString("orden");
                 nombreProducto = rst.getString("nombre_producto");
                 usuario = rst.getString("username");
                 nombreProveedor = rst.getString("nombres");
 
-                fecharesgitro = rst.getString("fecha_registro");
                 cantidad = rst.getString("ingreso");
                 totalcompra = rst.getString("total");
                 observacion = rst.getString("observacion");
@@ -1247,7 +1254,6 @@ public final class OperarcionesCRUD {
                 vector.add(observacion);
                 vector.add(nombreProveedor);
                 vector.add(usuario);
-                vector.add(fecharesgitro);
                 vector.add(forpago);
                 vector.add(cantidad);
                 vector.add(totalcompra);

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -29,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
  * @author USUARIO
  */
 public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
-
+    
     String usuario;
 
     /**
@@ -40,16 +41,16 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         usuario = Login.user;
         labelTitulo.setText("Mercaderia>IngresoPorLote>CompraPorLote");
-
+        
         LocalDate fecha = LocalDate.now();
         String fechas = fecha.format(DateTimeFormatter.ISO_DATE);
         labelfecha.setText(fechas);
-
+        
         OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-
+        
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) comboTipo.getModel();
         modelo.removeAllElements();
-
+        
         DefaultComboBoxModel modeloProveed = (DefaultComboBoxModel) comboProveedor.getModel();
         modeloProveed.removeAllElements();
 
@@ -66,38 +67,38 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
 
             //combo Proverdor
             ArrayList<Vector<String>> listaPRovee = op.NombresCompletosProveedor();
-
+            
             for (Vector<String> vector : listaPRovee) {
                 String nombre = vector.get(0);
                 String apellidos = vector.get(1);
                 modeloProveed.addElement(nombre + " " + apellidos);
             }
-
+            
         } catch (SQLException err) {
             err.printStackTrace();
-
+            
         }
         //esto es para activar el combo a credito
         DefaultTableModel modelodos = (DefaultTableModel) tablados.getModel();
         modelodos.setRowCount(0);
         labelPlazo.setVisible(false);
         comboplazo.setVisible(false);
-
+        
         comboformapago.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-
+                
                 Object seleccionado = comboformapago.getSelectedItem();
                 //if (e.getStateChange() == ItemEvent.SELECTED) verifica que el evento corresponde a un ítem que fue seleccionado, no deseleccionado.
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     if ("Crédito".equals(seleccionado)) {
                         labelPlazo.setVisible(true);
                         comboplazo.setVisible(true);
-
+                        
                     } else {
                         labelPlazo.setVisible(false);
                         comboplazo.setVisible(false);
-
+                        
                     }
                 }
             }
@@ -106,19 +107,40 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
         //para eliminar un producto de la compra
         tablados.addMouseListener(new MouseAdapter() {
             @Override
-
+            
             public void mouseClicked(MouseEvent e) {
                 int fila_po = tablados.rowAtPoint(e.getPoint());
-
+                
                 if (fila_po > -1) {
-
+                    
                     int confirm = JOptionPane.showConfirmDialog(null, "¿Eliminar este Producto de la Compra?", "Confirmar", JOptionPane.YES_NO_OPTION);
                     if (confirm == JOptionPane.YES_OPTION) {
                         modelodos.removeRow(fila_po);
+                        ActualizarTotales();
                     }
                 }
             }
-
+            
+        });
+        
+        txtOrden.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e) {
+                
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+                
+            }
         });
 
         //para que solo permita ingresar valores numericos en cantidad
@@ -129,20 +151,20 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                 if (!Character.isDigit(c)) {
                     e.consume();
                 }
-
+                
             }
-
+            
             @Override
             public void keyPressed(KeyEvent e) {
-
+                
             }
-
+            
             @Override
             public void keyReleased(KeyEvent e) {
-
+                
             }
         });
-
+        
     }
 
     /**
@@ -181,6 +203,12 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtcantidad = new javax.swing.JTextField();
         Limpiar1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        txtOrden = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtObservacion = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablados = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -194,6 +222,8 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
         labelpagarCredito = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         CalcularPlazo = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        txtfechaVence = new javax.swing.JLabel();
 
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro-de-la-carretilla.png"))); // NOI18N
 
@@ -225,17 +255,17 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
 
         tablaUno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre ", "Detalle", "Precio", "Iva"
+                "Cod Producto", "Nombre ", "Detalle", "Precio", "Iva"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -249,6 +279,7 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             tablaUno.getColumnModel().getColumn(1).setResizable(false);
             tablaUno.getColumnModel().getColumn(2).setResizable(false);
             tablaUno.getColumnModel().getColumn(3).setResizable(false);
+            tablaUno.getColumnModel().getColumn(4).setResizable(false);
         }
 
         AgregarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.png"))); // NOI18N
@@ -317,6 +348,14 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel11.setText("Orden:");
+
+        jLabel12.setText("Observación:");
+
+        txtCodigo.setEnabled(false);
+
+        jLabel13.setText("Código:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -324,30 +363,36 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboTipo, 0, 210, Short.MAX_VALUE)
-                            .addComponent(comboProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtObservacion, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtOrden, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, 210, Short.MAX_VALUE)
+                            .addComponent(comboProveedor, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BuscarTipo)
-                            .addComponent(BuscarProveedor)))
-                    .addComponent(labelfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BuscarProveedor))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel13))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtdetalle, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-                            .addComponent(txtnombres))
+                            .addComponent(txtnombres)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(44, 44, 44)
@@ -373,7 +418,7 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Limpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,45 +439,60 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelfecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Limpiar1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Limpiar))
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13))
+                                .addGap(10, 10, 10)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)
-                            .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Limpiar))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtdetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(txtiva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AgregarCompra))
+                            .addComponent(AgregarCompra)
+                            .addComponent(txtdetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addGap(0, 24, Short.MAX_VALUE))))
         );
 
         tablados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre del Producto", "Detalle del Producto", "Cantidad", "Precio", "Iva", "Total Compra"
+                "CodProducto", "Nombre del Producto", "Detalle del Producto", "Cantidad", "Precio", "Iva", "Total Compra"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -448,6 +508,7 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             tablados.getColumnModel().getColumn(3).setResizable(false);
             tablados.getColumnModel().getColumn(4).setResizable(false);
             tablados.getColumnModel().getColumn(5).setResizable(false);
+            tablados.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -480,6 +541,8 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel14.setText("Fecha Vencimiento:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -502,11 +565,13 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(labelpagar)
-                            .addComponent(labelPlazo))
+                            .addComponent(labelPlazo)
+                            .addComponent(jLabel14))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(comboplazo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelpagarCredito, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(labelpagarCredito, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtfechaVence, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(17, 17, 17))
         );
         jPanel2Layout.setVerticalGroup(
@@ -529,7 +594,11 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelpagar)
                     .addComponent(labelpagarCredito, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtfechaVence, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(14, 14, 14))
         );
@@ -562,8 +631,8 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
@@ -578,7 +647,7 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
     private void comboTipoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_comboTipoComponentShown
 
     }//GEN-LAST:event_comboTipoComponentShown
-
+    
     public void ActualizarTotales() {
         DefaultTableModel modelodos = (DefaultTableModel) tablados.getModel();
         String tota;
@@ -586,8 +655,8 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
         double val = 0.0;
         double diferido = 0.0;
         for (int i = 0; i < modelodos.getRowCount(); i++) {
-            tota = (String) modelodos.getValueAt(i, 5);
-
+            tota = (String) modelodos.getValueAt(i, 6);
+            
             if (tota != null && !tota.trim().isEmpty()) {
                 try {
                     val = Double.parseDouble(tota);
@@ -596,17 +665,17 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                     System.out.println("Error al convertir total" + tota);
                 }
             } else {
-                System.out.println("Valor nulo o vacío en columna 5, fila " + i);
+                System.out.println("Valor nulo o vacío en columna 6, fila " + i);
             }
         }
-
+        
         Object seleccionado = comboformapago.getSelectedItem();
         Object seleccion = comboplazo.getSelectedItem();
-
+        
         if ("Crédito".equals(seleccionado)) {
             labelPlazo.setVisible(true);
             comboplazo.setVisible(true);
-
+            
             if ("12 meses".equals(seleccion)) {
                 diferido = sumaTotal / 12;
             } else if ("6 meses".equals(seleccion)) {
@@ -616,16 +685,16 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             } else if ("1 mes".equals(seleccion)) {
                 diferido = sumaTotal / 1;
             }
-            txtSumaTotal.setText(String.format("%.2f", sumaTotal));
-            labelpagarCredito.setText(String.format("%.2f", diferido));
+            txtSumaTotal.setText(String.format(Locale.US, "%.2f", sumaTotal));
+            labelpagarCredito.setText(String.format(Locale.US, "%.2f", diferido));
         } else {
             labelPlazo.setVisible(false);
             comboplazo.setVisible(false);
-            txtSumaTotal.setText(String.format("%.2f", sumaTotal));
-            labelpagarCredito.setText(String.format("%.2f", sumaTotal));
-
+            txtSumaTotal.setText(String.format(Locale.US, "%.2f", sumaTotal));
+            labelpagarCredito.setText(String.format(Locale.US, "%.2f", sumaTotal));
+            
         }
-
+        
     }
     private void BuscarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarTipoActionPerformed
         String tipo;
@@ -633,20 +702,22 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
             ArrayList<Vector<String>> matriz = op.BusquedaProducto(tipo);
-
+            
             DefaultTableModel modelo = (DefaultTableModel) tablaUno.getModel();
             modelo.setRowCount(0);
-
+            
             for (Vector<String> vector : matriz) {
-                String nombre, detalle, precio, iva;
-
+                String nombre, detalle, precio, iva, cod;
+                
+                cod = vector.get(0);
                 nombre = vector.get(1);
                 detalle = vector.get(3);
                 precio = vector.get(5);
                 iva = vector.get(6);
-
+                
                 Vector<String> fila = new Vector<>();
-
+                
+                fila.add(cod);
                 fila.add(nombre);
                 fila.add(detalle);
                 fila.add(precio);
@@ -655,16 +726,18 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             }
             tablaUno.addMouseListener(new MouseAdapter() {
                 @Override
-
+                
                 public void mouseClicked(MouseEvent e) {
                     int fila_point = tablaUno.rowAtPoint(e.getPoint());
-
+                    
                     if (fila_point > -1) {
-                        String nombre = (String) modelo.getValueAt(fila_point, 0);
-                        String detalle = (String) modelo.getValueAt(fila_point, 1);
-                        String precio = (String) modelo.getValueAt(fila_point, 2);
-                        String iva = (String) modelo.getValueAt(fila_point, 3);
-
+                        String cod = (String) modelo.getValueAt(fila_point, 0);
+                        String nombre = (String) modelo.getValueAt(fila_point, 1);
+                        String detalle = (String) modelo.getValueAt(fila_point, 2);
+                        String precio = (String) modelo.getValueAt(fila_point, 3);
+                        String iva = (String) modelo.getValueAt(fila_point, 4);
+                        
+                        txtCodigo.setText(cod);
                         txtnombres.setText(nombre);
                         txtdetalle.setText(detalle);
                         txtprecio.setText(precio);
@@ -672,69 +745,74 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                     }
                 }
             });
-
+            
         } catch (SQLException err) {
             err.printStackTrace();
         }
     }//GEN-LAST:event_BuscarTipoActionPerformed
 
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
-
+        
         Limpiar();
     }//GEN-LAST:event_LimpiarActionPerformed
 
     private void BuscarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarProveedorActionPerformed
         String valor, nombre, apellido;
-
+        
         valor = (String) comboProveedor.getSelectedItem();
-
+        
         if (valor != null && !valor.isEmpty()) {
             String[] partes = valor.trim().split(" ");
-
+            
             nombre = partes[0];
             apellido = partes.length > 1 ? partes[1] : "";
-
+            
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 ArrayList<Vector<String>> matriz = op.BusquedaNombresProveedor(nombre, apellido);
-
+                
                 DefaultTableModel modelo = (DefaultTableModel) tablaUno.getModel();
                 modelo.setRowCount(0);
-
+                
                 for (Vector<String> vector : matriz) {
-                    String nombres, detalle, precio, iva;
+                    String nombres, detalle, precio, iva, cod;
+                    cod = vector.get(0);
                     nombres = vector.get(1);
                     detalle = vector.get(3);
                     precio = vector.get(5);
                     iva = vector.get(6);
-
+                    
                     Vector<String> vector2 = new Vector<>();
-
+                    
+                    vector2.add(cod);
                     vector2.add(nombres);
                     vector2.add(detalle);
                     vector2.add(precio);
                     vector2.add(iva);
-
+                    
                     modelo.addRow(vector2);
-
+                    
                 }
-
+                
                 tablaUno.addMouseListener(new MouseAdapter() {
                     @Override
-
+                    
                     public void mouseClicked(MouseEvent e) {
                         int fila_point = tablaUno.rowAtPoint(e.getPoint());
-
+                        
                         if (fila_point > -1) {
-                            String nombres = (String) modelo.getValueAt(fila_point, 0);
-                            String detalle = (String) modelo.getValueAt(fila_point, 1);
-                            String precio = (String) modelo.getValueAt(fila_point, 2);
-                            String iva = (String) modelo.getValueAt(fila_point, 3);
-
+                            String cod = (String) modelo.getValueAt(fila_point, 0);
+                            String nombres = (String) modelo.getValueAt(fila_point, 1);
+                            String detalle = (String) modelo.getValueAt(fila_point, 2);
+                            String precio = (String) modelo.getValueAt(fila_point, 3);
+                            String iva = (String) modelo.getValueAt(fila_point, 4);
+                            
+                            txtCodigo.setText(cod);
                             txtnombres.setText(nombres);
                             txtdetalle.setText(detalle);
                             txtprecio.setText(precio);
                             txtiva.setText(iva);
+                            
                         }
                     }
                 });
@@ -742,49 +820,51 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
                 err.printStackTrace();
             }
         }
-
+        
 
     }//GEN-LAST:event_BuscarProveedorActionPerformed
 
     private void AgregarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarCompraActionPerformed
-        String nombre, detalle, precio, iva, cantidad, tota;
+        String nombre, detalle, precio, iva, cantidad, tota, cod;
         int validar = 0;
-
-        nombre = txtnombres.getText();
-        detalle = txtdetalle.getText();
-        precio = txtprecio.getText();
-        iva = txtiva.getText();
-        cantidad = txtcantidad.getText();
+        
+        cod = txtCodigo.getText().toString();
+        nombre = txtnombres.getText().toString();
+        detalle = txtdetalle.getText().toString();
+        precio = txtprecio.getText().toString();
+        iva = txtiva.getText().toString();
+        cantidad = txtcantidad.getText().toString();
         DefaultTableModel modelo = (DefaultTableModel) tablados.getModel();
-
+        
         try {
             if (cantidad.equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese una cantidad");
                 validar++;
             }
-
+            
             if (validar == 0) {
-
+                
                 int can = (Integer.parseInt(cantidad));
                 double pre = (Double.parseDouble(precio));
                 double iv = (Double.parseDouble(iva));
-
+                
                 double sub = can * pre;
                 double impuesto = (sub * iv) / 100;
                 double total = sub + impuesto;
-
+                
                 String totales = (String.valueOf(total));
-
+                
                 Vector<String> vector = new Vector<>();
+                vector.add(cod);
                 vector.add(nombre);
                 vector.add(detalle);
                 vector.add(cantidad);
                 vector.add(precio);
                 vector.add(iva);
                 vector.add(totales);
-
+                
                 modelo.addRow(vector);
-
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un Producto");
             }
@@ -792,17 +872,17 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error al agregar producto" + e);
             System.out.println("Error al agregar producto" + e);
         }
-
+        ActualizarTotales();
 
     }//GEN-LAST:event_AgregarCompraActionPerformed
-
+    
     public void actulaizarVisiblePalzo() {
         Object seleccionado = comboformapago.getSelectedItem();
         boolean esCredito = "Crédito".equals(seleccionado);
-
+        
         labelPlazo.setVisible(true);
         comboplazo.setVisible(true);
-
+        
     }
     private void Limpiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Limpiar1ActionPerformed
         DefaultTableModel modelo = (DefaultTableModel) tablaUno.getModel();
@@ -812,13 +892,14 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
     private void CalcularPlazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularPlazoActionPerformed
         ActualizarTotales();
     }//GEN-LAST:event_CalcularPlazoActionPerformed
-
+    
     public void Limpiar() {
         txtnombres.setText("");
         txtdetalle.setText("");
         txtprecio.setText("");
         txtiva.setText("");
         txtcantidad.setText("");
+        txtCodigo.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -836,6 +917,10 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -856,9 +941,13 @@ public class IngresoMercaderiaPorLote extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelpagarCredito;
     private javax.swing.JTable tablaUno;
     private javax.swing.JTable tablados;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtObservacion;
+    private javax.swing.JTextField txtOrden;
     private javax.swing.JTextField txtSumaTotal;
     private javax.swing.JTextField txtcantidad;
     private javax.swing.JTextField txtdetalle;
+    private javax.swing.JLabel txtfechaVence;
     private javax.swing.JTextField txtiva;
     private javax.swing.JTextField txtnombres;
     private javax.swing.JTextField txtprecio;
