@@ -471,10 +471,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="txtprecio" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
                                       <Component id="txtcantidad" min="-2" pref="103" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                          <Component id="txtiva" min="-2" pref="97" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="txtiva" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">

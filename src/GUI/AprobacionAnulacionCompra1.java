@@ -35,24 +35,8 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
         usuario = Login.user;
         panel.setVisible(false);
 
-        String stado = "IngresoAnular";
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            ArrayList<Vector<String>> matriz = op.InventarioEstado(stado);
-
-            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-            modelo.setRowCount(0);
-
-            for (Vector<String> vector : matriz) {
-                modelo.addRow(vector);
-
-            }
-
-            MostrarAprobacion();
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
-
+        ActualizarTabla();
+        MostrarAprobacion();
     }
 
     /**
@@ -66,11 +50,11 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        JBActualizar = new javax.swing.JButton();
         LabelTitulo = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
-        jButton3 = new javax.swing.JButton();
+        jbSalir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         labelOrden = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -97,32 +81,32 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton2);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-flecha.png"))); // NOI18N
-        jButton1.setToolTipText("ActualizarTabla");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        JBActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-flecha.png"))); // NOI18N
+        JBActualizar.setToolTipText("ActualizarTabla");
+        JBActualizar.setFocusable(false);
+        JBActualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        JBActualizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        JBActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                JBActualizarActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(JBActualizar);
         jToolBar1.add(LabelTitulo);
 
         jToolBar2.setRollover(true);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
-        jButton3.setToolTipText("Salir");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jbSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
+        jbSalir.setToolTipText("Salir");
+        jbSalir.setFocusable(false);
+        jbSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jbSalirActionPerformed(evt);
             }
         });
-        jToolBar2.add(jButton3);
+        jToolBar2.add(jbSalir);
 
         jLabel3.setText("Orden:");
 
@@ -259,10 +243,15 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         panel.setVisible(false);        // TODO add your handling code here:
+        Bton();
+        ActualizarTabla();
+    }//GEN-LAST:event_jbSalirActionPerformed
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    public void Bton() {
+        botonAprobar.setEnabled(true);
+    }
 
     public void MostrarAprobacion() {
 
@@ -312,7 +301,7 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_botonAprobarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void ActualizarTabla() {
         String stado = "IngresoAnular";
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
@@ -324,47 +313,29 @@ public class AprobacionAnulacionCompra1 extends javax.swing.JInternalFrame {
             for (Vector<String> vector : matriz) {
                 modelo.addRow(vector);
 
-                tabla.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        int fila_point = tabla.rowAtPoint(e.getPoint());
-                        int columna_point = 0;
-
-                        panel.setVisible(true);
-
-                        String orden, nombrePro, cantidad;
-
-                        orden = vector.get(1);
-                        nombrePro = vector.get(2);
-                        cantidad = vector.get(10);
-
-                        labelOrden.setText(orden);
-                        labelNombreProducto.setText(nombrePro);
-                        labelCAntidad.setText(cantidad);
-                    }
-
-                });
-
             }
 
         } catch (SQLException err) {
             err.printStackTrace();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
+    private void JBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBActualizarActionPerformed
+        ActualizarTabla();
+    }//GEN-LAST:event_JBActualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBActualizar;
     private javax.swing.JLabel LabelTitulo;
     private javax.swing.JButton botonAprobar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JButton jbSalir;
     private javax.swing.JLabel labelCAntidad;
     private javax.swing.JLabel labelNombreProducto;
     private javax.swing.JLabel labelOrden;

@@ -865,7 +865,12 @@ public final class OperarcionesCRUD {
     public void Mercaderia(ArrayList<Vector<String>> datos) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();
+
         ArrayList<Vector<String>> matriz = datos;
+
+        PreparedStatement psCompra = null;
+        PreparedStatement pstDetalle = null;
+        int idInven = 0;
 
         for (Vector<String> vector : matriz) {
             String codProd, idUser, idProve, orden, detalle, stado, fechIngre, observacion, cantidad, stock, total, formapago, plazo, fechaVenc, cuota, sald;
@@ -892,13 +897,11 @@ public final class OperarcionesCRUD {
             switch (detalle) {
                 case "Compra":
                     try {
-                    //  String sql2 = "select * from inventario(select idinventario, stock from inventario where codproductos = '" + codProd + "'" + "order by idinventario desc) where rownum =1";
-
                     String sq = "select orden from inventario where orden = '" + orden + "'";
                     ResultSet rs = stm.executeQuery(sq);
                     if (rs.next()) {
                         JOptionPane.showMessageDialog(null, "!! Orden ya se encuentra registrada/ Espera de aprobación !!\n");
-                        this.cerrarConexionBD();
+
                     } else {
                         String sql2 = "SELECT idinventario, stock FROM ("
                                 + "SELECT idinventario, stock FROM inventario "
@@ -913,55 +916,79 @@ public final class OperarcionesCRUD {
                             int canti = (Integer.parseInt(cantidad));
                             resultado = saldo + canti;
 
-                            switch (formapago) {
-                                case "Crédito":
-                                    String sql3 = "insert into inventario "
-                                            + "(codproductos,idusuarios,idproveedor,orden,detalle, observacion, estado,"
-                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago,plazo,fecha_vencimiento_plazo,valor_cuota,saldo) "
-                                            + "values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "',"
-                                            + "'" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "','" + formapago + "','" + plazo + "', '" + fechaVenc + "','" + cuota + "','" + sald + "')";
-                                    stm.executeUpdate(sql3);
-                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
-                                    break;
-                                case "Contado":
-                                    String sql4 = "insert into inventario "
-                                            + "(codproductos,idusuarios,idproveedor,orden,detalle, observacion, estado,"
-                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago) "
-                                            + "values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "','" + formapago + "')";
-                                    stm.executeUpdate(sql4);
-                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+                            String sqlCompra = "insert into inventario "
+                                    + "(codproductos,idusuarios,idproveedor,orden,detalle, observacion, estado,"
+                                    + " fecha_registro,fecha_aprobacion,ingreso,stock,total) "
+                                    + "values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                    + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "',"
+                                    + "'" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
 
-                                    break;
+                            //  psCompra = this.conexion.prepareStatement(sqlCompra, Statement.RETURN_GENERATED_KEYS);
+                            psCompra = conexion.prepareStatement(sqlCompra, Statement.RETURN_GENERATED_KEYS);
+                            psCompra.executeUpdate();
+                            // stm.executeUpdate(sql3);
+                            JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+
+                            ResultSet rst2 = psCompra.getGeneratedKeys();
+
+                            if (rst2.next()) {
+                                idInven = rst2.getInt(1);
+                            }
+
+                            if (formapago.equals("Contado")) {
+
+                                String sqlDetalle = "insert into transacciones "
+                                        + "(idinventario,forma_pago)"
+                                        + "values('" + idInven + "','" + formapago + "')";
+                                pstDetalle = conexion.prepareStatement(sqlDetalle);
+                                pstDetalle.executeUpdate();
+                            } else {
+                                String sqlDetalle3 = "insert into transacciones "
+                                        + "(idinventario,forma_pago,plazo,fecha_vencimiento_plazo,"
+                                        + "valor_cuota,saldo)"
+                                        + "values('" + idInven + "','" + formapago + "','" + plazo + "','" + fechaVenc + "',"
+                                        + "'" + cuota + "','" + sald + "')";
+                                pstDetalle = conexion.prepareStatement(sqlDetalle3);
+                                pstDetalle.executeUpdate();
                             }
 
                         } else {
-                            switch (formapago) {
-                                case "Crédito":
-                                    stock = cantidad;
-                                    String sql = "insert into inventario "
-                                            + "(codproductos,idusuarios,idproveedor,orden,detalle,observacion, estado,"
-                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago,plazo,fecha_vencimiento_plazo,valor_cuota,saldo)"
-                                            + " values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "',"
-                                            + "'" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "','" + formapago + "','" + plazo + "', '" + fechaVenc + "','" + cuota + "','" + sald + "')";
-                                    stm.executeUpdate(sql);
-                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
-                                    break;
-                                case "Contado":
-                                    stock = cantidad;
-                                    String sql5 = "insert into inventario "
-                                            + "(codproductos,idusuarios,idproveedor,orden,detalle,observacion, estado,"
-                                            + " fecha_registro,fecha_aprobacion,ingreso,stock,total,forma_pago) values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
-                                            + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "','" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "','" + formapago + "')";
-                                    stm.executeUpdate(sql5);
-                                    JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
-                                    break;
+                            stock = cantidad;
+                            String sqlComprados = "insert into inventario "
+                                    + "(codproductos,idusuarios,idproveedor,orden,detalle,observacion, estado,"
+                                    + " fecha_registro,fecha_aprobacion,ingreso,stock,total)"
+                                    + " values ('" + codProd + "','" + idUser + "','" + idProve + "','" + orden + "',"
+                                    + "'" + detalle + "', '" + observacion + "','" + stado + "','" + fechIngre + "',"
+                                    + "'" + fechIngre + "','" + cantidad + "','" + stock + "','" + total + "')";
+                            // stm.executeUpdate(sql);
+
+                            psCompra = conexion.prepareStatement(sqlComprados, Statement.RETURN_GENERATED_KEYS);
+                            psCompra.executeUpdate();
+                            JOptionPane.showMessageDialog(null, "!! Compra de Mercadería Guardada con Exito !!\n");
+
+                            ResultSet rst3 = psCompra.getGeneratedKeys();
+                            if (rst3.next()) {
+                                idInven = rst3.getInt(1);
+                            }
+
+                            if (formapago.endsWith("Contado")) {
+                                String sqlDetalle2 = "insert into transacciones "
+                                        + "(idinventario,forma_pago)"
+                                        + "values('" + idInven + "','" + formapago + "')";
+                                pstDetalle = conexion.prepareStatement(sqlDetalle2);
+                                pstDetalle.executeUpdate();
+                            } else {
+                                String sqlDetalle4 = "insert into transacciones "
+                                        + "(idinventario,forma_pago,plazo,fecha_vencimiento_plazo,"
+                                        + "valor_cuota,saldo)"
+                                        + "values('" + idInven + "','" + formapago + "','" + plazo + "','" + fechaVenc + "',"
+                                        + "'" + cuota + "','" + sald + "')";
+                                pstDetalle = conexion.prepareStatement(sqlDetalle4);
+                                pstDetalle.executeUpdate();
                             }
 
                         }
-                        this.cerrarConexionBD();
+
                     }
 
                 } catch (Exception e) {
@@ -972,7 +999,7 @@ public final class OperarcionesCRUD {
                 break;
 
                 case "Venta":
-                    this.iniciarConexionBD();
+
                     Statement stm4 = this.conexion.createStatement();
 
                     String sql4 = "SELECT idinventario, stock FROM ("
@@ -998,7 +1025,7 @@ public final class OperarcionesCRUD {
                                     + "'" + detalle + "', '" + fechIngre + "','" + cantidad + "','" + resultado + "','" + total + "')";
                             stm4.executeUpdate(sql5);
                             JOptionPane.showMessageDialog(null, "!! Venta realizada con Exito !!");
-                            this.cerrarConexionBD();
+
                         }
 
                         break;
@@ -1021,10 +1048,12 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         try {
-            String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.ingreso, i.total, i.forma_pago, i.plazo, i.fecha_vencimiento_plazo, i.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
+            String sql = "SELECT i.idinventario, i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.ingreso, i.total, t.forma_pago, t.plazo, t.fecha_vencimiento_plazo, t.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
                     + "FROM bd_systema.inventario i\n"
-                    + "INNER JOIN bd_systema.proveedor pro \n"
+                    + "INNER JOIN bd_systema.proveedor pro \n"                    
                     + "on i.idProveedor = pro.idProveedor\n"
+                    + "INNER JOIN bd_systema.transacciones t \n"
+                    + "on i.idinventario = t.idinventario \n"
                     + "INNER JOIN bd_systema.usuarios u \n"
                     + "on i.idusuarios = u.idusuarios\n"
                     + "INNER JOIN bd_systema.productos p \n"
@@ -1142,7 +1171,6 @@ public final class OperarcionesCRUD {
     }
 
     //busqueda en el inventario por Numero de Orden
-
     public ArrayList<Vector<String>> InventarioPorOrden(String orden, String fecha, String stado) throws SQLException {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
@@ -1157,15 +1185,17 @@ public final class OperarcionesCRUD {
             if (rst2.next()) {
                 JOptionPane.showMessageDialog(null, "!! Orden En Espera de Aprobacion !!\n");
             } else {
-                String sql = "SELECT i.codproductos, i.orden, i.observacion, i.estado, i.fecha_aprobacion, i.ingreso, i.total,i.forma_pago, i.plazo, i.fecha_vencimiento_plazo, i.valor_cuota, u.username,  pro.nombres, p.nombre_producto\n"
+                String sql = "SELECT i.idinventario, i.codproductos, i.orden, i.observacion, i.estado, i.fecha_registro, i.ingreso, i.total, t.forma_pago, t.plazo, t.fecha_vencimiento_plazo, t.valor_cuota, u.username,  pro.nombres, p.nombre_producto\n"
                         + "FROM bd_systema.inventario i\n"
                         + "INNER JOIN bd_systema.usuarios u \n"
                         + "on i.idusuarios = u.idusuarios\n"
+                        + "INNER JOIN bd_systema.transacciones t \n"
+                        + "on i.idinventario = t.idinventario\n"
                         + "INNER JOIN bd_systema.proveedor pro \n"
                         + "on i.idproveedor = pro.idProveedor\n"
                         + "INNER JOIN bd_systema.productos p \n"
                         + "on i.codproductos = p.codproductos\n"
-                        + "where i.estado = '" + stado + "' and i.fecha_aprobacion = '" + fecha + "' and i.orden = '" + orden + "'";
+                        + "where i.estado = '" + stado + "' and i.fecha_registro = '" + fecha + "' and i.orden = '" + orden + "'";
 
                 ResultSet rst = stm.executeQuery(sql);
 
@@ -1220,10 +1250,12 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         try {
-            String sql = "SELECT i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total,i.forma_pago,i.plazo,i.fecha_vencimiento_plazo,i.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
+            String sql = "SELECT i.idinventario, i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.fecha_aprobacion, i.ingreso, i.total,t.forma_pago,t.plazo,t.fecha_vencimiento_plazo,t.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
                     + "FROM bd_systema.inventario i\n"
                     + "INNER JOIN bd_systema.proveedor pro \n"
                     + "on i.idProveedor = pro.idProveedor\n"
+                    + "INNER JOIN bd_systema.transacciones t \n"
+                    + "on i.idinventario = t.idinventario\n"
                     + "INNER JOIN bd_systema.usuarios u \n"
                     + "on i.idusuarios = u.idusuarios\n"
                     + "INNER JOIN bd_systema.productos p \n"

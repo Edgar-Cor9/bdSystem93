@@ -33,26 +33,13 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
         labelTitulo.setText("Mercadería>Ingreso Mercaderia>ProcesarCompra");
         usuario = Login.user;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        String estado = "Aprobado";
         jPanel1.setVisible(false);
         isCredito();
 
         LocalDate fecha = LocalDate.now();
         txtFecha.setText(fecha.format(DateTimeFormatter.ISO_DATE));
 
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            ArrayList<Vector<String>> matriz = op.InventarioEstado(estado);
-
-            DefaultTableModel modelo = (DefaultTableModel) TablaAprobar.getModel();
-            modelo.setRowCount(0);
-
-            for (Vector<String> vector : matriz) {
-                modelo.addRow(vector);
-            }
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
+        MostrarTabla();
         MostrarProcesar();
     }
 
@@ -66,7 +53,7 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton4 = new javax.swing.JButton();
+        jbActualizar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -105,17 +92,17 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
 
         jToolBar1.setRollover(true);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-flecha.png"))); // NOI18N
-        jButton4.setToolTipText("Actualizar Tabla");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jbActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar-flecha.png"))); // NOI18N
+        jbActualizar.setToolTipText("Actualizar Tabla");
+        jbActualizar.setFocusable(false);
+        jbActualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbActualizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jbActualizarActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton4);
+        jToolBar1.add(jbActualizar);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
         jButton1.setToolTipText("Salir");
@@ -388,6 +375,8 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         jPanel1.setVisible(false);
+        MostrarTabla();
+        Boton();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public void isCredito() {
@@ -450,14 +439,14 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
                         isCredito();
                     }
                     txtformapago.setText(forpago);
-
+                    Boton();
                 }
 
             }
         });
     }
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
+    public void MostrarTabla() {
         try {
             String stado = "Aprobado";
             jPanel1.setVisible(false);
@@ -475,8 +464,14 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }
+    private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
+        MostrarTabla();
+    }//GEN-LAST:event_jbActualizarActionPerformed
 
+    public void Boton() {
+        JBAprobar.setEnabled(true);
+    }
     private void JBAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAprobarActionPerformed
         String orden, fec, forpago;
 
@@ -491,7 +486,7 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 op.ActualizarEstadoCompra(orden, stado, fec);
-                JBAprobar.setVisible(false);
+                JBAprobar.setEnabled(false);
             } catch (SQLException err) {
                 err.printStackTrace();
             }
@@ -505,7 +500,6 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBAprobar;
     private javax.swing.JTable TablaAprobar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -522,6 +516,7 @@ public class ProcesarCompra extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JButton jbActualizar;
     private javax.swing.JLabel labelFechaVence;
     private javax.swing.JLabel labelPlazo;
     private javax.swing.JLabel labelTitulo;

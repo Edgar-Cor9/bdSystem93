@@ -358,7 +358,7 @@ public class IngresarAnulacionCompra extends javax.swing.JInternalFrame {
 
                             orden = vector.get(0);
                             nombrePro = vector.get(1);
-                            cantidad = vector.get(4);
+                            cantidad = vector.get(6);
 
                             labelOrden.setText(orden);
                             labelNombreProducto.setText(nombrePro);

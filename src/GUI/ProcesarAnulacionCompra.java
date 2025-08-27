@@ -35,22 +35,8 @@ public class ProcesarAnulacionCompra extends javax.swing.JInternalFrame {
         usuario = Login.user;
         panel.setVisible(false);
 
-        String stado = "AprobadoAnular";
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            ArrayList<Vector<String>> matriz = op.InventarioEstado(stado);
-
-            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-            modelo.setRowCount(0);
-
-            for (Vector<String> vector : matriz) {
-                modelo.addRow(vector);
-            }
-
-            MostrarProcesar();
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
+        ActualizarTabla();
+        MostrarProcesar();
 
     }
 
@@ -69,7 +55,7 @@ public class ProcesarAnulacionCompra extends javax.swing.JInternalFrame {
         LabelTitulo = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
-        jButton3 = new javax.swing.JButton();
+        JSAlir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         labelOrden = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -111,17 +97,17 @@ public class ProcesarAnulacionCompra extends javax.swing.JInternalFrame {
 
         jToolBar2.setRollover(true);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
-        jButton3.setToolTipText("Salir");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        JSAlir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
+        JSAlir.setToolTipText("Salir");
+        JSAlir.setFocusable(false);
+        JSAlir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        JSAlir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        JSAlir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                JSAlirActionPerformed(evt);
             }
         });
-        jToolBar2.add(jButton3);
+        jToolBar2.add(JSAlir);
 
         jLabel3.setText("Orden:");
 
@@ -258,10 +244,15 @@ public class ProcesarAnulacionCompra extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void JSAlirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSAlirActionPerformed
         panel.setVisible(false);        // TODO add your handling code here:
+        ActualizarTabla();
+        BTon();
+    }//GEN-LAST:event_JSAlirActionPerformed
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    public void BTon() {
+        botonAprobar.setEnabled(true);
+    }
 
     public void MostrarProcesar() {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
@@ -309,7 +300,7 @@ public class ProcesarAnulacionCompra extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_botonAprobarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void ActualizarTabla() {
         String stado = "AprobadoAnular";
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
@@ -347,15 +338,18 @@ public class ProcesarAnulacionCompra extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ActualizarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JSAlir;
     private javax.swing.JLabel LabelTitulo;
     private javax.swing.JButton botonAprobar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

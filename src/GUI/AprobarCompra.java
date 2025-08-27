@@ -35,7 +35,6 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         labelTitulo.setText("Mercadería>Ingreso Mercaderia>AprobarCompra");
         usuario = Login.user;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        String estado = "Ingresado";
         jPanel1.setVisible(false);
         LocalDate fecha = LocalDate.now();
         txtFecha.setText(fecha.format(DateTimeFormatter.ISO_DATE));
@@ -46,17 +45,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         modelo.setRowCount(0);
 
         String codProd = null;
-        try {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            ArrayList<Vector<String>> matriz = op.InventarioEstado(estado);
-            for (Vector<String> vector : matriz) {
-                modelo.addRow(vector);
-                codProd = vector.get(0);
-            }
-
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
+        ActualizarTabla();
         MostrarAprobar();
 
     }
@@ -80,7 +69,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         jToolBar2 = new javax.swing.JToolBar();
         JBAprobar = new javax.swing.JButton();
         JBAnular = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jbSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -200,17 +189,17 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         });
         jToolBar2.add(JBAnular);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
-        jButton5.setToolTipText("Salir");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jbSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
+        jbSalir.setToolTipText("Salir");
+        jbSalir.setFocusable(false);
+        jbSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jbSalirActionPerformed(evt);
             }
         });
-        jToolBar2.add(jButton5);
+        jToolBar2.add(jbSalir);
 
         jLabel1.setText("Realizar Aprobacion o Anulación de Compra");
 
@@ -462,6 +451,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
                         isCredito();
                     }
                     txtformaPAgo.setText(forpago);
+                    Boton();
                 }
 
             }
@@ -480,9 +470,16 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         jPanel3.setVisible(false);
 
     }
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+    public void Boton() {
+        JBAprobar.setEnabled(true);
+        JBAnular.setEnabled(true);
+    }
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         jPanel1.setVisible(false);
-    }//GEN-LAST:event_jButton5ActionPerformed
+        ActualizarTabla();  
+        Boton();
+    }//GEN-LAST:event_jbSalirActionPerformed
 
     private void JBAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAnularActionPerformed
         String orden, fech, forpago;
@@ -498,8 +495,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 op.ActualizarEstadoCompra(orden, stado, fech);
-                JBAprobar.setVisible(false);
-                JBAnular.setVisible(false);
+                JBAprobar.setEnabled(false);
+                JBAnular.setEnabled(false);
             } catch (SQLException err) {
                 err.printStackTrace();
             }
@@ -508,8 +505,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_JBAnularActionPerformed
 
-    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-
+    public void ActualizarTabla() {
         try {
             String stado = "Ingresado";
             jPanel1.setVisible(false);
@@ -527,6 +523,9 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
+    }
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
+        ActualizarTabla();
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void JBAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAprobarActionPerformed
@@ -543,8 +542,8 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
             try {
                 OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                 op.ActualizarEstadoCompra(orden, stado, fech);
-                JBAprobar.setVisible(false);
-                JBAnular.setVisible(false);
+                JBAprobar.setEnabled(false);
+                JBAnular.setEnabled(false);
             } catch (SQLException err) {
                 err.printStackTrace();
             }
@@ -560,7 +559,6 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBAprobar;
     private javax.swing.JTable TablaAprobar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -576,6 +574,7 @@ public class AprobarCompra extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JButton jbSalir;
     private javax.swing.JLabel labelFechaVence;
     private javax.swing.JLabel labelPlazo;
     private javax.swing.JLabel labelTitulo;
