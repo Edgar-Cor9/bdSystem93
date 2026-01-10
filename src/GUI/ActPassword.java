@@ -33,8 +33,15 @@ public class ActPassword extends javax.swing.JInternalFrame {
         JBpassword1.setVisible(false);
         JLabelTitulo.setText(" Usuarios> Actualizacion Password ");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        jLabelUsuario.setText(usuario);
+     
 
+    }
+
+    private String userA2;
+
+    public void SetUsuarioPass(String usuarioPAss2) {
+        this.userA2 = usuarioPAss2;
+        jLabelUsuario.setText(userA2);
     }
 
     /**
@@ -47,7 +54,7 @@ public class ActPassword extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
+        GurdarPassU = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         JLabelTitulo = new javax.swing.JLabel();
@@ -66,17 +73,17 @@ public class ActPassword extends javax.swing.JInternalFrame {
         jToolBar1.setRollover(true);
         jToolBar1.setEnabled(false);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disco-flexible.png"))); // NOI18N
-        jButton1.setToolTipText("Guardar");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        GurdarPassU.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disco-flexible.png"))); // NOI18N
+        GurdarPassU.setToolTipText("Guardar");
+        GurdarPassU.setFocusable(false);
+        GurdarPassU.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        GurdarPassU.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        GurdarPassU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                GurdarPassUActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(GurdarPassU);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
         jButton2.setToolTipText("Limpiar");
@@ -186,21 +193,22 @@ public class ActPassword extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -210,14 +218,16 @@ public class ActPassword extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void GuardarPassword() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         String passnuevo, confirmacionpass;
 
         passnuevo = jPassNuevo.getText();
         confirmacionpass = jPassNuevoConfir.getText();
-        jLabelUsuario.setText(usuario);
+//        jLabelUsuario.setText(usuario);
+
+            String user = jLabelUsuario.getText();
 
         int validacion = 0;
         if (passnuevo.equals("")) {
@@ -237,7 +247,7 @@ public class ActPassword extends javax.swing.JInternalFrame {
                 try {
 
                     OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                    op.ActPassUsuario(usuario, confirmacionpass);
+                    op.ActPassUsuario(user, confirmacionpass);
                     JOptionPane.showMessageDialog(this, "Contraseña Actualiza Exitosamente");
                     Limpiar();
                 } catch (SQLException err) {
@@ -251,7 +261,10 @@ public class ActPassword extends javax.swing.JInternalFrame {
             }
 
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
+    private void GurdarPassUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GurdarPassUActionPerformed
+            GuardarPassword();
+    }//GEN-LAST:event_GurdarPassUActionPerformed
 
     public void Limpiar() {
         jPassNuevo.setText("");
@@ -269,10 +282,10 @@ public class ActPassword extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton GurdarPassU;
     private javax.swing.JButton JBpassword1;
     private javax.swing.JButton JBpassword2;
     private javax.swing.JLabel JLabelTitulo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel5;

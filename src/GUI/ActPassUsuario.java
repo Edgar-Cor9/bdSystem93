@@ -39,6 +39,7 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
 
     private String userA;
 
+    // este metodo permite traer por parametro el usuario a actualizar
     public void setUsuario(String usuarioPASS) {
         this.userA = usuarioPASS;
         jLabelUsuario.setText(userA);

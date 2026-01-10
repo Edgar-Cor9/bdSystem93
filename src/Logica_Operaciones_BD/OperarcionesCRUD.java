@@ -187,6 +187,48 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
     }
 
+    //Consultar la lista de Usuarios registrados por Tipo de Estado
+    public ArrayList<Vector<String>> BusquedaListaUsuario(String stado) throws SQLException {
+        ArrayList<Vector<String>> lista = new ArrayList<>();
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        try {
+            String sql = "SELECT u.cedula, u.nombres_usuario, u.apellidos_usuario, u.username, u.tipo_nivel, u.status from  bd_systema.usuarios u\n"
+                    + "where u.status = '" + stado + "'";
+
+            ResultSet rst = stm.executeQuery(sql);
+
+            while (rst.next()) {
+                Vector<String> datos = new Vector<>();
+                String cedula, nombres, apellidos, username, tiponivel, status;
+
+                cedula = rst.getString("cedula");
+                nombres = rst.getString("nombres_usuario");
+                apellidos = rst.getString("apellidos_usuario");
+                username = rst.getString("username");
+                tiponivel = rst.getString("tipo_nivel");
+                status = rst.getString("status");
+
+                datos.add(cedula);
+                datos.add(nombres);
+                datos.add(apellidos);
+                datos.add(username);
+                datos.add(tiponivel);
+                datos.add(status);
+
+                lista.add(datos);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer Usuarios Registrados" + e);
+            System.out.println("Error al Extraer Usuarios Registrados" + e);
+        }
+
+        this.cerrarConexionBD();
+        return lista;
+    }
+
     // aqui se consulta a la base de datos para el acceso a login
     public void login(String user, String pass) throws SQLException { // acceso a la ventana login
         this.iniciarConexionBD();
@@ -259,6 +301,27 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
     }
 
+    // Consultar tipoDeNivel del Usuario
+    public String TipoNivelUser(String username) throws SQLException {
+        this.iniciarConexionBD();
+        String tiponivel = "";
+        Statement stm = this.conexion.createStatement();
+
+        try {
+            String sql = "select tipo_nivel from usuarios where username ='" + username + "'";
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                tiponivel = rst.getString("tipo_nivel");
+            }
+        } catch (Exception e) {
+        }
+
+        this.cerrarConexionBD();
+        return tiponivel;
+    }
+
+    //Actualizar el perfil del usuario
     public void ActPerfilUser(String stado, String nivel, String user) throws SQLException {
         String status = stado;
         String tiponivel = nivel;
@@ -1050,7 +1113,7 @@ public final class OperarcionesCRUD {
         try {
             String sql = "SELECT i.idinventario, i.codproductos,i.orden, i.detalle,i.observacion, i.estado, i.fecha_registro,i.ingreso, i.total, t.forma_pago, t.plazo, t.fecha_vencimiento_plazo, t.valor_cuota, u.username, pro.nombres, p.nombre_producto\n"
                     + "FROM bd_systema.inventario i\n"
-                    + "INNER JOIN bd_systema.proveedor pro \n"                    
+                    + "INNER JOIN bd_systema.proveedor pro \n"
                     + "on i.idProveedor = pro.idProveedor\n"
                     + "INNER JOIN bd_systema.transacciones t \n"
                     + "on i.idinventario = t.idinventario \n"
@@ -1514,6 +1577,8 @@ public final class OperarcionesCRUD {
         Statement stm = this.conexion.createStatement();
 
         try {
+            //- Indica que se van a seleccionar registros de la tabla, pero eliminando duplicados. Es decir, si hay filas repetidas con los mismos nombres y apellidos, solo se mostrará una.
+
             String sql = "SELECT distinct nombres as nomb , apellidos as aplle FROM bd_systema.proveedor";
             ResultSet rst = stm.executeQuery(sql);
             while (rst.next()) {

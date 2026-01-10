@@ -4,9 +4,11 @@
  */
 package GUI;
 
+import Logica_Operaciones_BD.OperarcionesCRUD;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,7 +19,7 @@ import javax.swing.WindowConstants;
  * @author edand
  */
 public class Principal extends javax.swing.JFrame {
-
+    
     String usuario;
     TransaccionesIngreso transaccion;
     TransaccionesPolizas polizas;
@@ -37,6 +39,7 @@ public class Principal extends javax.swing.JFrame {
     AprobacionAnulacionCompra1 aproAnulCom;
     ProcesarAnulacionCompra proAnulCom;
     IngresoMercaderiaPorLote ingreMercLote;
+    ListaUsuarios listaUsuarios;
 
     /**
      * Creates new form Principal
@@ -47,15 +50,28 @@ public class Principal extends javax.swing.JFrame {
         usuario = Login.user;
         setTitle(" Sesion iniciada por " + usuario);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+        try {
+            String tiponivel = op.TipoNivelUser(usuario);
+            if (tiponivel.equalsIgnoreCase("Administrador")) {
+                Usuarios.setVisible(true);
+            } 
+            else if (tiponivel.equalsIgnoreCase("Usuario")) {
+                Usuarios.setVisible(false);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
     }
-
+    
     @Override
     public Image getIconImage() {
         // Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/informationuser.png"));
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/ico.png"));
         return retValue;
     }
-
+    
     private boolean cerrado(Object obj) {
         JInternalFrame[] FrmActivo = jDesktopPane2.getAllFrames();
         boolean cerrado = true;
@@ -119,10 +135,11 @@ public class Principal extends javax.swing.JFrame {
         ProcesarAnulacion1 = new javax.swing.JMenuItem();
         Proveedor = new javax.swing.JMenu();
         Registro = new javax.swing.JMenuItem();
-        ActualizarUsuario = new javax.swing.JMenu();
+        Usuarios = new javax.swing.JMenu();
         RegistroUsuario = new javax.swing.JMenuItem();
         CambioPassword = new javax.swing.JMenuItem();
         ActualizacionUsuario = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         Opciones = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -399,11 +416,11 @@ public class Principal extends javax.swing.JFrame {
 
         BarraMenu.add(Proveedor);
 
-        ActualizarUsuario.setText("Usuarios");
-        ActualizarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ActualizarUsuario.addActionListener(new java.awt.event.ActionListener() {
+        Usuarios.setText("Usuarios");
+        Usuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Usuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ActualizarUsuarioActionPerformed(evt);
+                UsuariosActionPerformed(evt);
             }
         });
 
@@ -414,7 +431,7 @@ public class Principal extends javax.swing.JFrame {
                 RegistroUsuarioActionPerformed(evt);
             }
         });
-        ActualizarUsuario.add(RegistroUsuario);
+        Usuarios.add(RegistroUsuario);
 
         CambioPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/contrasena.png"))); // NOI18N
         CambioPassword.setText("Password");
@@ -423,7 +440,7 @@ public class Principal extends javax.swing.JFrame {
                 CambioPasswordActionPerformed(evt);
             }
         });
-        ActualizarUsuario.add(CambioPassword);
+        Usuarios.add(CambioPassword);
 
         ActualizacionUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
         ActualizacionUsuario.setText("Actualizar");
@@ -432,9 +449,18 @@ public class Principal extends javax.swing.JFrame {
                 ActualizacionUsuarioActionPerformed(evt);
             }
         });
-        ActualizarUsuario.add(ActualizacionUsuario);
+        Usuarios.add(ActualizacionUsuario);
 
-        BarraMenu.add(ActualizarUsuario);
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/agregar.png"))); // NOI18N
+        jMenuItem1.setText("Lista");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        Usuarios.add(jMenuItem1);
+
+        BarraMenu.add(Usuarios);
 
         Opciones.setText("Opciones");
         Opciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -471,7 +497,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_IngresoClientesActionPerformed
 
     private void RegistroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroUsuarioActionPerformed
-
+        
         try {
             if (cerrado(registro)) {
                 registro = new Registro();
@@ -486,10 +512,10 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_RegistroUsuarioActionPerformed
 
-    private void ActualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarUsuarioActionPerformed
+    private void UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuariosActionPerformed
+        
 
-
-    }//GEN-LAST:event_ActualizarUsuarioActionPerformed
+    }//GEN-LAST:event_UsuariosActionPerformed
 
     private void ActualizacionUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizacionUsuarioActionPerformed
         try {
@@ -497,7 +523,7 @@ public class Principal extends javax.swing.JFrame {
                 ActUsuario = new ActualizarUsuario();
                 jTabbedPane1.add("Actualizar Usuario", ActUsuario);
                 ActUsuario.show();
-
+                
             } else {
                 JOptionPane.showMessageDialog(this, "La Ventana Actualizacion Usuario ya se Encuentra abierta");
             }
@@ -526,7 +552,7 @@ public class Principal extends javax.swing.JFrame {
                 Regisprod = new Productos();
                 jTabbedPane1.add("Registro Productos", Regisprod);
                 Regisprod.show();
-
+                
             } else {
                 JOptionPane.showMessageDialog(this, "La Ventana Registro Producto ya se Encuentra abierta");
             }
@@ -701,6 +727,22 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_IngresoCompraLoteActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try {
+            if (cerrado(listaUsuarios)) {
+                listaUsuarios = new ListaUsuarios();
+                jTabbedPane1.add("Lista Usuarios", listaUsuarios);
+                listaUsuarios.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "La Ventana Lista Usuarios ya se Encuentra abierta");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Lista Usuarios" + e);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -743,7 +785,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem ActualizacionUsuario;
     private javax.swing.JMenuItem ActualizarProducto;
     private javax.swing.JMenuItem ActualizarProducto1;
-    private javax.swing.JMenu ActualizarUsuario;
     private javax.swing.JMenu AnulacioCompra;
     private javax.swing.JMenu AnulacioCompra1;
     private javax.swing.JMenuItem AprobarAnulacion;
@@ -783,8 +824,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem RegistroProducto;
     private javax.swing.JMenuItem RegistroProducto1;
     private javax.swing.JMenuItem RegistroUsuario;
+    private javax.swing.JMenu Usuarios;
     private javax.swing.JMenu Ventas;
     private javax.swing.JDesktopPane jDesktopPane2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
