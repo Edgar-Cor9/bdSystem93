@@ -158,6 +158,12 @@ public class Registro extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Cédula:");
 
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -238,7 +244,6 @@ public class Registro extends javax.swing.JInternalFrame {
         jLabel6.setText("Password:");
 
         txtpassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtpassword.setText("jPasswordField1");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Tipo de Nivel:");
@@ -304,7 +309,10 @@ public class Registro extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 963, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(156, 156, 156)
+                .addComponent(JBpassword)
+                .addContainerGap(791, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(62, 62, 62)
@@ -322,19 +330,16 @@ public class Registro extends javax.swing.JInternalFrame {
                                 .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JBNombres)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JBusuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JBpassword)))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(labelCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(labelCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtpassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                                .addComponent(txtusuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(JBusuario)))
                     .addGap(38, 38, 38)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
@@ -369,7 +374,10 @@ public class Registro extends javax.swing.JInternalFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(304, Short.MAX_VALUE)
+                .addComponent(JBpassword)
+                .addGap(73, 73, 73))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(45, 45, 45)
@@ -421,7 +429,6 @@ public class Registro extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(JBpassword)
                                 .addComponent(JBestado)))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(4, 4, 4)
@@ -493,7 +500,7 @@ public class Registro extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
+    public void Guardar() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         Date fecha = new Date();
@@ -570,15 +577,16 @@ public class Registro extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
-
-
+    }
+    private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
+        Guardar();
     }//GEN-LAST:event_JBGuardarActionPerformed
 
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
         txtCedula.setText("");
     }//GEN-LAST:event_jBLimpiarActionPerformed
 
-    private void jBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConsultarActionPerformed
+    public void Consultar() {
         String cedula;
         cedula = txtCedula.getText();
         labelCedula.setText(cedula);
@@ -593,7 +601,7 @@ public class Registro extends javax.swing.JInternalFrame {
 
                 for (Vector<String> vector : matriz) {
 
-                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
+                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, registradox, fecha_regis, ult_actua;
 
                     iduser = vector.get(0);
                     cedul = vector.get(1);
@@ -603,11 +611,10 @@ public class Registro extends javax.swing.JInternalFrame {
                     telefono = vector.get(5);
                     username = vector.get(6);
                     pass = vector.get(7);
-                    tipo_niv = vector.get(8);
-                    status = vector.get(9);
-                    registradox = vector.get(10);
-                    fecha_regis = vector.get(11);
-                    ult_actua = vector.get(12);
+
+                    registradox = vector.get(8);
+                    fecha_regis = vector.get(9);
+                    ult_actua = vector.get(10);
 
                     labelCedula.setText(cedul);
                     txtnombres.setText(nombres);
@@ -616,8 +623,7 @@ public class Registro extends javax.swing.JInternalFrame {
                     txtfono.setText(telefono);
                     txtusuario.setText(username);
                     txtpassword.setText(pass);
-                    jComboNivel.setSelectedItem(tipo_niv);
-                    jcomboStatus.setSelectedItem(status);
+
                     LabelRegistro.setText(registradox);
                     labelFecha.setText("  " + fecha_regis);
                     LabelActualizacion.setText(ult_actua);
@@ -629,6 +635,9 @@ public class Registro extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un número de cédula");
         }
+    }
+    private void jBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConsultarActionPerformed
+        Consultar();
 
     }//GEN-LAST:event_jBConsultarActionPerformed
 
@@ -638,6 +647,10 @@ public class Registro extends javax.swing.JInternalFrame {
 //        jPanel2.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        Consultar();
+    }//GEN-LAST:event_txtCedulaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -40,6 +40,7 @@ public class Principal extends javax.swing.JFrame {
     ProcesarAnulacionCompra proAnulCom;
     IngresoMercaderiaPorLote ingreMercLote;
     ListaUsuarios listaUsuarios;
+    ActPassUsuario actPassUser;
 
     /**
      * Creates new form Principal
@@ -534,10 +535,10 @@ public class Principal extends javax.swing.JFrame {
 
     private void CambioPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CambioPasswordActionPerformed
         try {
-            if (cerrado(actPassww)) {
-                actPassww = new ActPassword();
-                jTabbedPane1.add("Actualizacion Password", actPassww);
-                actPassww.show();
+            if (cerrado(actPassUser)) {
+                actPassUser = new ActPassUsuario();
+                jTabbedPane1.add("Actualizacion Password", actPassUser);
+                actPassUser.show();
             } else {
                 JOptionPane.showMessageDialog(this, "La Ventana Actualizacion Password ya se Encuentra abierta");
             }

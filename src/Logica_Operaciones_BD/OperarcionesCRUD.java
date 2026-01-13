@@ -48,13 +48,13 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         try {
-            String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, tipo_nivel, status, registrado_por, fecha_registro, ultima_actualizacion from usuarios where cedula = '" + cedula + "'";
+            String sql = "select idusuarios, cedula, nombres_usuario, apellidos_usuario, email, telefono, username, password, registrado_por, fecha_registro, ultima_actualizacion from usuarios where cedula = '" + cedula + "'";
             ResultSet rst = stm.executeQuery(sql);
 
             if (rst.next()) {
 
                 Vector<String> datos = new Vector<>();
-                String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
+                String iduser, cedul, nombres, apellidos, email, telefono, username, pass, registradox, fecha_regis, ult_actua;
 
                 iduser = rst.getString("idusuarios");
                 cedul = rst.getString("cedula");
@@ -64,8 +64,6 @@ public final class OperarcionesCRUD {
                 telefono = rst.getString("telefono");
                 username = rst.getString("username");
                 pass = rst.getString("password");
-                tipo_niv = rst.getString("tipo_nivel");
-                status = rst.getString("status");
                 registradox = rst.getString("registrado_por");
                 fecha_regis = rst.getString("fecha_registro");
                 ult_actua = rst.getString("ultima_actualizacion");
@@ -78,8 +76,6 @@ public final class OperarcionesCRUD {
                 datos.add(telefono);
                 datos.add(username);
                 datos.add(pass);
-                datos.add(tipo_niv);
-                datos.add(status);
                 datos.add(registradox);
                 datos.add(fecha_regis);
                 datos.add(ult_actua);
@@ -154,24 +150,22 @@ public final class OperarcionesCRUD {
 
         try {
             for (Vector<String> vector : matriz) {
-                String cedula, nombres, apellidos, email, telefono, username, tipo_nivel, status, usuario, fecha;
+                String cedula, nombres, apellidos, email, telefono, username, usuario, fecha;
 
                 cedula = vector.get(0);
                 nombres = vector.get(1);
                 apellidos = vector.get(2);
                 email = vector.get(3);
                 telefono = vector.get(4);
-                username = vector.get(5);
-                tipo_nivel = vector.get(6);
-                status = vector.get(7);
-                usuario = vector.get(8);
-                fecha = vector.get(9);
+                username = vector.get(5);               
+                usuario = vector.get(6);
+                fecha = vector.get(7);
 
                 String sql2 = "select cedula from usuarios where cedula ='" + cedula + "'";
                 ResultSet rs = stm2.executeQuery(sql2);
 
                 if (rs.next()) {
-                    String sql = "update usuarios set nombres_usuario ='" + nombres + "',apellidos_usuario = '" + apellidos + "', email = '" + email + "', telefono ='" + telefono + "',username = '" + username + "',tipo_nivel = '" + tipo_nivel + "', status = '" + status + "', registrado_por ='" + usuario + "', ultima_actualizacion = '" + fecha + "' where cedula = '" + cedula + "'";
+                    String sql = "update usuarios set nombres_usuario ='" + nombres + "',apellidos_usuario = '" + apellidos + "', email = '" + email + "', telefono ='" + telefono + "',username = '" + username + "', registrado_por ='" + usuario + "', ultima_actualizacion = '" + fecha + "' where cedula = '" + cedula + "'";
                     stm.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "!! Datos Actualizados con Exito !!\n");
                 } else {
@@ -264,21 +258,6 @@ public final class OperarcionesCRUD {
             JOptionPane.showMessageDialog(null, "!! Error al Acesso del Usuario" + e);
             System.out.println("Error al Acceso del Usuario" + e);
         }
-
-//         if (rst.next()) {
-//            lg.dispose();
-//            new Principal().setVisible(true);
-//
-//        } else if (veces == 3) {
-//            JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
-//            ActEstadoUser(user, statusActual);
-//
-//        } else {
-//            JOptionPane.showMessageDialog(null, "PASSWORD INCORRECTOS");
-//            veces = veces + 1;
-//            System.out.println(veces);
-//            lg.show(true);
-//        }
         this.cerrarConexionBD();
 
     }

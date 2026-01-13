@@ -18,14 +18,14 @@ import javax.swing.WindowConstants;
  * @author USUARIO
  */
 public class ActPassUsuario extends javax.swing.JInternalFrame {
-
+    
     String usuario;
 
     /**
      * Creates new form ActPassUsuario
      */
     ActPerfilUsuario actPu;
-
+    
     public ActPassUsuario() {
         initComponents();
         usuario = Login.user;
@@ -33,30 +33,9 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         JBpassword1.setVisible(false);
         JLabelTitulo.setText(" Actualizacion Usuario > Password ");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //  setUsuario(usuarioPASS);
-        jDesktopPane1.setVisible(true);
-    }
-
-    private String userA;
-
-    // este metodo permite traer por parametro el usuario a actualizar
-    public void setUsuario(String usuarioPASS) {
-        this.userA = usuarioPASS;
-        jLabelUsuario.setText(userA);
-
-    }
-
-    private boolean cerrado(Object obj) {
-        JInternalFrame[] FrmActivo = jDesktopPane1.getAllFrames();
-        boolean cerrado = true;
-        int i = 0;
-        while (i < FrmActivo.length && cerrado) {
-            if (FrmActivo[i] == obj) {
-                cerrado = false;
-            }
-        }
-        i++;
-        return cerrado;
+        
+        jLabelUsuario.setText(usuario);
+        
     }
 
     /**
@@ -70,11 +49,9 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         JLabelTitulo = new javax.swing.JLabel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
@@ -102,18 +79,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton1);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clasificacion.png"))); // NOI18N
-        jButton4.setToolTipText("Perfil");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton4);
-
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/actualizar.png"))); // NOI18N
         jButton2.setToolTipText("Limpiar");
         jButton2.setFocusable(false);
@@ -138,17 +103,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton3);
         jToolBar1.add(JLabelTitulo);
-
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 264, Short.MAX_VALUE)
-        );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -205,7 +159,7 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 177, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -224,7 +178,7 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
                             .addComponent(jLabel8)
                             .addComponent(jPassNuevoConfir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(JBpassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(135, Short.MAX_VALUE)))
+                    .addContainerGap(48, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -233,23 +187,20 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jDesktopPane1))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDesktopPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,12 +212,12 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-
+        
         String passnuevo, confirmacionpass;
-
+        
         passnuevo = jPassNuevo.getText();
         confirmacionpass = jPassNuevoConfir.getText();
-
+        
         int validacion = 0;
         if (passnuevo.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el password Nuevo por favor");
@@ -278,29 +229,29 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
             validacion++;
             JBpassword2.setVisible(true);
         }
-
+        
         if (validacion == 0) {
-
+            
             if (confirmacionpass.equals(passnuevo)) {
                 try {
-                    String us = jLabelUsuario.getText();
+                    
                     OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                    op.ActPassUsuario(us, confirmacionpass);
+                    op.ActPassUsuario(usuario, confirmacionpass);
                     JOptionPane.showMessageDialog(this, "Contraseña Actualiza Exitosamente");
                     Limpiar();
                 } catch (SQLException err) {
                     err.printStackTrace();
                 }
             } else {
-
+                
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
                 JBpassword1.setVisible(true);
                 JBpassword2.setVisible(true);
             }
-
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     public void Limpiar() {
         jPassNuevo.setText("");
         jPassNuevoConfir.setText("");
@@ -315,22 +266,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         Limpiar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-            if (cerrado(actPu)) {
-                actPu = new ActPerfilUsuario();
-                jDesktopPane1.add("Actualizacion _Perfil ", actPu);
-                actPu.show();
-                String userPerfil = jLabelUsuario.getText();
-                actPu.setUserPerfil(userPerfil);
-            } else {
-                JOptionPane.showMessageDialog(this, "La Ventana Actualizacion Perfil ya se Encuentra abierta");
-            }
-        } catch (Exception e) {
-            System.err.println("Error al cargar ventana Actualizaion Perfil" + e);
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBpassword1;
@@ -339,8 +274,6 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

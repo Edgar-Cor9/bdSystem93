@@ -386,6 +386,11 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         jToolBar2.add(jButton4);
 
         txtRuc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtRuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRucActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -431,8 +436,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void ConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaActionPerformed
-
+    public void Consultar() {
         String ruc = txtRuc.getText().toString();
         LabelRuc.setText(ruc);
         int longitud = 13;
@@ -493,6 +497,9 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese el Ruc por favor");
         }
+    }
+    private void ConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaActionPerformed
+        Consultar();
     }//GEN-LAST:event_ConsultaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -500,8 +507,8 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         jPanel1.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
+    public void Guardar(){
+         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         String fechaIngreso = FechaRegistro.getText();
 
@@ -562,10 +569,12 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
-
+    }
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        Guardar();
     }//GEN-LAST:event_GuardarActionPerformed
 
-    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
+    public void Editar(){
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Date fechaA = new Date();
 
@@ -632,8 +641,14 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe Ingresar todos los datos");
 
         }
-
+    }
+    private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
+      Editar();
     }//GEN-LAST:event_EditarActionPerformed
+
+    private void txtRucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRucActionPerformed
+        Consultar();
+    }//GEN-LAST:event_txtRucActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -47,25 +47,8 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         JBNombres.setVisible(false);
         JBApellidos.setVisible(false);
         JBemail.setVisible(false);
-        JBestado.setVisible(false);
-        JBnivel.setVisible(false);
         JBtelefono.setVisible(false);
-        PanelDesActu.setVisible(true);
-        JtabActu.setVisible(true);
 
-    }
-
-    private boolean cerrado(Object obj) {
-        JInternalFrame[] FrmActivo = PanelDesActu.getAllFrames();
-        boolean cerrado = true;
-        int i = 0;
-        while (i < FrmActivo.length && cerrado) {
-            if (FrmActivo[i] == obj) {
-                cerrado = false;
-            }
-        }
-        i++;
-        return cerrado;
     }
 
     /**
@@ -91,12 +74,9 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jToolBar3 = new javax.swing.JToolBar();
         JBEditar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         labelFecha = new javax.swing.JLabel();
-        PanelDesActu = new javax.swing.JDesktopPane();
-        JtabActu = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtnombres = new javax.swing.JTextField();
@@ -106,15 +86,9 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtfono = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jComboNivel = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        jcomboStatus = new javax.swing.JComboBox<>();
         JBemail = new javax.swing.JButton();
         JBApellidos = new javax.swing.JButton();
         JBtelefono = new javax.swing.JButton();
-        JBnivel = new javax.swing.JButton();
-        JBestado = new javax.swing.JButton();
         JBNombres = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -180,6 +154,12 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Cédula:");
 
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -221,18 +201,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         });
         jToolBar3.add(JBEditar);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/contrasena.png"))); // NOI18N
-        jButton3.setToolTipText("Contraseña");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(jButton3);
-
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
         jButton2.setToolTipText("Salir");
         jButton2.setFocusable(false);
@@ -251,24 +219,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jToolBar3.add(jLabel12);
         jToolBar3.add(labelFecha);
 
-        JtabActu.setBackground(new java.awt.Color(255, 255, 255));
-
-        PanelDesActu.setLayer(JtabActu, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout PanelDesActuLayout = new javax.swing.GroupLayout(PanelDesActu);
-        PanelDesActu.setLayout(PanelDesActuLayout);
-        PanelDesActuLayout.setHorizontalGroup(
-            PanelDesActuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDesActuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JtabActu)
-                .addContainerGap())
-        );
-        PanelDesActuLayout.setVerticalGroup(
-            PanelDesActuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JtabActu, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-        );
-
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Actualizar Usuario", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -282,14 +232,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Teléfono:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("Tipo de Nivel:");
-
-        jComboNivel.setToolTipText("");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("Estado:");
 
         JBemail.setBackground(new java.awt.Color(255, 51, 51));
         JBemail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acerca-de.png"))); // NOI18N
@@ -305,16 +247,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         JBtelefono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acerca-de.png"))); // NOI18N
         JBtelefono.setToolTipText("ingrese el telefono");
         JBtelefono.setBorder(null);
-
-        JBnivel.setBackground(new java.awt.Color(255, 51, 51));
-        JBnivel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acerca-de.png"))); // NOI18N
-        JBnivel.setToolTipText("selecione un nivel");
-        JBnivel.setBorder(null);
-
-        JBestado.setBackground(new java.awt.Color(255, 51, 51));
-        JBestado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acerca-de.png"))); // NOI18N
-        JBestado.setToolTipText("seleccione un estado");
-        JBestado.setBorder(null);
 
         JBNombres.setBackground(new java.awt.Color(255, 51, 51));
         JBNombres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acerca-de.png"))); // NOI18N
@@ -350,7 +282,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1196, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -383,19 +315,12 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                             .addGap(38, 38, 38)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JBnivel)
-                                            .addGap(130, 130, 130))
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(LabelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
-                                            .addComponent(jLabel14)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(LabelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                                    .addComponent(jLabel14)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,17 +330,10 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                                             .addComponent(JBApellidos))
                                         .addComponent(jLabel4)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtfono, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel7))
+                                            .addComponent(txtfono, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(JBtelefono))
-                                        .addComponent(jLabel2)
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JBestado))
-                                        .addComponent(jLabel8))
+                                        .addComponent(jLabel2))
                                     .addGap(0, 0, Short.MAX_VALUE)))))
                     .addContainerGap()))
         );
@@ -458,26 +376,12 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                         .addComponent(JBtelefono)
                         .addComponent(JBemail))
                     .addGap(18, 18, 18)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel5))
+                    .addComponent(jLabel5)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JBnivel)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(JBestado)))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGap(26, 26, 26)
-                            .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(26, 26, 26)
+                    .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(27, 27, 27)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
                         .addComponent(idUSer, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -493,8 +397,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 1093, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 113, Short.MAX_VALUE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelDesActu))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -504,8 +407,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(PanelDesActu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(426, 426, 426))
         );
 
         jDesktopPane1Registro.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -555,7 +457,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         txtCedula.setText("");
     }//GEN-LAST:event_jBLimpiarActionPerformed
 
-    private void jBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConsultarActionPerformed
+    public void Consultar() {
         String cedula;
         cedula = txtCedula.getText();
         labelCedula.setText(cedula);
@@ -570,7 +472,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
 
                 for (Vector<String> vector : matriz) {
 
-                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, tipo_niv, status, registradox, fecha_regis, ult_actua;
+                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, registradox, fecha_regis, ult_actua;
 
                     iduser = vector.get(0);
                     cedul = vector.get(1);
@@ -580,14 +482,10 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                     telefono = vector.get(5);
                     username = vector.get(6);
                     pass = vector.get(7);
-                    tipo_niv = vector.get(8);
-                    status = vector.get(9);
-                    registradox = vector.get(10);
-                    fecha_regis = vector.get(11);
-                    ult_actua = vector.get(12);
 
-                    String txtComoNi = vector.get(8);
-                    String txtComost = vector.get(9);
+                    registradox = vector.get(8);
+                    fecha_regis = vector.get(9);
+                    ult_actua = vector.get(10);
 
                     idUSer.setText(iduser);
                     labelCedula.setText(cedul);
@@ -596,9 +494,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                     txtapellidos.setText(apellidos);
                     txtemail.setText(email);
                     txtfono.setText(telefono);
-
-                    jComboNivel.addItem(tipo_niv);
-                    jcomboStatus.addItem(status);
 
                     LabelRegistro.setText(registradox);
                     labelFecha.setText(fecha_regis);
@@ -611,6 +506,9 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un número de cédula");
         }
+    }
+    private void jBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConsultarActionPerformed
+        Consultar();
 
     }//GEN-LAST:event_jBConsultarActionPerformed
 
@@ -621,24 +519,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            if (cerrado(actP)) {
-                actP = new ActPassUsuario();
-                JtabActu.add("Actualizacion Password", actP);
-                actP.show();
-                String usuario = txtUsuario.getText();
-                actP.setUsuario(usuario);
-            } else {
-                JOptionPane.showMessageDialog(this, "La Ventana Actualizacion Password ya se Encuentra abierta");
-            }
-        } catch (Exception e) {
-            System.err.println("Error al cargar ventana Aactualizaion Password" + e);
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void JBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEditarActionPerformed
-
+    public void Editar() {
         try {
             ArrayList<Vector<String>> matriz = new ArrayList<>();
 
@@ -647,17 +528,15 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
 
             String fechas = formato.format(fecha);
 
-            String cedula, nombres, apellidos, email, telefono, usrname, tipo_nivel, status, seleccion1, seleccion2;
+            String cedula, nombres, apellidos, email, telefono, usrname, tipo_nivel, status;
             cedula = labelCedula.getText().toString();
             int validacion = 0;
-            int seleccion = 0;
+
             nombres = txtnombres.getText();
             apellidos = txtapellidos.getText();
             email = txtemail.getText();
             telefono = txtfono.getText();
             usrname = txtUsuario.getText();
-            tipo_nivel = jComboNivel.getSelectedItem().toString();
-            status = jcomboStatus.getSelectedItem().toString();
 
             if (nombres.equals("")) {
                 JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
@@ -685,8 +564,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                 datos.add(email);
                 datos.add(telefono);
                 datos.add(usrname);
-                datos.add(tipo_nivel);
-                datos.add(status);
                 datos.add(usuario);
                 datos.add(fechas);
 
@@ -706,11 +583,18 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error al guardar actualizacion Usuario No Registrado");
         }
 
+    }
+    private void JBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEditarActionPerformed
+        Editar();
     }//GEN-LAST:event_JBEditarActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        Consultar();
+    }//GEN-LAST:event_txtCedulaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -718,22 +602,16 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBEditar;
     private javax.swing.JButton JBNombres;
     private javax.swing.JButton JBemail;
-    private javax.swing.JButton JBestado;
-    private javax.swing.JButton JBnivel;
     private javax.swing.JButton JBtelefono;
     private javax.swing.JLabel JLabelTitulo;
-    private javax.swing.JTabbedPane JtabActu;
     private javax.swing.JLabel LabelActualizacion;
     private javax.swing.JLabel LabelRegistro;
-    private javax.swing.JDesktopPane PanelDesActu;
     private javax.swing.JLabel idUSer;
     private javax.swing.JButton jBConsultar;
     private javax.swing.JButton jBLimpiar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboNivel;
     private javax.swing.JDesktopPane jDesktopPane1Registro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -745,8 +623,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -754,7 +630,6 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
-    private javax.swing.JComboBox<String> jcomboStatus;
     private javax.swing.JLabel labelCedula;
     private javax.swing.JLabel labelFecha;
     private javax.swing.JTextField txtCedula;

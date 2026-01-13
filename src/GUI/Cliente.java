@@ -49,7 +49,7 @@ public class Cliente extends javax.swing.JInternalFrame {
         JBEdad.setVisible(false);
         JBDireccion.setVisible(false);
         JBDireccion1.setVisible(false);
-        
+
         LocalDate fechaActuar = LocalDate.now();
         LabelIngreso.setText(fechaActuar.format(DateTimeFormatter.ISO_DATE));
     }
@@ -581,69 +581,80 @@ public class Cliente extends javax.swing.JInternalFrame {
         txtCedula.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 //Consultar los datos del cliente en la base de datos
-    private void JBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBConsultarActionPerformed
+
+    public void Consultar() {
         String cedula = txtCedula.getText();
         LabelCedula.setText(cedula);
+        int longitud = 10;
+        int valor = cedula.length();
 
         if (!cedula.equals("")) {
-            try {
-                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                String coduser = op.codigoUser(usuario);
-                ArrayList<Vector<String>> matriz = op.cedulaCliente(cedula);
-                Panel1.setVisible(false);
-                JDesktopCliente.setVisible(true);
-                idUser1.setText(coduser);
 
-                for (Vector<String> vector : matriz) {
-                    String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userAct, fechaAct, comentario;
+            if (valor < longitud) {
+                JOptionPane.showMessageDialog(null, "!! La Cédula debe contener 10 digitos !!\n");
+            } else if (valor > longitud) {
+                JOptionPane.showMessageDialog(null, "!! La Cédula debe contener 10 digitos !!\n");
+            } else {
+                try {
+                    OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+                    String coduser = op.codigoUser(usuario);
+                    ArrayList<Vector<String>> matriz = op.cedulaCliente(cedula);
+                    Panel1.setVisible(false);
+                    JDesktopCliente.setVisible(true);
+                    idUser1.setText(coduser);
 
-                    idclient = vector.get(0);
-                    cedul = vector.get(1);
-                    nombres = vector.get(2);
-                    apellidos = vector.get(3);
-                    email = vector.get(4);
-                    direccion = vector.get(5);
-                    edad = vector.get(6);
-                    username = vector.get(7);
-                    idusuario = vector.get(8);
-                    fechaIngr = vector.get(9);
-                    userAct = vector.get(10);
-                    fechaAct = vector.get(11);
-                    comentario = vector.get(12);
+                    for (Vector<String> vector : matriz) {
+                        String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userAct, fechaAct, comentario;
 
-                    Nombres.setText("Cliente #" + idclient + "  " + nombres + "  " + apellidos);
-                    labelCliente.setText(idclient);
-                    LabelCedula.setText(cedul);
-                    txtNombres.setText(nombres);
-                    txtApellidos.setText(apellidos);
-                    txtCorreo.setText(email);
-                    txtdireccion.setText(direccion);
-                    txtEdad.setText(edad);
-                    LabelUsuario.setText(username);
-                    idUser1.setText(idusuario);
-                    LabelIngreso.setText(fechaIngr);
-                    LabelUsuarioActua.setText(userAct);
-                    LabelFechActualizacion.setText(fechaAct);
-                    jTextArea1.setText(comentario);
+                        idclient = vector.get(0);
+                        cedul = vector.get(1);
+                        nombres = vector.get(2);
+                        apellidos = vector.get(3);
+                        email = vector.get(4);
+                        direccion = vector.get(5);
+                        edad = vector.get(6);
+                        username = vector.get(7);
+                        idusuario = vector.get(8);
+                        fechaIngr = vector.get(9);
+                        userAct = vector.get(10);
+                        fechaAct = vector.get(11);
+                        comentario = vector.get(12);
+
+                        Nombres.setText("Cliente #" + idclient + "  " + nombres + "  " + apellidos);
+                        labelCliente.setText(idclient);
+                        LabelCedula.setText(cedul);
+                        txtNombres.setText(nombres);
+                        txtApellidos.setText(apellidos);
+                        txtCorreo.setText(email);
+                        txtdireccion.setText(direccion);
+                        txtEdad.setText(edad);
+                        LabelUsuario.setText(username);
+                        idUser1.setText(idusuario);
+                        LabelIngreso.setText(fechaIngr);
+                        LabelUsuarioActua.setText(userAct);
+                        LabelFechActualizacion.setText(fechaAct);
+                        jTextArea1.setText(comentario);
+
+                    }
+
+                } catch (SQLException err) {
+                    err.printStackTrace();
 
                 }
-
-            } catch (SQLException err) {
-                err.printStackTrace();
-
             }
 
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese la Cedula por favor");
         }
+    }
+    private void JBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBConsultarActionPerformed
+        Consultar();
     }//GEN-LAST:event_JBConsultarActionPerformed
 
     private void JBSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSalir1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_JBSalir1ActionPerformed
-//Actualizar datos del Cliente
-    private void JBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBActualizarActionPerformed
-
+    public void Actualizar() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         Date dechaA = new Date();
@@ -722,20 +733,20 @@ public class Cliente extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
-
-
+    }
+//Actualizar datos del Cliente
+    private void JBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBActualizarActionPerformed
+        Actualizar();
     }//GEN-LAST:event_JBActualizarActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        // TODO add your handling code here:
+        Consultar();
     }//GEN-LAST:event_txtCedulaActionPerformed
 
-    private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
+    public void Guardar() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
-       
         String fechaIngreso = LabelIngreso.getText();
-        
 
         int validacion = 0;
 
@@ -792,7 +803,7 @@ public class Cliente extends javax.swing.JInternalFrame {
             datos.add(edad);
             datos.add(usuario);
             datos.add(idusuario);
-            datos.add(fechaIngreso);            
+            datos.add(fechaIngreso);
             datos.add(comentario);
 
             matriz.add(datos);
@@ -806,7 +817,9 @@ public class Cliente extends javax.swing.JInternalFrame {
         } catch (SQLException err) {
             err.printStackTrace();
         }
-
+    }
+    private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
+        Guardar();
     }//GEN-LAST:event_JBGuardarActionPerformed
 
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
