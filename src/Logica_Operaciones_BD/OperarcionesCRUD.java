@@ -157,7 +157,7 @@ public final class OperarcionesCRUD {
                 apellidos = vector.get(2);
                 email = vector.get(3);
                 telefono = vector.get(4);
-                username = vector.get(5);               
+                username = vector.get(5);
                 usuario = vector.get(6);
                 fecha = vector.get(7);
 
@@ -415,6 +415,27 @@ public final class OperarcionesCRUD {
 
         this.cerrarConexionBD();
         return coduser;
+    }
+// permite extraer la lista de usuarios registrados en la base de datos por nombre de USUARIO
+    public Vector<String> ListaUsername() throws SQLException {
+        Vector<String> vector = new Vector<>();
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        try {
+            String sql = "select distinct username as ti_user from bd_systema.usuarios";
+            ResultSet rst = stm.executeQuery(sql);
+
+            while (rst.next()) {
+                String usuario = rst.getString("ti_user");
+                vector.add(usuario);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer lista Usuarios" + e);
+            System.out.println("Error al Extraer lista Usuarios" + e);
+        }
+
+        return vector;
     }
 
     //-----------------------------------------------------------------------------------------------------------------

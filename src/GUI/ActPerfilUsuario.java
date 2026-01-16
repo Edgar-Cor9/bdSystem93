@@ -98,7 +98,7 @@ public class ActPerfilUsuario extends javax.swing.JInternalFrame {
         jComboNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Usuario", "Tecnico" }));
         jComboNivel.setToolTipText("Tipo de Nivel");
 
-        jcomboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo", "Bloqueado", " " }));
+        jcomboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo", "Bloqueado" }));
         jcomboStatus.setToolTipText("Estado");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
