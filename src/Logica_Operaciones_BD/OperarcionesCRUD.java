@@ -417,6 +417,7 @@ public final class OperarcionesCRUD {
         return coduser;
     }
 // permite extraer la lista de usuarios registrados en la base de datos por nombre de USUARIO
+
     public Vector<String> ListaUsername() throws SQLException {
         Vector<String> vector = new Vector<>();
         this.iniciarConexionBD();
@@ -589,6 +590,46 @@ public final class OperarcionesCRUD {
 
     }
 
+    //para extraer el reporte de clientes registrado por un usuario mediante fecha utilizando preparedStatement
+    public ArrayList<Vector<String>> ReportesDeClientes2(String usuario, String fechaInicio, String fechaFin) throws SQLException {
+    this.iniciarConexionBD();
+    ArrayList<Vector<String>> matriz = new ArrayList<>();
+
+    String sql = "SELECT cedula_cliente, nombres_cliente, apellidos_cliente, " +
+                 "email_cliente, direccion_cliente, edad, username " +
+                 "FROM bd_systema.clientes " +
+                 "WHERE username = ? " +
+                 "AND fecha_ingreso BETWEEN ? AND ? " +
+                 "ORDER BY fecha_ingreso";
+
+    try (PreparedStatement ps = this.conexion.prepareStatement(sql)) {
+        ps.setString(1, usuario);
+        ps.setString(2, fechaInicio);
+        ps.setString(3, fechaFin);
+
+        try (ResultSet rst = ps.executeQuery()) {
+            while (rst.next()) {
+                Vector<String> datos = new Vector<>();
+
+                datos.add(rst.getString("cedula_cliente"));
+                datos.add(rst.getString("nombres_cliente"));
+                datos.add(rst.getString("apellidos_cliente"));
+                datos.add(rst.getString("email_cliente"));
+                datos.add(rst.getString("direccion_cliente"));
+                datos.add(rst.getString("edad"));
+                datos.add(rst.getString("username"));
+
+                matriz.add(datos);
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "!! Error al Extraer Reportes de clientes: " + e);
+        System.out.println("Error al Extraer Reportes de clientes: " + e);
+    }
+
+    this.cerrarConexionBD();
+    return matriz;
+}
     //---------------------------------------------------------------------------------------------------------------
     // Productos
     //---------------------------------------------------------------------------------------------------------------
