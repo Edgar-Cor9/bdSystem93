@@ -37,14 +37,6 @@ CREATE TABLE `inventario` (
   `egreso` int DEFAULT NULL,
   `stock` int NOT NULL,
   `total` double NOT NULL,
-  `forma_pago` varchar(45) DEFAULT NULL,
-  `plazo` varchar(10) DEFAULT NULL,
-  `fecha_vencimiento_plazo` date DEFAULT NULL,
-  `fecha_abono` date DEFAULT NULL,
-  `comentario_abono` varchar(45) DEFAULT NULL,
-  `valor_cuota` double DEFAULT NULL,
-  `abono` double DEFAULT NULL,
-  `saldo` double DEFAULT NULL,
   PRIMARY KEY (`idinventario`),
   KEY `idusers_idx` (`idusuarios`),
   KEY `codPro_idx` (`codproductos`),
@@ -52,7 +44,7 @@ CREATE TABLE `inventario` (
   CONSTRAINT `codPro` FOREIGN KEY (`codproductos`) REFERENCES `productos` (`codproductos`),
   CONSTRAINT `idprovee` FOREIGN KEY (`idproveedor`) REFERENCES `proveedor` (`idProveedor`),
   CONSTRAINT `idusers` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +53,7 @@ CREATE TABLE `inventario` (
 
 LOCK TABLES `inventario` WRITE;
 /*!40000 ALTER TABLE `inventario` DISABLE KEYS */;
-INSERT INTO `inventario` VALUES (1,1,2,1,'10020000015201','Compra','','Procesado','2025-07-17','2025-07-17',10,NULL,10,190.4,'Contado',NULL,NULL,NULL,NULL,NULL,0,0),(3,1,2,1,'10020000015202','Compra','','Procesado','2025-07-21','2025-07-22',10,NULL,20,190.4,NULL,NULL,NULL,NULL,NULL,NULL,0,0),(4,7,3,1,'100200202010','Compra','','Procesado','2025-07-23','2025-07-23',1,NULL,1,28,NULL,NULL,NULL,NULL,NULL,NULL,0,0),(5,1,2,1,'1000200151244','Compra','','Procesado','2025-07-23','2025-08-01',5,NULL,25,95.2,NULL,NULL,NULL,NULL,NULL,NULL,0,0),(6,10,3,1,'100200201045','Compra','MARCA ASUS','Procesado','2025-08-04','2025-08-04',10,NULL,10,168,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,10,2,1,'140101010','Compra','MARCA ASUS','Procesado','2025-08-07','2025-08-07',10,NULL,20,168,'Contado',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,10,2,1,'14414141','Compra','MARCA ASUS','Procesado','2025-08-07','2025-08-08',10,NULL,30,168,'Crédito','6 meses','2026-02-03',NULL,NULL,28,NULL,168);
+INSERT INTO `inventario` VALUES (1,1,2,1,'10020000015201','Compra','','Procesado','2025-07-17','2025-07-17',10,NULL,10,190.4),(3,1,2,1,'10020000015202','Compra','','Procesado','2025-07-21','2025-07-22',10,NULL,20,190.4),(4,7,3,1,'100200202010','Compra','','Procesado','2025-07-23','2025-07-23',1,NULL,1,28),(5,1,2,1,'1000200151244','Compra','','Procesado','2025-07-23','2025-08-01',5,NULL,25,95.2),(6,10,3,1,'100200201045','Compra','MARCA ASUS','Procesado','2025-08-04','2025-08-04',10,NULL,10,168),(13,10,2,1,'140101010','Compra','MARCA ASUS','Procesado','2025-08-07','2025-08-07',10,NULL,20,168),(15,10,2,1,'14414141','Compra','MARCA ASUS','Procesado','2025-08-07','2025-08-08',10,NULL,30,168),(22,10,2,1,'10101','Compra','MARCA ASUS','Procesado','2025-08-26','2025-08-26',10,NULL,40,168),(23,10,2,1,'10144','Compra','MARCA ASUS','Procesado','2025-08-26','2025-08-26',5,NULL,45,84);
 /*!40000 ALTER TABLE `inventario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -74,4 +66,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-12 22:04:47
+-- Dump completed on 2026-01-17 21:33:40

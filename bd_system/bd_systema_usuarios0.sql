@@ -46,7 +46,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (2,'0706628393','Edgar Andre','Martinez Romer','edandre_93@hotmail.com','0988525908','EMARTINEZ','1111','Usuario','Activo','','2025-06-24','2025-07-02'),(3,'0706157161','Bryan Santiago','martinez','dasdasads','222222221','BMARTINEZ','1111','Administrador','Activo','EMARTINEZ','2025-06-24','2025-06-28');
+INSERT INTO `usuarios` VALUES (2,'0706628393','Edgar Andre','Martinez Romero','edandre_93@hotmail.com','0988525908','EMARTINEZ','1234','Administrador','Activo','EMARTINEZ','2025-06-20','2026-01-12'),(3,'0706157161','Bryan Santiago','martinez','dasdasads','222222221','BMARTINEZ','1234','Tecnico','Activo','EMARTINEZ','2025-06-24','2026-01-06');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-12 22:04:47
+-- Dump completed on 2026-01-17 21:33:40

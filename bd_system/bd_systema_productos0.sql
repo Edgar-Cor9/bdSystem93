@@ -47,7 +47,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (1,2,1,'Celular','Electronica','Honor Magit 20 mpx','2025-07-11','2025-07-14',17,12),(7,3,1,'ZAPATOS','Ropa','CASUALES','2025-07-12',NULL,25,12),(8,3,2,'vitamina c','Hogar','12 pastillas','2025-07-12','2025-07-30',7,8.1),(9,2,1,'Celular','Electronica','Honor Magit','2025-07-14','2025-07-14',10,14),(10,2,1,'TECLADO','Electronica','MARCA ASUS','2025-08-04',NULL,15,12);
+INSERT INTO `productos` VALUES (1,2,1,'Celular','Electronica','Honor Magit 20 mpx','2025-07-11','2025-07-14',17,12),(7,3,1,'ZAPATOS','Ropa','CASUALES','2025-07-12',NULL,25,12),(8,3,2,'vitamina c','Hogar','12 pastillas','2025-07-12','2025-07-30',7,8.1),(9,2,1,'Celular','Electronica','Honor Magit','2025-07-14','2025-08-26',10,14),(10,2,1,'TECLADO','Electronica','MARCA ASUS','2025-08-04',NULL,15,12);
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-12 22:04:48
+-- Dump completed on 2026-01-17 21:33:40

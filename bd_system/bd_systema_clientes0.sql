@@ -36,12 +36,9 @@ CREATE TABLE `clientes` (
   `username_Actu` varchar(45) DEFAULT NULL,
   `fecha_actualizacion` date NOT NULL,
   `comentario` longtext NOT NULL,
-  `idventa` int DEFAULT NULL,
   PRIMARY KEY (`idclientes`),
   KEY `idusuarios_idx` (`idusuarios`) /*!80000 INVISIBLE */,
-  KEY `idventa_idx` (`idventa`),
-  CONSTRAINT `idusuarios` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`),
-  CONSTRAINT `idventa` FOREIGN KEY (`idventa`) REFERENCES `transacciones` (`codventa`)
+  CONSTRAINT `idusuarios` FOREIGN KEY (`idusuarios`) REFERENCES `usuarios` (`idusuarios`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,7 +48,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,2,'0706628393','EDGAR ANDRE','Martinez','eda','dad','31','EMARTINEZ','2025-07-01','bmartinez','2025-07-08','dasasdd',NULL);
+INSERT INTO `clientes` VALUES (1,2,'0706628393','EDGAR ANDRE','Martinez','eda','dad','31','EMARTINEZ','2025-07-01','bmartinez','2025-07-08','dasasdd');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -64,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-12 22:04:48
+-- Dump completed on 2026-01-17 21:33:40
