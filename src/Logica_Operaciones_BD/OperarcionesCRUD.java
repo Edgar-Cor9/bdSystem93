@@ -592,44 +592,45 @@ public final class OperarcionesCRUD {
 
     //para extraer el reporte de clientes registrado por un usuario mediante fecha utilizando preparedStatement
     public ArrayList<Vector<String>> ReportesDeClientes2(String usuario, String fechaInicio, String fechaFin) throws SQLException {
-    this.iniciarConexionBD();
-    ArrayList<Vector<String>> matriz = new ArrayList<>();
+        this.iniciarConexionBD();
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
 
-    String sql = "SELECT cedula_cliente, nombres_cliente, apellidos_cliente, " +
-                 "email_cliente, direccion_cliente, edad, username " +
-                 "FROM bd_systema.clientes " +
-                 "WHERE username = ? " +
-                 "AND fecha_ingreso BETWEEN ? AND ? " +
-                 "ORDER BY fecha_ingreso";
+        String sql = "SELECT cedula_cliente, nombres_cliente, apellidos_cliente, "
+                + "email_cliente, direccion_cliente, edad, username "
+                + "FROM bd_systema.clientes "
+                + "WHERE username = ? "
+                + "AND fecha_ingreso BETWEEN ? AND ? "
+                + "ORDER BY fecha_ingreso";
 
-    try (PreparedStatement ps = this.conexion.prepareStatement(sql)) {
-        ps.setString(1, usuario);
-        ps.setString(2, fechaInicio);
-        ps.setString(3, fechaFin);
+        try ( PreparedStatement ps = this.conexion.prepareStatement(sql)) {
+            ps.setString(1, usuario);
+            ps.setString(2, fechaInicio);
+            ps.setString(3, fechaFin);
 
-        try (ResultSet rst = ps.executeQuery()) {
-            while (rst.next()) {
-                Vector<String> datos = new Vector<>();
+            try ( ResultSet rst = ps.executeQuery()) {
+                while (rst.next()) {
+                    Vector<String> datos = new Vector<>();
 
-                datos.add(rst.getString("cedula_cliente"));
-                datos.add(rst.getString("nombres_cliente"));
-                datos.add(rst.getString("apellidos_cliente"));
-                datos.add(rst.getString("email_cliente"));
-                datos.add(rst.getString("direccion_cliente"));
-                datos.add(rst.getString("edad"));
-                datos.add(rst.getString("username"));
+                    datos.add(rst.getString("cedula_cliente"));
+                    datos.add(rst.getString("nombres_cliente"));
+                    datos.add(rst.getString("apellidos_cliente"));
+                    datos.add(rst.getString("email_cliente"));
+                    datos.add(rst.getString("direccion_cliente"));
+                    datos.add(rst.getString("edad"));
+                    datos.add(rst.getString("username"));
 
-                matriz.add(datos);
+                    matriz.add(datos);
+                }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer Reportes de clientes: " + e);
+            System.out.println("Error al Extraer Reportes de clientes: " + e);
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "!! Error al Extraer Reportes de clientes: " + e);
-        System.out.println("Error al Extraer Reportes de clientes: " + e);
+
+        this.cerrarConexionBD();
+        return matriz;
     }
 
-    this.cerrarConexionBD();
-    return matriz;
-}
     //---------------------------------------------------------------------------------------------------------------
     // Productos
     //---------------------------------------------------------------------------------------------------------------
@@ -1458,7 +1459,53 @@ public final class OperarcionesCRUD {
     //-----------------------------------------------------------------------------------------------------------------
     // Proveedores
     //-----------------------------------------------------------------------------------------------------------------
-    //consultar si proveedor se encuentra registrado
+//para extraer el reporte de clientes registrado por un usuario mediante fecha utilizando preparedStatement  
+    public ArrayList<Vector<String>> ReportesProveedor(String user, String fechaInicio, String fechaFin) throws SQLException {
+        this.iniciarConexionBD();
+
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
+
+        String sql = "SELECT ruc, nombres, apellidos, "
+                + "email, direccion, comentario, userRegistro "
+                + "FROM bd_systema.proveedor "
+                + "WHERE userRegistro = ? "
+                + "AND fecha_registro BETWEEN ? AND ? "
+                + "ORDER BY fecha_registro";
+
+      //        //- Se abre un try-with-resources, que asegura que el objeto PreparedStatement se cierre automáticamente al finalizar el bloque.
+     //- this.conexion.prepareStatement(sql) crea un PreparedStatement a partir de la conexión conexion y la consulta SQL (sql).
+           //- El PreparedStatement permite ejecutar consultas parametrizadas, evitando inyecciones SQL y mejorando el rendimiento.
+        try ( PreparedStatement pst = this.conexion.prepareStatement(sql)) {
+            pst.setString(1, user);
+            pst.setString(2, fechaInicio);
+            pst.setString(3, fechaFin);
+
+            try ( ResultSet rst = pst.executeQuery()) {
+                while (rst.next()) {
+                    Vector<String> datos = new Vector<>();
+
+                    datos.add(rst.getString("ruc"));
+                    datos.add(rst.getString("nombres"));
+                    datos.add(rst.getString("apellidos"));
+                    datos.add(rst.getString("email"));
+                    datos.add(rst.getString("direccion"));
+                    datos.add(rst.getString("comentario"));
+                    datos.add(rst.getString("userRegistro"));
+
+                    matriz.add(datos);
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "!! Error al Extraer Reportes de Proveedores: " + e);
+            System.out.println("Error al Extraer Reportes de Proveedores: " + e);
+        }
+
+        this.cerrarConexionBD();
+        return matriz;
+    }
+//consultar si proveedor se encuentra registrado
+
     public ArrayList<Vector<String>> RucProveedor(String ruc) throws SQLException {
         this.iniciarConexionBD();
         Statement stm = this.conexion.createStatement();

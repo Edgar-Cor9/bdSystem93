@@ -42,6 +42,7 @@ public class Principal extends javax.swing.JFrame {
     ListaUsuarios listaUsuarios;
     ActPassUsuario actPassUser;
     ReportesClientes reClientes;
+    ReportesProveedor reProveedor;
 
     /**
      * Creates new form Principal
@@ -518,6 +519,11 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/transaccion.png"))); // NOI18N
         jMenuItem6.setText("Proveedor");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenuProveedor.add(jMenuItem6);
 
         Reportes.add(jMenuProveedor);
@@ -823,6 +829,21 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            if (cerrado(reProveedor)) {
+                reProveedor = new ReportesProveedor();
+                jTabbedPane1.add("Reportes Proveedor",reProveedor);
+                reProveedor.show();
+            }else{
+                JOptionPane.showMessageDialog(this, "La Ventana Reportes Proveedor ya se Encuentra abierta");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar ventana Reportes Proveedor" + e);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

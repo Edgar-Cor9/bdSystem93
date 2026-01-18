@@ -22,15 +22,17 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.mysql.cj.result.Row;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Cell;
 import javax.swing.JFileChooser;
-import javax.swing.text.Element;
-import static javax.swing.text.TabStop.ALIGN_CENTER;
 
+import static javax.swing.text.TabStop.ALIGN_CENTER;
 
 /**
  *
@@ -101,6 +103,9 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
                 documento.open();
 
                 //Titulo del Reporte
+                Font fontTitulo = new Font(title, WIDTH, WIDTH);
+          
+
                 Paragraph titulo = new Paragraph("Reporte de Clientes");
                 titulo.setAlignment((int) CENTER_ALIGNMENT);
                 documento.add(titulo);
@@ -108,16 +113,20 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
 
                 //generar la tabla en el reporte
                 PdfPTable tabla = new PdfPTable(7);
+                tabla.setWidthPercentage(100);// ocupa todo el ancho
+                tabla.setWidths(new float[]{2f, 3f, 3f, 4f, 4f, 2f, 3f}); // proporciones
 
                 //Encabezados
                 String[] columnas = {
                     "Cédula", "Nombre", "Apellidos", "Email", "Dirección", "Edad", "Usuario Registro"
                 };
 
+           
                 for (String col : columnas) {
                     PdfPCell celda = new PdfPCell(new Phrase(col));//color de fondo
                     celda.setHorizontalAlignment(ALIGN_CENTER); // centrar texto
                     celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    celda.setPadding(5); // espacio interno
                     tabla.addCell(celda);
                 }
 
@@ -125,7 +134,7 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
                 if (matrizClientes != null) {
                     //cada Vector<String> representa una fila con las 7 columnas
                     for (Vector<String> dato : matrizClientes) {
-                        for (String valor : dato) {
+                        for (String valor : dato) {                                               
                             tabla.addCell(valor);
                         }
                     }
@@ -143,11 +152,6 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
             e.printStackTrace();
 
         }
-    }
-    
-    public void GenerarExcel(){
-        // Crear libro y hoja
-     
     }
 
     public void Consulta() {
@@ -225,8 +229,7 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
         jDatefechaFin = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        BtImprimir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableClientes = new javax.swing.JTable();
 
@@ -306,33 +309,30 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impresoras.png"))); // NOI18N
-        jButton3.setText("Imprimir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        BtImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impresoras.png"))); // NOI18N
+        BtImprimir.setText("Imprimir");
+        BtImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                BtImprimirActionPerformed(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pdf", "Excel", "Word" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(305, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BtImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(29, 29, 29)
-                        .addComponent(jDatefechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jDatefechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(22, 22, 22))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -357,9 +357,7 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(BtImprimir)
                 .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -437,7 +435,7 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -456,17 +454,16 @@ public class ReportesClientes extends javax.swing.JInternalFrame {
         LimpiarTabla();
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void BtImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtImprimirActionPerformed
         GenerarDpf();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_BtImprimirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtImprimir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboUsuario;
     private com.toedter.calendar.JDateChooser jDatefechaFin;
     private com.toedter.calendar.JDateChooser jDatefechaInicio;
