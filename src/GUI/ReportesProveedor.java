@@ -5,14 +5,27 @@
 package GUI;
 
 import Logica_Operaciones_BD.OperarcionesCRUD;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Font;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static javax.swing.text.TabStop.ALIGN_CENTER;
 
 /**
  *
@@ -47,9 +60,66 @@ public class ReportesProveedor extends javax.swing.JInternalFrame {
         jTableProveedor.setVisible(false);
     }
 
-    public void GenerarDpf(){
-        
+    public void GenerarDpf() {
+        Document documento = new Document();
+
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Guardar Reporte");
+            chooser.setSelectedFile(new File("ReportesProveedor.pdf"));
+
+            int userSelection = chooser.showSaveDialog(null);
+
+            if (userSelection == chooser.APPROVE_OPTION) {
+                File archivo = chooser.getSelectedFile();
+
+                PdfWriter.getInstance(documento, new FileOutputStream(archivo));
+                documento.open();
+
+                Font fontTitulo = new Font(title, WIDTH, WIDTH);
+
+                Paragraph titulo = new Paragraph("Reporte de Proveedor");
+                titulo.setAlignment((int) CENTER_ALIGNMENT);
+
+                documento.add(titulo);
+                documento.add(new Paragraph("\n"));
+
+                PdfPTable tabla = new PdfPTable(7);
+                tabla.setWidthPercentage(100);
+                tabla.setWidths(new float[]{2f, 3f, 3f, 4f, 4f, 2f, 3f}); // proporciones
+
+                //Encabezados
+                String[] columnas = {
+                    "Ruc", "Nombre", "Apellidos", "Email", "Dirección", "Comentario", "Usuario Registro"
+                };
+
+                for (String col : columnas) {
+                    PdfPCell celda = new PdfPCell(new Phrase(col));//color de fondo
+                    celda.setHorizontalAlignment(ALIGN_CENTER); // centrar texto
+                    celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    celda.setPadding(5); // espacio interno
+                    tabla.addCell(celda);
+                }
+
+                if (matrizProveedores != null) {
+                    for (Vector<String> fila : matrizProveedores) {
+                        for (String valor : fila) {
+                            tabla.addCell(valor);
+                        }
+                    }
+                }
+                documento.add(tabla);
+                documento.close();
+                JOptionPane.showMessageDialog(null, "Reporte generado correctamente");
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
     public void Consulta() {
         Date fechaInicio = jDateChooserInicio.getDate();
         Date fechaFin = jDateChooserFin.getDate();
@@ -181,6 +251,11 @@ public class ReportesProveedor extends javax.swing.JInternalFrame {
 
         jButtonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impresoras.png"))); // NOI18N
         jButtonImprimir.setText("Imprimir");
+        jButtonImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -287,7 +362,7 @@ public class ReportesProveedor extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -316,6 +391,10 @@ public class ReportesProveedor extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         LimpiarTabla();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButtonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirActionPerformed
+       GenerarDpf();
+    }//GEN-LAST:event_jButtonImprimirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

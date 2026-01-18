@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
     <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
       <Image iconType="3" name="/images/transaccion.png"/>
@@ -31,7 +31,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
-                  <Component id="jPanel1" alignment="1" pref="985" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="1" pref="1086" max="32767" attributes="0"/>
                   <Component id="jToolBar1" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -251,6 +251,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Imprimir"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImprimirActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
