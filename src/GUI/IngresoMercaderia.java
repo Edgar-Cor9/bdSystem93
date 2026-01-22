@@ -176,14 +176,13 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
 
         DefaultComboBoxModel modelo2 = (DefaultComboBoxModel) jCombobusqueda.getModel();
         modelo2.removeAllElements();
-        
+
         try {
             Vector<String> tipoPro = ops.TipoProducto();
-            for (String tip_pro :tipoPro) {
+            for (String tip_pro : tipoPro) {
                 modelo2.addElement(tip_pro);
             }
-            
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -952,7 +951,8 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         txtDetalle.setText("");
 
     }
-    private void ConsulatRucProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsulatRucProveedorActionPerformed
+
+    public void ConsultaProveedor() {
         String rucPro = txtRucConsultaPRo.getText().toString();
         int longitud = 13;
         int valor = rucPro.length();
@@ -984,7 +984,9 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "!! Ingrese el ruc por favor !!\n");
         }
 
-
+    }
+    private void ConsulatRucProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsulatRucProveedorActionPerformed
+        ConsultaProveedor();
     }//GEN-LAST:event_ConsulatRucProveedorActionPerformed
 
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
@@ -1024,26 +1026,24 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         if (valor > longitud) {
             JOptionPane.showMessageDialog(null, "No puede Exceder los 15 Caracteres en la Orden");
             return false;
+        } else if (orden.isEmpty()) {
+           JOptionPane.showMessageDialog(null, "Ingrese un # de Orden");
         }
 
         return true;
     }
 
     public boolean valirCalcular() {
-        String cantidad, precio, iva, total, orden;
+        String cantidad, precio, iva, total;
 
-        orden = txtOrden.getText().trim();
+       
         cantidad = txtcantidad.getText().trim();
         precio = txtprecio.getText().trim();
         iva = txtiva.getText().trim();
         total = txtotal.getText().trim();
         int validacion = 0;
-        
-  
 
-        if (orden.isEmpty()) {     
-            JOptionPane.showMessageDialog(null, "Ingrese un # de Orden");
-        }
+       
         if (precio.isEmpty()) {
             validacion++;
         }
@@ -1065,7 +1065,7 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
         return true;
     }
 
-    private void RegistroCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroCompraActionPerformed
+    public void RegistroCompra() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         LocalDate fechaAc = LocalDate.now();
@@ -1158,8 +1158,9 @@ public class IngresoMercaderia extends javax.swing.JInternalFrame {
                 err.printStackTrace();
             }
         }
-
-
+    }
+    private void RegistroCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroCompraActionPerformed
+        RegistroCompra();
     }//GEN-LAST:event_RegistroCompraActionPerformed
     public void Calculo() {
         String cantida, precio, iva;
