@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
@@ -14,15 +15,34 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ClienteCelular extends javax.swing.JInternalFrame {
 
-    
     /**
      * Creates new form ClienteCelular
      */
+    String idCliente, numero, tipoCelular, empresa, descripcion;
+
     public ClienteCelular() {
         initComponents();
         labelTitulo.setText("Actualización Datos Celular");
-       
-                
+
+    }
+
+    public void setIdCliente(String id, String celula, String tipoCelula, String empres, String descripcio) {
+        this.idCliente = id;
+        this.numero = celula;
+        this.tipoCelular = tipoCelula;
+        this.empresa = empres;
+        this.descripcion = descripcio;
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaCelular.getModel();
+        modelo.setRowCount(0);
+
+        Vector<String> datos = new Vector<>();
+        datos.add(numero);
+        datos.add(tipoCelular);
+        datos.add(empresa);
+        datos.add(descripcion);
+
+        modelo.addRow(datos);
     }
 
     /**
@@ -41,7 +61,7 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaCelular = new javax.swing.JTable();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,24 +100,21 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         jToolBar1.add(jButton2);
         jToolBar1.add(labelTitulo);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCelular.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
                 "Número", "Tipo", "Empresa", "Descripcion"
             }
         ));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        tablaCelular.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaCelular);
+        if (tablaCelular.getColumnModel().getColumnCount() > 0) {
+            tablaCelular.getColumnModel().getColumn(0).setResizable(false);
+            tablaCelular.getColumnModel().getColumn(1).setResizable(false);
+            tablaCelular.getColumnModel().getColumn(2).setResizable(false);
+            tablaCelular.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -122,7 +139,7 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -131,9 +148,9 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JTable tablaCelular;
     // End of variables declaration//GEN-END:variables
 }

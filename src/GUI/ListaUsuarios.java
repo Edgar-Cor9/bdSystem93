@@ -18,10 +18,10 @@ import javax.swing.table.DefaultTableModel;
  * @author USUARIO
  */
 public class ListaUsuarios extends javax.swing.JInternalFrame {
-    
+
     ActPerfilUsuario ActUsuario;
     ActPassword actPassww;
-    
+
     ListaUsuarios lista;
 
     /**
@@ -30,9 +30,9 @@ public class ListaUsuarios extends javax.swing.JInternalFrame {
     public ListaUsuarios() {
         initComponents();
         labeleyenda1.setText("Lista Usuarios");
-         jPanel2.setVisible(false);
+        jPanel2.setVisible(false);
     }
-    
+
     private boolean cerrado(Object obj) {
         JInternalFrame[] FrmActivo = jDesktopPane1.getAllFrames();
         boolean cerrado = true;
@@ -272,7 +272,7 @@ public class ListaUsuarios extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     public void ExtraerUsuario() {
         DefaultTableModel modelo = (DefaultTableModel) tablaUnoLista.getModel();
         tablaUnoLista.addMouseListener(new MouseAdapter() {
@@ -280,29 +280,29 @@ public class ListaUsuarios extends javax.swing.JInternalFrame {
             public void mouseClicked(MouseEvent e) {
                 int filapoint = tablaUnoLista.rowAtPoint(e.getPoint());
                 int columnapoint = 0;
-                
+
                 String usuario;
-                
+
                 usuario = (String) modelo.getValueAt(filapoint, 3);
                 labeleyenda2.setText(usuario);
-                 jPanel2.setVisible(true);
-          
+                jPanel2.setVisible(true);
+
             }
-            
+
         });
     }
-    
+
     public void Consultar() {
         String stado;
-        
+
         stado = comboStado.getSelectedItem().toString();
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
             ArrayList<Vector<String>> matriz = op.BusquedaListaUsuario(stado);
-            
+
             DefaultTableModel modelo = (DefaultTableModel) tablaUnoLista.getModel();
             modelo.setRowCount(0);
-            
+
             for (Vector<String> vector : matriz) {
                 modelo.addRow(vector);
             }
@@ -321,7 +321,7 @@ public class ListaUsuarios extends javax.swing.JInternalFrame {
                 ActUsuario = new ActPerfilUsuario();
                 jTabbedPane1.add("Actualizacion Perfil", ActUsuario);
                 ActUsuario.show();
-                
+
                 String user = labeleyenda2.getText();
                 ActUsuario.setUserPerfil(user);
             }
@@ -336,7 +336,7 @@ public class ListaUsuarios extends javax.swing.JInternalFrame {
                 actPassww = new ActPassword();
                 jTabbedPane1.add("Actualización Password", actPassww);
                 actPassww.show();
-                
+
                 String user = labeleyenda2.getText();
                 actPassww.SetUsuarioPass(user);
             }
@@ -346,8 +346,8 @@ public class ListaUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_PasswordActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       jPanel2.setVisible(false);
-       
+        jPanel2.setVisible(false);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

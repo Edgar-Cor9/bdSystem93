@@ -442,52 +442,60 @@ public final class OperarcionesCRUD {
     //-----------------------------------------------------------------------------------------------------------------
     // Clientes
     //-----------------------------------------------------------------------------------------------------------------
-    // consultar a la base de datos si el socio esta registrado
+// consultar a la base de datos si el socio esta registrado
     public ArrayList<Vector<String>> cedulaCliente(String cedula) throws SQLException {
-
         this.iniciarConexionBD();
-        Statement stm = this.conexion.createStatement();
+
         ArrayList<Vector<String>> matriz = new ArrayList<>();
-        try {
-            String sql = "select idclientes, cedula_cliente, nombres_cliente, apellidos_cliente, email_cliente, direccion_cliente, edad, username, idusuarios, fecha_ingreso,username_Actu, fecha_actualizacion, comentario from clientes where cedula_cliente = '" + cedula + "'";
-            ResultSet rst = stm.executeQuery(sql);
 
-            while (rst.next()) {
+        String sql = "select idclientes, cedula_cliente, nombres_cliente, apellidos_cliente,"
+                + " email_cliente, direccion_cliente, fecha_nacimiento, edad, username, idusuarios, fecha_ingreso,username_Actu,"
+                + " fecha_actualizacion, comentario, numero, tipoCelular, empresa, descripcion, nombre_referencia,"
+                + " relacion_referencia, celular_referencia, nombre_trabajo, descripcion_trabajo, cargo_trabajo,"
+                + " direccion_trabajo, ingreso_trabajo, fecha_trabajo from clientes where cedula_cliente = ? ";
 
-                Vector<String> datos = new Vector<>();
-                String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userActu, fechaAct, comentario;
+        try ( PreparedStatement pst = this.conexion.prepareStatement(sql)) {
+            pst.setString(1, cedula);
 
-                idclient = rst.getString("idclientes");
-                cedul = rst.getString("cedula_cliente");
-                nombres = rst.getString("nombres_cliente");
-                apellidos = rst.getString("apellidos_cliente");
-                email = rst.getString("email_cliente");
-                direccion = rst.getString("direccion_cliente");
-                edad = rst.getString("edad");
-                username = rst.getString("username");
-                idusuario = rst.getString("idusuarios");
-                fechaIngr = rst.getString("fecha_ingreso");
-                userActu = rst.getString("username_Actu");
-                fechaAct = rst.getString("fecha_actualizacion");
-                comentario = rst.getString("comentario");
+            try ( ResultSet rst = pst.executeQuery()) {
+                while (rst.next()) {
 
-                datos.add(idclient);
-                datos.add(cedul);
-                datos.add(nombres);
-                datos.add(apellidos);
-                datos.add(email);
-                datos.add(direccion);
-                datos.add(edad);
-                datos.add(username);
-                datos.add(idusuario);
-                datos.add(fechaIngr);
-                datos.add(userActu);
-                datos.add(fechaAct);
-                datos.add(comentario);
+                    Vector<String> datos = new Vector<>();
 
-                matriz.add(datos);
+                    datos.add(rst.getString("idclientes"));
+                    datos.add(rst.getString("cedula_cliente"));
+                    datos.add(rst.getString("nombres_cliente"));
+                    datos.add(rst.getString("apellidos_cliente"));
+                    datos.add(rst.getString("email_cliente"));
+                    datos.add(rst.getString("direccion_cliente"));
+                    datos.add(rst.getString("fecha_nacimiento"));
+                    datos.add(rst.getString("edad"));
+                    datos.add(rst.getString("username"));
+                    datos.add(rst.getString("idusuarios"));
+                    datos.add(rst.getString("fecha_ingreso"));
+                    datos.add(rst.getString("username_Actu"));
+                    datos.add(rst.getString("fecha_actualizacion"));
+                    datos.add(rst.getString("comentario"));
+                    datos.add(rst.getString("numero"));
+                    datos.add(rst.getString("tipoCelular"));
+                    datos.add(rst.getString("empresa"));
+                    datos.add(rst.getString("descripcion"));
+                    datos.add(rst.getString("nombre_referencia"));
+                    datos.add(rst.getString("relacion_referencia"));
+                    datos.add(rst.getString("celular_referencia"));
+                    datos.add(rst.getString("nombre_trabajo"));
+                    datos.add(rst.getString("descripcion_trabajo"));
+                    datos.add(rst.getString("cargo_trabajo"));
+                    datos.add(rst.getString("direccion_trabajo"));
+                    datos.add(rst.getString("ingreso_trabajo"));
+                    datos.add(rst.getString("fecha_trabajo"));
 
+                    matriz.add(datos);
+
+                }
+            } catch (Exception e) {
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "!! Error al Consultar datos del Socio" + e);
             System.out.println("Error al Consultar datos del Socio" + e);
@@ -1472,9 +1480,9 @@ public final class OperarcionesCRUD {
                 + "AND fecha_registro BETWEEN ? AND ? "
                 + "ORDER BY fecha_registro";
 
-      //        //- Se abre un try-with-resources, que asegura que el objeto PreparedStatement se cierre automáticamente al finalizar el bloque.
-     //- this.conexion.prepareStatement(sql) crea un PreparedStatement a partir de la conexión conexion y la consulta SQL (sql).
-           //- El PreparedStatement permite ejecutar consultas parametrizadas, evitando inyecciones SQL y mejorando el rendimiento.
+        //        //- Se abre un try-with-resources, que asegura que el objeto PreparedStatement se cierre automáticamente al finalizar el bloque.
+        //- this.conexion.prepareStatement(sql) crea un PreparedStatement a partir de la conexión conexion y la consulta SQL (sql).
+        //- El PreparedStatement permite ejecutar consultas parametrizadas, evitando inyecciones SQL y mejorando el rendimiento.
         try ( PreparedStatement pst = this.conexion.prepareStatement(sql)) {
             pst.setString(1, user);
             pst.setString(2, fechaInicio);

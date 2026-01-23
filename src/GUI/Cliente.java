@@ -81,6 +81,10 @@ public class Cliente extends javax.swing.JInternalFrame {
 
     }
 
+    String idclient, cedul, nombres, apellidos, email, direccion, fecha_nacimiento, edad,
+            username, idusuario, fechaIngr, userAct, fechaAct, comentario, numero, tipoCelular, empresa, descripcion, nombre_referencia,
+            relacion_referencia, celular_referencia, nombre_trabajo, descripcion_trabajo, cargo_trabajo, direccion_trabajo, ingreso_trabajo, fecha_trabajo;
+
     private boolean cerrado(Object obj) {
         JInternalFrame[] FrmActivo = jDesktopPane1.getAllFrames();
         boolean cerrado = true;
@@ -159,9 +163,11 @@ public class Cliente extends javax.swing.JInternalFrame {
         labelCliente = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jToolBar4 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        botonCelular = new javax.swing.JButton();
+        botonReferencias = new javax.swing.JButton();
+        botontrabajo = new javax.swing.JButton();
+        labelIDtoolBar = new javax.swing.JLabel();
+        labelNombrestoolBar = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
@@ -195,9 +201,10 @@ public class Cliente extends javax.swing.JInternalFrame {
         jToolBar1.add(JBSalir);
         jToolBar1.add(Titulo);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Cedula:");
 
+        txtCedula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCedulaActionPerformed(evt);
@@ -263,8 +270,8 @@ public class Cliente extends javax.swing.JInternalFrame {
         jToolBar3.setBorderPainted(false);
         jToolBar3.setEnabled(false);
 
-        JBGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disco-flexible.png"))); // NOI18N
-        JBGuardar.setToolTipText("Guardar");
+        JBGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.png"))); // NOI18N
+        JBGuardar.setToolTipText("Nuevo");
         JBGuardar.setFocusable(false);
         JBGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         JBGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -275,8 +282,8 @@ public class Cliente extends javax.swing.JInternalFrame {
         });
         jToolBar3.add(JBGuardar);
 
-        JBActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lapiz.png"))); // NOI18N
-        JBActualizar.setToolTipText("ActualizarDatos");
+        JBActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/disco-flexible.png"))); // NOI18N
+        JBActualizar.setToolTipText("GuardarTodo");
         JBActualizar.setFocusable(false);
         JBActualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         JBActualizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -299,35 +306,35 @@ public class Cliente extends javax.swing.JInternalFrame {
         });
         jToolBar3.add(JBSalir1);
 
-        Nombres.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Nombres.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jToolBar3.add(Nombres);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Cedula:");
 
-        LabelCedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelCedula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Fecha de Ingreso:");
 
-        LabelIngreso.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelIngreso.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Nombres:");
 
         txtNombres.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Apellidos:");
 
         txtApellidos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Fecha de Actualizacion:");
 
-        LabelFechActualizacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelFechActualizacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         JBNombres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/acerca-de.png"))); // NOI18N
         JBNombres.setToolTipText("Ingrese los Nombres");
@@ -337,15 +344,15 @@ public class Cliente extends javax.swing.JInternalFrame {
         JBApellidos.setToolTipText("Ingrese los Apellidos");
         JBApellidos.setBorder(null);
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("Cliente:");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel12.setText("Direccion:");
 
         txtdireccion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel13.setText("Comentario :");
 
         jTextArea1.setColumns(20);
@@ -361,21 +368,21 @@ public class Cliente extends javax.swing.JInternalFrame {
         JBDireccion1.setToolTipText("Ingrese comentario");
         JBDireccion1.setBorder(null);
 
-        labelUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelUsuario.setText("Usuario Ingreso:");
 
-        idUser1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        idUser1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        LabelUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        labelUSuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelUSuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelUSuario.setText("Usuario Actualizacion:");
 
-        idUserAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        idUserAct.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        LabelUsuarioActua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelUsuarioActua.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        labelCorreo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelCorreo.setText("Correo:");
 
         txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -389,10 +396,10 @@ public class Cliente extends javax.swing.JInternalFrame {
         JBCorreo.setToolTipText("Ingrese el Correo");
         JBCorreo.setBorder(null);
 
-        labelFechaNacimiento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelFechaNacimiento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelFechaNacimiento.setText("Fecha Nacimiento:");
 
-        labelEdad.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelEdad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelEdad.setText("Edad:");
 
         txtEdad.setEditable(false);
@@ -476,30 +483,33 @@ public class Cliente extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBNombres, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(JBNombres, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                    .addComponent(txtdireccion)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(JBDireccion))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                    .addComponent(txtApellidos)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(JBApellidos))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel12)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(JBDireccion1)))
+                                    .addGap(0, 0, Short.MAX_VALUE)))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtdireccion)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JBDireccion))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtApellidos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JBApellidos))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel12)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(JBDireccion1)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(169, 169, 169)
                 .addComponent(jLabel11)
@@ -517,7 +527,7 @@ public class Cliente extends javax.swing.JInternalFrame {
                             .addComponent(LabelCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 577, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 593, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel9)
                         .addComponent(jLabel4))
@@ -548,7 +558,7 @@ public class Cliente extends javax.swing.JInternalFrame {
                             .addComponent(JBDireccion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JBDireccion1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -593,41 +603,43 @@ public class Cliente extends javax.swing.JInternalFrame {
         jToolBar4.setBorderPainted(false);
         jToolBar4.setEnabled(false);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llamada-telefonica.png"))); // NOI18N
-        jButton2.setToolTipText("Celular");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonCelular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llamada-telefonica.png"))); // NOI18N
+        botonCelular.setToolTipText("Celular");
+        botonCelular.setFocusable(false);
+        botonCelular.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonCelular.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonCelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonCelularActionPerformed(evt);
             }
         });
-        jToolBar4.add(jButton2);
+        jToolBar4.add(botonCelular);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/negocios-y-finanzas.png"))); // NOI18N
-        jButton3.setToolTipText("Referencias");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botonReferencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/negocios-y-finanzas.png"))); // NOI18N
+        botonReferencias.setToolTipText("Referencias");
+        botonReferencias.setFocusable(false);
+        botonReferencias.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonReferencias.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonReferencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botonReferenciasActionPerformed(evt);
             }
         });
-        jToolBar4.add(jButton3);
+        jToolBar4.add(botonReferencias);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/activo-fijo.png"))); // NOI18N
-        jButton4.setToolTipText("Actividad Economica");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        botontrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/activo-fijo.png"))); // NOI18N
+        botontrabajo.setToolTipText("Actividad Economica");
+        botontrabajo.setFocusable(false);
+        botontrabajo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botontrabajo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botontrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                botontrabajoActionPerformed(evt);
             }
         });
-        jToolBar4.add(jButton4);
+        jToolBar4.add(botontrabajo);
+        jToolBar4.add(labelIDtoolBar);
+        jToolBar4.add(labelNombrestoolBar);
 
         jDesktopPane1.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -672,9 +684,9 @@ public class Cliente extends javax.swing.JInternalFrame {
             .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -758,6 +770,28 @@ public class Cliente extends javax.swing.JInternalFrame {
 
     }
 
+    public void getDatosCelular(String celula, String tipoCelula, String empres, String descripcio) {
+        this.numero = celula;
+        this.tipoCelular = tipoCelula;
+        this.empresa = empres;
+        this.descripcion = descripcio;
+    }
+
+    public void getDatosReferencia(String nombre_ref, String relacion_ref, String celular_ref) {
+        this.nombre_referencia = nombre_ref;
+        this.relacion_referencia = relacion_ref;
+        this.celular_referencia = celular_ref;
+    }
+
+    public void getDatosTrabajo(String nombre_trab, String descripcion_trab, String cargo_trab, String direccion_trab, String ingreso_trab, String fecha_trab) {
+        this.nombre_trabajo = nombre_trab;
+        this.descripcion_trabajo = descripcion_trab;
+        this.cargo_trabajo = cargo_trab;
+        this.direccion_trabajo = direccion_trab;
+        this.ingreso_trabajo = ingreso_trab;
+        this.fecha_trabajo = fecha_trab;
+    }
+
     public void Consultar() {
         String cedula = txtCedula.getText();
 
@@ -780,7 +814,6 @@ public class Cliente extends javax.swing.JInternalFrame {
                     idUser1.setText(coduser);
 
                     for (Vector<String> vector : matriz) {
-                        String idclient, cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngr, userAct, fechaAct, comentario;
 
                         idclient = vector.get(0);
                         cedul = vector.get(1);
@@ -788,13 +821,40 @@ public class Cliente extends javax.swing.JInternalFrame {
                         apellidos = vector.get(3);
                         email = vector.get(4);
                         direccion = vector.get(5);
-                        edad = vector.get(6);
-                        username = vector.get(7);
-                        idusuario = vector.get(8);
-                        fechaIngr = vector.get(9);
-                        userAct = vector.get(10);
-                        fechaAct = vector.get(11);
-                        comentario = vector.get(12);
+                        fecha_nacimiento = vector.get(6);
+                        edad = vector.get(7);
+                        username = vector.get(8);
+                        idusuario = vector.get(9);
+                        fechaIngr = vector.get(10);
+                        userAct = vector.get(11);
+                        fechaAct = vector.get(12);
+                        comentario = vector.get(13);
+
+                        numero = vector.get(14);
+                        tipoCelular = vector.get(15);
+                        empresa = vector.get(16);
+                        descripcion = vector.get(17);
+                        nombre_referencia = vector.get(18);
+                        relacion_referencia = vector.get(19);
+                        celular_referencia = vector.get(20);
+                        nombre_trabajo = vector.get(21);
+                        descripcion_trabajo = vector.get(22);
+                        cargo_trabajo = vector.get(23);
+                        direccion_trabajo = vector.get(24);
+                        ingreso_trabajo = vector.get(25);
+                        fecha_trabajo = vector.get(26);
+                        
+                        try {
+                            Date fech = fecha.parse(fecha_nacimiento);
+                            jDateChooser1.setDate(fech);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        
+
+                        getDatosCelular(numero, tipoCelular, empresa, descripcion);
+                        getDatosReferencia(nombre_referencia, relacion_referencia, celular_referencia);
+                        getDatosTrabajo(nombre_trabajo, descripcion_trabajo, cargo_trabajo, direccion_trabajo, ingreso_trabajo, fecha_trabajo);
 
                         Nombres.setText("Cliente #" + idclient + "  " + nombres + "  " + apellidos);
                         labelCliente.setText(idclient);
@@ -815,7 +875,6 @@ public class Cliente extends javax.swing.JInternalFrame {
 
                 } catch (SQLException err) {
                     err.printStackTrace();
-
                 }
             }
 
@@ -823,6 +882,8 @@ public class Cliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ingrese la Cedula por favor");
         }
     }
+
+
     private void JBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBConsultarActionPerformed
         Consultar();
     }//GEN-LAST:event_JBConsultarActionPerformed
@@ -1002,13 +1063,14 @@ public class Cliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCelularActionPerformed
         try {
             if (cerrado(clCelular)) {
                 clCelular = new ClienteCelular();
                 jTabbedPane1.add("Celular", clCelular);
                 clCelular.show();
 
+                clCelular.setIdCliente(idclient, numero, tipoCelular, empresa, descripcion);
             }
 
         } catch (Exception e) {
@@ -1016,14 +1078,16 @@ public class Cliente extends javax.swing.JInternalFrame {
         }
 
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botonCelularActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void botonReferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReferenciasActionPerformed
         try {
             if (cerrado(clReferencia)) {
                 clReferencia = new ClienteReferencia();
                 jTabbedPane1.add("Referencias", clReferencia);
                 clReferencia.show();
+
+                clReferencia.setRefeCliente(idclient, nombre_referencia, relacion_referencia, celular_referencia);
 
             }
 
@@ -1032,14 +1096,16 @@ public class Cliente extends javax.swing.JInternalFrame {
         }
 
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_botonReferenciasActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void botontrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botontrabajoActionPerformed
         try {
             if (cerrado(clActividad)) {
                 clActividad = new ClienteActividadEconomica();
                 jTabbedPane1.add("Actividad Economica", clActividad);
                 clActividad.show();
+
+                clActividad.setClienteReferencia(idclient, nombre_trabajo, descripcion_trabajo, cargo_trabajo, direccion_trabajo, ingreso_trabajo, fecha_trabajo);
 
             }
 
@@ -1047,7 +1113,7 @@ public class Cliente extends javax.swing.JInternalFrame {
             System.err.println("Error al cargar ventana Datos Activida Económica" + e);
         }
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_botontrabajoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1071,12 +1137,12 @@ public class Cliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Nombres;
     private javax.swing.JPanel Panel1;
     private javax.swing.JLabel Titulo;
+    private javax.swing.JButton botonCelular;
+    private javax.swing.JButton botonReferencias;
+    private javax.swing.JButton botontrabajo;
     private javax.swing.JLabel idUser1;
     private javax.swing.JLabel idUserAct;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
@@ -1104,6 +1170,8 @@ public class Cliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelCorreo;
     private javax.swing.JLabel labelEdad;
     private javax.swing.JLabel labelFechaNacimiento;
+    private javax.swing.JLabel labelIDtoolBar;
+    private javax.swing.JLabel labelNombrestoolBar;
     private javax.swing.JLabel labelUSuario;
     private javax.swing.JLabel labelUsuario;
     private javax.swing.JTextField txtApellidos;

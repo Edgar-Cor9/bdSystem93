@@ -834,9 +834,9 @@ public class Principal extends javax.swing.JFrame {
         try {
             if (cerrado(reProveedor)) {
                 reProveedor = new ReportesProveedor();
-                jTabbedPane1.add("Reportes Proveedor",reProveedor);
+                jTabbedPane1.add("Reportes Proveedor", reProveedor);
                 reProveedor.show();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "La Ventana Reportes Proveedor ya se Encuentra abierta");
             }
         } catch (Exception e) {

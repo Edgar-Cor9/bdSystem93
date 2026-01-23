@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
@@ -14,14 +15,34 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ClienteReferencia extends javax.swing.JInternalFrame {
 
-    
     /**
      * Creates new form ClienteCelular
      */
+    String idCliente, nombre_ref, relacion_ref, celular_ref;
+
     public ClienteReferencia() {
         initComponents();
-       labelTitulo.setText("Actualización Referencias");
-                
+        labelTitulo.setText("Actualización Referencias");
+
+    }
+
+    public void setRefeCliente(String idCliente, String nombre_ref, String relacion_ref, String celular_ref) {
+
+        this.idCliente = idCliente;
+        this.nombre_ref = nombre_ref;
+        this.relacion_ref = relacion_ref;
+        this.celular_ref = celular_ref;
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaReferencia.getModel();
+        modelo.setRowCount(0);
+
+        Vector<String> datos = new Vector<>();
+        datos.add(nombre_ref);
+        datos.add(relacion_ref);
+        datos.add(celular_ref);
+
+        modelo.addRow(datos);
+
     }
 
     /**
@@ -40,7 +61,7 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaReferencia = new javax.swing.JTable();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,23 +100,20 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
         jToolBar1.add(jButton2);
         jToolBar1.add(labelTitulo);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaReferencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
                 {null, null, null}
             },
             new String [] {
                 "Nombres", "Relacion", "Celular"
             }
         ));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        tablaReferencia.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaReferencia);
+        if (tablaReferencia.getColumnModel().getColumnCount() > 0) {
+            tablaReferencia.getColumnModel().getColumn(0).setResizable(false);
+            tablaReferencia.getColumnModel().getColumn(1).setResizable(false);
+            tablaReferencia.getColumnModel().getColumn(2).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,7 +138,7 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -129,9 +147,9 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JTable tablaReferencia;
     // End of variables declaration//GEN-END:variables
 }
