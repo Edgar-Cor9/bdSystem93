@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import Logica_Operaciones_BD.OperarcionesCRUD;
+import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -22,7 +24,7 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
 
     public ClienteReferencia() {
         initComponents();
-        labelTitulo.setText("Actualización Referencias");
+        labelTitulo.setText("Actualización Referencias del Cliente : ");
 
     }
 
@@ -32,6 +34,8 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
         this.nombre_ref = nombre_ref;
         this.relacion_ref = relacion_ref;
         this.celular_ref = celular_ref;
+
+        labelIDCliente.setText(idCliente);
 
         DefaultTableModel modelo = (DefaultTableModel) tablaReferencia.getModel();
         modelo.setRowCount(0);
@@ -43,6 +47,33 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
 
         modelo.addRow(datos);
 
+    }
+
+    public Vector<String> Referencias() {
+        Vector<String> referencia = new Vector<>();
+
+        referencia.add(idCliente);
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaReferencia.getModel();
+
+        int fila = 0;
+        for (int col = 0; col < modelo.getColumnCount(); col++) {
+            referencia.add((String.valueOf(modelo.getValueAt(fila, col))));
+        }
+
+        return referencia;
+    }
+
+    public void Guardar() {
+        Vector<String> valores = Referencias();
+
+        try {
+            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+            op.ActualizarReferencia(valores);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -60,6 +91,7 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
+        labelIDCliente = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaReferencia = new javax.swing.JTable();
 
@@ -85,6 +117,11 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
@@ -99,6 +136,7 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton2);
         jToolBar1.add(labelTitulo);
+        jToolBar1.add(labelIDCliente);
 
         tablaReferencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,6 +179,10 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Guardar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -149,6 +191,7 @@ public class ClienteReferencia extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel labelIDCliente;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JTable tablaReferencia;
     // End of variables declaration//GEN-END:variables

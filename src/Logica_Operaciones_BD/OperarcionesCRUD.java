@@ -598,6 +598,129 @@ public final class OperarcionesCRUD {
 
     }
 
+    //para actualizar datos del celular del cliente
+    public void ActualizarCelular(Vector<String> datos) throws SQLException {
+        this.iniciarConexionBD();
+
+        Statement stm = conexion.createStatement();
+        Vector<String> valores = datos;
+
+        String id, celula, tipoCelula, empres, descripcio;
+
+        try {
+          
+            id = valores.get(0);
+            celula = valores.get(1);
+            tipoCelula = valores.get(2);
+            empres = valores.get(3);
+            descripcio = valores.get(4);
+
+            if (tipoCelula.equalsIgnoreCase("Celular")) {
+                if (celula.length() != 10) {
+                    JOptionPane.showMessageDialog(null, "Celular debe tener exactamente 10 dgitos");
+                    return;
+                }
+            } else if (tipoCelula.equalsIgnoreCase("Convencional")) {
+                if (celula.length() != 9) {
+                    JOptionPane.showMessageDialog(null, "Convencional debe tener exactamente 9 dgitos");
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Formato no permitido tipo Celular  (celular/Convencional) ");
+                return;
+            }
+
+            String sql = "select idclientes from clientes where idclientes = '" + id + "'";
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                String sql2 = "update clientes set numero ='" + celula + "', tipoCelular = '" + tipoCelula + "', empresa  = '" + empres + "', descripcion = '" + descripcio + "'where idclientes = '" + id + "'";
+                stm.executeUpdate(sql2);
+                JOptionPane.showMessageDialog(null, "!! Datos del Celular Actualizados con Exito !!\n");
+            } else {
+                JOptionPane.showMessageDialog(null, "!! No puede Actualizar debe Registrar persona Primero !!\n");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "!! Error al actualizar datos de Celular" + e);
+            System.out.println("Error al actualizar datos de Celular" + e);
+        }
+        this.cerrarConexionBD();
+    }
+
+    //para actualizar datos de Referencia del cliente
+    public void ActualizarReferencia(Vector<String> datos) throws SQLException {
+        this.iniciarConexionBD();
+        Statement stm = this.conexion.createStatement();
+
+        String id, nombre_referencia, relacion_referencia, celular_referencia;
+
+        Vector<String> valor = datos;
+
+        try {
+            id = valor.get(0);
+            nombre_referencia = valor.get(1);
+            relacion_referencia = valor.get(2);
+            celular_referencia = valor.get(3);
+
+            if (celular_referencia.length() != 10) {
+                JOptionPane.showMessageDialog(null, "Formato no permitido Celular");
+                return;
+            }
+            String sql = "select idclientes from clientes where idclientes = '" + id + "'";
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                String sql2 = "update clientes set nombre_referencia ='" + nombre_referencia + "', relacion_referencia = '" + relacion_referencia + "', celular_referencia  = '" + celular_referencia + "'where idclientes = '" + id + "'";
+                stm.executeUpdate(sql2);
+                JOptionPane.showMessageDialog(null, "!! Datos de Referencia Actualizados con Exito !!\n");
+            } else {
+                JOptionPane.showMessageDialog(null, "!! No puede Actualizar debe Registrar persona Primero !!\n");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "!! Error al actualizar datos de Referencia" + e);
+            System.out.println("Error al actualizar datos de Referencia" + e);
+        }
+        this.cerrarConexionBD();
+    }
+
+    //para actualizar datos de ActividadEconomica
+    public void ActuzalirActividaEconomica(Vector<String> datos) throws SQLException {
+        this.iniciarConexionBD();
+
+        Statement stm = this.conexion.createStatement();
+
+        String id, nombre_trabajo, descripcion_trabajo, cargo_trabajo, direccion_trabajo, ingreso_trabajo, fecha_trabajo;
+
+        Vector<String> valor = datos;
+
+        try {
+            id = valor.get(0);
+            nombre_trabajo = valor.get(1);
+            descripcion_trabajo = valor.get(2);
+            cargo_trabajo = valor.get(3);
+            direccion_trabajo = valor.get(4);
+            ingreso_trabajo = valor.get(5);
+            fecha_trabajo = valor.get(6);
+
+            String sql = "select idclientes from clientes where idclientes = '" + id + "'";
+            ResultSet rst = stm.executeQuery(sql);
+
+            if (rst.next()) {
+                String sql2 = "update clientes set nombre_trabajo ='" + nombre_trabajo + "', descripcion_trabajo = '" + descripcion_trabajo + "', cargo_trabajo  = '" + cargo_trabajo + "', direccion_trabajo = '" + direccion_trabajo + "', ingreso_trabajo = '" + ingreso_trabajo + "', fecha_trabajo = '" + fecha_trabajo + "' where idclientes = '" + id + "'";
+                stm.executeUpdate(sql2);
+                JOptionPane.showMessageDialog(null, "!! Datos de Actividad Economica Actualizados con Exito !!\n");
+            } else {
+                JOptionPane.showMessageDialog(null, "!! No puede Actualizar debe Registrar persona Primero !!\n");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "!! Error al actualizar datos de Actividad Economica" + e);
+            System.out.println("Error al actualizar datos de Actividad Economica" + e);
+        }
+        this.cerrarConexionBD();
+    }
+
     //para extraer el reporte de clientes registrado por un usuario mediante fecha utilizando preparedStatement
     public ArrayList<Vector<String>> ReportesDeClientes2(String usuario, String fechaInicio, String fechaFin) throws SQLException {
         this.iniciarConexionBD();

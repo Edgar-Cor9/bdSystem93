@@ -4,8 +4,12 @@
  */
 package GUI;
 
+import Logica_Operaciones_BD.OperarcionesCRUD;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
@@ -20,10 +24,11 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
      * Creates new form ClienteCelular
      */
     String idCliente, nombre_trabajo, descripcion_trabajo, cargo_trabajo, direccion_trabajo, ingreso_trabajo, fecha_trabajo;
+    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
     public ClienteActividadEconomica() {
         initComponents();
-        labelTitulo.setText("Actualización Datos Actividad Economica");
+        labelTitulo.setText("Actualización Datos Actividad Economica del Cliente : ");
 
     }
 
@@ -36,6 +41,8 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
         this.ingreso_trabajo = ingreso_trab;
         this.fecha_trabajo = fecha_trab;
 
+        jLabelidCliente.setText(idCliente);
+
         txtNombreTrabajo.setText(nombre_trabajo);
         txtDescripcion.setText(descripcion_trabajo);
         txtcargo.setText(cargo_trabajo);
@@ -43,14 +50,48 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
         txtingreso.setText(ingreso_trabajo);
 
         try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fech = formato.parse(fecha_trabajo);
-            chooserFecha.setDate(fech);
+//  si el valor de fecha viene con datos se parsea y si es vacio envia fecha actual     
+            if (fecha_trabajo != null && !fecha_trabajo.trim().isEmpty()) {
+
+                Date fech = formato.parse(fecha_trabajo);
+                chooserFecha.setDate(fech);
+            } else {
+                // Fecha por defecto: la actual
+                chooserFecha.setDate(new Date());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
+            chooserFecha.setDate(new Date());// fallback: fecha actual
         }
 
+    }
+
+    public Vector<String> ActiviEconom() {
+        Vector<String> valor = new Vector<>();
+        Date fecha = chooserFecha.getDate();
+        String fechactual = formato.format(fecha);
+
+        valor.add(idCliente);
+        valor.add(txtNombreTrabajo.getText());
+        valor.add(txtDescripcion.getText());
+        valor.add(txtcargo.getText());
+        valor.add(txtdirecciontrabajo.getText());
+        valor.add(txtingreso.getText());
+        valor.add(fechactual);
+
+        return valor;
+    }
+
+    public void Guardar() {
+        Vector<String> valores = ActiviEconom();
+
+        try {
+            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+            op.ActuzalirActividaEconomica(valores);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -68,6 +109,7 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
+        jLabelidCliente = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombreTrabajo = new javax.swing.JTextField();
@@ -104,6 +146,11 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
@@ -118,6 +165,7 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton2);
         jToolBar1.add(labelTitulo);
+        jToolBar1.add(jLabelidCliente);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -221,6 +269,10 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Guardar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser chooserFecha;
@@ -232,6 +284,7 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelidCliente;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;

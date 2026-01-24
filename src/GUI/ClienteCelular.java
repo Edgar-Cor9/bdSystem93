@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import Logica_Operaciones_BD.OperarcionesCRUD;
+import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -22,7 +24,7 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
 
     public ClienteCelular() {
         initComponents();
-        labelTitulo.setText("Actualización Datos Celular");
+        labelTitulo.setText("Actualización Datos Celular del cliente : ");
 
     }
 
@@ -32,6 +34,8 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         this.tipoCelular = tipoCelula;
         this.empresa = empres;
         this.descripcion = descripcio;
+
+        labelIDCLiente.setText(idCliente);
 
         DefaultTableModel modelo = (DefaultTableModel) tablaCelular.getModel();
         modelo.setRowCount(0);
@@ -43,6 +47,35 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         datos.add(descripcion);
 
         modelo.addRow(datos);
+    }
+
+    public Vector<String> Celular() {
+        Vector<String> datos = new Vector<>();
+        //Muy buena observación, Edgar 👌. La razón por la que el método getValueAt(int row, int column) devuelve un Object es porque un JTable puede contener diferentes tipos de datos en sus columnas (Strings, enteros, booleanos, fechas, etc.).
+        //Al devolver , el  es flexible y tú haces el cast al tipo correcto
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaCelular.getModel();
+        datos.add(idCliente);
+        //Si datos es una variable global, corres el riesgo de acumular valores cada vez que llames al método. Lo más seguro es inicializarlo dentro del método:
+        int fila = 0;
+        for (int col = 0; col < modelo.getColumnCount(); col++) {
+            datos.add(String.valueOf(modelo.getValueAt(fila, col)));
+        }
+
+        return datos;
+
+    }
+
+    public void Guardar() {
+        Vector<String> valores = Celular();
+
+        try {
+            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+            op.ActualizarCelular(valores);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -60,6 +93,7 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
+        labelIDCLiente = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCelular = new javax.swing.JTable();
 
@@ -85,6 +119,11 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salida.png"))); // NOI18N
@@ -99,6 +138,7 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton2);
         jToolBar1.add(labelTitulo);
+        jToolBar1.add(labelIDCLiente);
 
         tablaCelular.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,6 +182,10 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Guardar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -150,6 +194,7 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel labelIDCLiente;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JTable tablaCelular;
     // End of variables declaration//GEN-END:variables

@@ -92,6 +92,9 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
@@ -108,6 +111,8 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelTitulo">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelidCliente">
         </Component>
       </SubComponents>
     </Container>

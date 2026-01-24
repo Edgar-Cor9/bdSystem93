@@ -843,14 +843,19 @@ public class Cliente extends javax.swing.JInternalFrame {
                         direccion_trabajo = vector.get(24);
                         ingreso_trabajo = vector.get(25);
                         fecha_trabajo = vector.get(26);
-                        
+
                         try {
-                            Date fech = fecha.parse(fecha_nacimiento);
-                            jDateChooser1.setDate(fech);
+                            if (fecha_nacimiento != null && !fecha_nacimiento.trim().isEmpty()) {
+                                Date fech = fecha.parse(fecha_nacimiento);
+                                jDateChooser1.setDate(fech);
+                            } else {
+                                jDateChooser1.setDate(new Date());
+                            }
+
                         } catch (Exception e) {
                             e.printStackTrace();
+                            jDateChooser1.setDate(new Date());// fallback: fecha actual
                         }
-                        
 
                         getDatosCelular(numero, tipoCelular, empresa, descripcion);
                         getDatosReferencia(nombre_referencia, relacion_referencia, celular_referencia);
@@ -979,6 +984,16 @@ public class Cliente extends javax.swing.JInternalFrame {
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         Consultar();
     }//GEN-LAST:event_txtCedulaActionPerformed
+
+    public void Mostrar() {
+        Vector<String> valores = clCelular.Celular();
+        this.numero = valores.get(1);
+        this.tipoCelular = valores.get(2);
+        this.empresa = valores.get(3);
+        this.descripcion = valores.get(4);
+
+        System.out.println(valores);
+    }
 
     public void Guardar() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
