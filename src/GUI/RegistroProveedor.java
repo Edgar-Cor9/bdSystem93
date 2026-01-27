@@ -66,6 +66,8 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtcomentario = new javax.swing.JTextArea();
+        jLabel12 = new javax.swing.JLabel();
+        txtnumero = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         LabelRuc = new javax.swing.JLabel();
@@ -158,6 +160,8 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         txtcomentario.setRows(5);
         jScrollPane1.setViewportView(txtcomentario);
 
+        jLabel12.setText("Número:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -165,20 +169,20 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(264, 264, 264)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)
-                            .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(264, 264, 264)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel12)
+                    .addComponent(txtdireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtapellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtnumero))
                 .addContainerGap(270, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -201,9 +205,13 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
                     .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jLabel10)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -459,7 +467,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
                     jPanel2.setVisible(false);
 
                     for (Vector<String> vector : matriz) {
-                        String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
+                        String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, numero, fech_regis, fecha_actu, comentario, userRegis, userActual;
 
                         idprovee = vector.get(0);
                         rucPro = vector.get(1);
@@ -468,11 +476,12 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
                         apellidos = vector.get(4);
                         email = vector.get(5);
                         direccion = vector.get(6);
-                        fech_regis = vector.get(7);
-                        fecha_actu = vector.get(8);
-                        comentario = vector.get(9);
-                        userRegis = vector.get(10);
-                        userActual = vector.get(11);
+                        numero = vector.get(7);
+                        fech_regis = vector.get(8);
+                        fecha_actu = vector.get(9);
+                        comentario = vector.get(10);
+                        userRegis = vector.get(11);
+                        userActual = vector.get(12);
 
                         labelProveedor.setText(idprovee);
                         LabelRuc.setText(rucPro);
@@ -481,6 +490,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
                         txtapellidos.setText(apellidos);
                         txtemail.setText(email);
                         txtdireccion.setText(direccion);
+                        txtnumero.setText(numero);
                         FechaRegistro.setText(fech_regis);
                         fechaActual.setText(fecha_actu);
                         txtcomentario.setText(comentario);
@@ -507,13 +517,13 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         jPanel1.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public void Guardar(){
-         ArrayList<Vector<String>> matriz = new ArrayList<>();
+    public void Guardar() {
+        ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         String fechaIngreso = FechaRegistro.getText();
 
         int validacion = 0;
-        String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, comentario, userRegis, userActual;
+        String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, numero, comentario, userRegis, userActual;
 
         rucPro = LabelRuc.getText();
         iduser = IdUSer.getText();
@@ -521,6 +531,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         apellidos = txtapellidos.getText();
         email = txtemail.getText();
         direccion = txtdireccion.getText();
+        numero = txtnumero.getText();
         comentario = txtcomentario.getText();
         userRegis = usuario;
 
@@ -544,6 +555,10 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese un comentario por favor");
             validacion++;
         }
+        if (numero.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero por favor");
+            validacion++;
+        }
 
         if (validacion == 0) {
             Vector<String> datos = new Vector<>();
@@ -553,6 +568,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             datos.add(apellidos);
             datos.add(email);
             datos.add(direccion);
+            datos.add(numero);
             datos.add(fechaIngreso);
             datos.add(comentario);
             datos.add(userRegis);
@@ -574,7 +590,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         Guardar();
     }//GEN-LAST:event_GuardarActionPerformed
 
-    public void Editar(){
+    public void Editar() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
         Date fechaA = new Date();
 
@@ -582,13 +598,14 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         String fechaAc = formato.format(fechaA);
 
         int validacion = 0;
-        String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
+        String rucPro, iduser, nombres, apellidos, email, direccion, numero, comentario, fechaActual, userActual;
 
         rucPro = LabelRuc.getText().toString();
         nombres = txtnombres.getText();
         apellidos = txtapellidos.getText();
         email = txtemail.getText();
         direccion = txtdireccion.getText();
+        numero = txtnumero.getText();
         fechaActual = fechaAc;
         comentario = txtcomentario.getText();
         userActual = usuario;
@@ -610,6 +627,10 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese la direccion por favor");
             validacion++;
         }
+         if (numero.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero por favor");
+            validacion++;
+        }
         if (comentario.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese un comentario por favor");
             validacion++;
@@ -624,6 +645,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
             datos.add(apellidos);
             datos.add(email);
             datos.add(direccion);
+            datos.add(numero);
             datos.add(fechaActual);
             datos.add(comentario);
             datos.add(userActual);
@@ -643,7 +665,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         }
     }
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-      Editar();
+        Editar();
     }//GEN-LAST:event_EditarActionPerformed
 
     private void txtRucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRucActionPerformed
@@ -667,6 +689,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -692,5 +715,6 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtnombres;
+    private javax.swing.JTextField txtnumero;
     // End of variables declaration//GEN-END:variables
 }

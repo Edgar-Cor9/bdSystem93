@@ -137,7 +137,7 @@ public class ClienteActividadEconomica extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llamada-telefonica.png"))); // NOI18N
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/activo-fijo.png"))); // NOI18N
 
         jToolBar1.setRollover(true);
 

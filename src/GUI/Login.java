@@ -115,37 +115,51 @@ public class Login extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public void Ingreso() {
-        String pass, stado = null;
-        int validarion = 0;
-        user = txtusuario.getText().toString();
-        pass = txtpassword.getText().toString();
+    // En tu clase LoginFrame
+    private int intentos = 0;
+    private final int maxIntento = 3;
 
-        if (user.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese el Usuario por favor");
-            validarion++;
-        }
-        if (pass.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese la Contrasena por favor");
-            validarion++;
-        } else {
-            OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-            dispose();
-            try {
-                // op.login(user, pass);
-                op.UsuarioRegistrado(user, pass);
+    private void verificarAcceso() {
+        String usuario = txtusuario.getText();
+        String password = new String(txtpassword.getPassword());
+        user = usuario;
 
-            } catch (SQLException err) {
-                err.printStackTrace();
+        OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+        try {
+            if (op.UsuarioRegistrado(usuario)) {
+                if (op.EstadoUsuario(usuario)) {
+                    if (op.login(usuario, password)) {
+                        JOptionPane.showMessageDialog(this, "Acceso concedido");
+                        new Principal().setVisible(true);
+                        dispose();
+                    } else {
+                        intentos++;
+                        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos. Intento " + intentos);
+                        if (intentos >= maxIntento) {
+                            JOptionPane.showMessageDialog(this, "Usuario bloqueado por exceso de intentos");
+                            op.ActEstadoUser(usuario, "Bloqueado");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "USUARIO SE ENCUENTRA INACTIVO / BLOQUEADO"
+                            + "CONTACTE AL ADMINISTRADOR");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "USUARIO NO SE ENCUENTRA REGISTRADO");
             }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error en acceso: " + e.getMessage());
         }
     }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Ingreso();
+        verificarAcceso();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
-        Ingreso();
+        verificarAcceso();
     }//GEN-LAST:event_txtpasswordActionPerformed
 
     /**

@@ -223,47 +223,55 @@ public final class OperarcionesCRUD {
         return lista;
     }
 
-    // aqui se consulta a la base de datos para el acceso a login
-    public void login(String user, String pass) throws SQLException { // acceso a la ventana login
-        this.iniciarConexionBD();
-        Login lg = new Login();
-        String status;
-        status = "Activo";
-        String statusActual = "Bloqueado";
+    //validar acceso    
+    public boolean login(String user, String pass) throws SQLException {
+        String sql = "SELECT status FROM usuarios WHERE username = ? AND password = ?";
+        iniciarConexionBD();
+        PreparedStatement pst = conexion.prepareStatement(sql);
+        pst.setString(1, user);
+        pst.setString(2, pass);
 
-        int intentos = 0;
-        int maxIntento = 3;
-        boolean acceso = false;
-        Statement stm = this.conexion.createStatement();
-        try {
-            String sql = "select status from usuarios where username = '" + user
-                    + "' and password = '" + pass + "'and  status = '" + status + "'";
-
-            ResultSet rst = stm.executeQuery(sql);
-            while (intentos < maxIntento && !acceso) {
-                if (rst.next()) {
-                    lg.dispose();
-                    acceso = true;
-                    new Principal().setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "PASSWORD INCORRECTOS");
-                    intentos++;                    
-                    lg.show(true);
-                }
-
-                if (!acceso) {
-                    JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
-                    ActEstadoUser(user, statusActual);
-
-                }
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "!! Error al Acesso del Usuario" + e);
-            System.out.println("Error al Acceso del Usuario" + e);
+        ResultSet rst = pst.executeQuery();
+        if (rst.next()) {
+            String status = rst.getString("status");
+            return "Activo".equalsIgnoreCase(status);
         }
-        this.cerrarConexionBD();
+        return false;
 
+    }
+
+    // para consultar si el usuario se encuentra en estado activo
+    public boolean EstadoUsuario(String usuario) throws SQLException {
+        String sql = "select status from usuarios where username = ?";
+        this.iniciarConexionBD();
+
+        PreparedStatement pst = this.conexion.prepareStatement(sql);
+        pst.setString(1, usuario);
+        ResultSet rst = pst.executeQuery();
+
+        if (rst.next()) {
+            String status = rst.getString("status");
+            return "Activo".equalsIgnoreCase(status);
+        }
+        return false;
+    }
+
+    //para consultar si el usuario se encuentra registrado 
+    public boolean UsuarioRegistrado(String usuario) throws SQLException {
+        this.iniciarConexionBD();
+
+        String sql = "select username from usuarios where username = ?";
+        PreparedStatement pst = this.conexion.prepareStatement(sql);
+
+        pst.setString(1, usuario);
+
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {            
+            String userr = rs.getString("username");
+            return true;
+        } 
+        return false;
     }
 
     //para actualizar el estado del usuario
@@ -319,62 +327,6 @@ public final class OperarcionesCRUD {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "!! Error al Actualizar Perfil del Usuario" + e);
             System.out.println("Error al Actualizar Perfil del Usuario" + e);
-        }
-
-        this.cerrarConexionBD();
-
-    }
-
-    // para consultar si el usuario se encuentra en estado activo
-    public void EstadoUsuario(String usuario, String password) throws SQLException {
-        this.iniciarConexionBD();
-
-        Login lg = new Login();
-        String user = usuario;
-        String pass = password;
-        String status = "Activo";
-        Statement stm = this.conexion.createStatement();
-
-        try {
-            String sql = "select status from usuarios where username ='" + user + "' and status = '" + status + "'";
-            ResultSet rst = stm.executeQuery(sql);
-
-            if (rst.next()) {
-                login(user, pass);
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario no se encuentra Activo, contacte con el administrador !!!!");
-                lg.show(true);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "!! Error al Consultar si Usuario esta Activo" + e);
-            System.out.println("Error al Consultar si Usuario esta Activo" + e);
-
-        }
-        this.cerrarConexionBD();
-    }
-
-    //para consultar si el usuario se encuentra registrado 
-    public void UsuarioRegistrado(String usuario, String password) throws SQLException {
-        this.iniciarConexionBD();
-        Login lg = new Login();
-
-        String user = usuario;
-        String pass = password;
-        Statement stm = this.conexion.createStatement();
-
-        try {
-            String sql = "select username from usuarios where username = '" + user + "'";
-            ResultSet rs = stm.executeQuery(sql);
-
-            if (rs.next()) {
-                EstadoUsuario(usuario, password);
-            } else {
-                JOptionPane.showMessageDialog(null, "USUARIO NO SE ENCUENTRA REGISTRADO");
-                lg.show(true);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "!! Error al Consultar si Usuario esta Registrado" + e);
-            System.out.println("Error al Consultar si Usuario esta Registrado" + e);
         }
 
         this.cerrarConexionBD();
@@ -1669,13 +1621,13 @@ public final class OperarcionesCRUD {
         try {
             String sql = "select idProveedor,"
                     + " ruc,idusuarios, nombres,"
-                    + " apellidos, email, direccion,fecha_registro,"
+                    + " apellidos, email, direccion, numero, fecha_registro,"
                     + " fecha_actualizacion, comentario, userRegistro,"
                     + "userActualizacion from proveedor where ruc ='" + ruc + "'";
             ResultSet rst = stm.executeQuery(sql);
             if (rst.next()) {
                 Vector<String> datos = new Vector<>();
-                String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, fech_regis, fecha_actu, comentario, userRegis, userActual;
+                String idprovee, rucPro, iduser, nombres, apellidos, email, direccion, numero, fech_regis, fecha_actu, comentario, userRegis, userActual;
 
                 idprovee = rst.getString("idProveedor");
                 rucPro = rst.getString("ruc");
@@ -1684,6 +1636,7 @@ public final class OperarcionesCRUD {
                 apellidos = rst.getString("apellidos");
                 email = rst.getString("email");
                 direccion = rst.getString("direccion");
+                numero = rst.getString("numero");
                 fech_regis = rst.getString("fecha_registro");
                 fecha_actu = rst.getString("fecha_actualizacion");
                 comentario = rst.getString("comentario");
@@ -1697,6 +1650,7 @@ public final class OperarcionesCRUD {
                 datos.add(apellidos);
                 datos.add(email);
                 datos.add(direccion);
+                datos.add(numero);
                 datos.add(fech_regis);
                 datos.add(fecha_actu);
                 datos.add(comentario);
@@ -1724,7 +1678,7 @@ public final class OperarcionesCRUD {
 
         try {
             for (Vector<String> vector : matriz) {
-                String rucPro, iduser, nombres, apellidos, email, direccion, fecha_registro, comentario, userRegis;
+                String rucPro, iduser, nombres, apellidos, email, direccion, numero, fecha_registro, comentario, userRegis;
 
                 rucPro = vector.get(0);
                 iduser = vector.get(1);
@@ -1732,9 +1686,10 @@ public final class OperarcionesCRUD {
                 apellidos = vector.get(3);
                 email = vector.get(4);
                 direccion = vector.get(5);
-                fecha_registro = vector.get(6);
-                comentario = vector.get(7);
-                userRegis = vector.get(8);
+                numero = vector.get(6);
+                fecha_registro = vector.get(7);
+                comentario = vector.get(8);
+                userRegis = vector.get(9);
 
                 String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
 
@@ -1748,18 +1703,18 @@ public final class OperarcionesCRUD {
                     Statement stm1 = this.conexion.createStatement();
                     String sql1 = " INSERT INTO proveedor (RUC, "
                             + "IDUSUARIOS, NOMBRES, "
-                            + "APELLIDOS, EMAIL,DIRECCION,"
+                            + "APELLIDOS, EMAIL,DIRECCION,NUMERO,"
                             + "FECHA_REGISTRO, COMENTARIO, "
                             + "USERREGISTRO) VALUES ('" + rucPro + "', '" + iduser + "',"
                             + " '" + nombres + "', '" + apellidos + "', '" + email + "', "
-                            + "'" + direccion + "','" + fecha_registro + "', "
+                            + "'" + direccion + "','" + numero + "', '" + fecha_registro + "', "
                             + "'" + comentario + "', '" + userRegis + "')";
                     stm1.executeUpdate(sql1);
                     JOptionPane.showMessageDialog(null, "!! Proveedor Guardado con Exito !!\n");
                 }
 
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "!! Error al Registrar un proveedor" + e);
             System.out.println("Error al Registrar un proveedor" + e);
         }
@@ -1775,16 +1730,17 @@ public final class OperarcionesCRUD {
 
         try {
             for (Vector<String> vector : matriz) {
-                String rucPro, iduser, nombres, apellidos, email, direccion, comentario, fechaActual, userActual;
+                String rucPro, iduser, nombres, apellidos, email, direccion, numero, comentario, fechaActual, userActual;
                 rucPro = vector.get(0);
                 iduser = vector.get(1);
                 nombres = vector.get(2);
                 apellidos = vector.get(3);
                 email = vector.get(4);
                 direccion = vector.get(5);
-                fechaActual = vector.get(6);
-                comentario = vector.get(7);
-                userActual = vector.get(8);
+                numero = vector.get(6);
+                fechaActual = vector.get(7);
+                comentario = vector.get(8);
+                userActual = vector.get(9);
 
                 String sql = "select ruc from proveedor where ruc = '" + rucPro + "'";
 
@@ -1793,7 +1749,7 @@ public final class OperarcionesCRUD {
                 if (rst.next()) {
                     String sql2 = "update proveedor set nombres ='" + nombres + "', "
                             + "apellidos ='" + apellidos + "',"
-                            + " email ='" + email + "', direccion ='" + direccion + "', "
+                            + " email ='" + email + "', direccion ='" + direccion + "', numero = '" + numero + "', "
                             + "fecha_actualizacion ='" + fechaActual + "', "
                             + "comentario ='" + comentario + "',"
                             + " userActualizacion = '" + userActual + "' where ruc = '" + rucPro + "'";
