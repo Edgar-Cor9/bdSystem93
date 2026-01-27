@@ -443,7 +443,7 @@ public class Cliente extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JBEdad))))
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,11 +511,11 @@ public class Cliente extends javax.swing.JInternalFrame {
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(169, 169, 169)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
                 .addComponent(labelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -792,6 +792,12 @@ public class Cliente extends javax.swing.JInternalFrame {
         this.fecha_trabajo = fecha_trab;
     }
 
+    public void mostrarBotones() {
+        btCelular();
+        btReferencia();
+        btActividad();
+    }
+
     public void Consultar() {
         String cedula = txtCedula.getText();
 
@@ -812,6 +818,9 @@ public class Cliente extends javax.swing.JInternalFrame {
                     Panel1.setVisible(false);
                     JDesktopCliente.setVisible(true);
                     idUser1.setText(coduser);
+                    if (matriz.isEmpty()) {
+                        mostrarBotones();
+                    }
 
                     for (Vector<String> vector : matriz) {
 
@@ -861,6 +870,8 @@ public class Cliente extends javax.swing.JInternalFrame {
                         getDatosReferencia(nombre_referencia, relacion_referencia, celular_referencia);
                         getDatosTrabajo(nombre_trabajo, descripcion_trabajo, cargo_trabajo, direccion_trabajo, ingreso_trabajo, fecha_trabajo);
 
+                        mostrarBotones();
+
                         Nombres.setText("Cliente #" + idclient + "  " + nombres + "  " + apellidos);
                         labelCliente.setText(idclient);
                         LabelCedula.setText(cedul);
@@ -897,7 +908,7 @@ public class Cliente extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_JBSalir1ActionPerformed
 
-    public void Actualizar() {
+    public void ActualizarTodo() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         Date dechaA = new Date();
@@ -978,7 +989,10 @@ public class Cliente extends javax.swing.JInternalFrame {
     }
 //Actualizar datos del Cliente
     private void JBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBActualizarActionPerformed
-        Actualizar();
+        ActualizarTodo();
+        clCelular.Guardar();
+        clReferencia.Guardar();
+        clActividad.Guardar();
     }//GEN-LAST:event_JBActualizarActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
@@ -1045,6 +1059,44 @@ public class Cliente extends javax.swing.JInternalFrame {
             validacion++;
         }
 
+        //estrayendo datos celular
+        Vector<String> celular = clCelular.Celular();
+        String cell, tipoCell, empres, descripcio;
+
+        cell = celular.get(1);
+        tipoCell = celular.get(2);
+        empres = celular.get(3);
+        descripcio = celular.get(4);
+
+        //estrayendo datos referencia
+        Vector<String> refere = clReferencia.Referencias();
+        String nombre_refer, relacion_refer, celular_refer;
+
+        nombre_refer = refere.get(1);
+        relacion_refer = refere.get(2);
+        celular_refer = refere.get(3);
+
+        //estrayendo datos actividad economica
+        Vector<String> actividadEc = clActividad.ActiviEconom();
+        String nombre_trab, descripcion_trab, cargo_trab, direccion_trab, ingreso_trab, fecha_trab;
+
+        nombre_trab = actividadEc.get(1);
+        descripcion_trab = actividadEc.get(2);
+        cargo_trab = actividadEc.get(3);
+        direccion_trab = actividadEc.get(4);
+        ingreso_trab = actividadEc.get(5);
+        fecha_trab = actividadEc.get(6);
+
+        if (celular.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresar datos de Celular");
+            return;
+        } else if (refere.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresar datos de Referencia");
+            return;
+        } else if (actividadEc.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresar datos de Actividad Economica");
+            return;
+        }
         if (validacion == 0) {
             Vector<String> datos = new Vector<>();
             datos.add(cedul);
@@ -1057,6 +1109,19 @@ public class Cliente extends javax.swing.JInternalFrame {
             datos.add(idusuario);
             datos.add(fechaIngreso);
             datos.add(comentario);
+            datos.add(cell);
+            datos.add(tipoCell);
+            datos.add(empres);
+            datos.add(descripcio);
+            datos.add(nombre_refer);
+            datos.add(relacion_refer);
+            datos.add(celular_refer);
+            datos.add(nombre_trab);
+            datos.add(descripcion_trab);
+            datos.add(cargo_trab);
+            datos.add(direccion_trab);
+            datos.add(ingreso_trab);
+            datos.add(fecha_trab);
 
             matriz.add(datos);
         } else {
@@ -1078,7 +1143,7 @@ public class Cliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
 
-    private void botonCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCelularActionPerformed
+    public void btCelular() {
         try {
             if (cerrado(clCelular)) {
                 clCelular = new ClienteCelular();
@@ -1092,10 +1157,12 @@ public class Cliente extends javax.swing.JInternalFrame {
             System.err.println("Error al cargar ventana Datos Celular" + e);
         }
 
-
+    }
+    private void botonCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCelularActionPerformed
+        btCelular();
     }//GEN-LAST:event_botonCelularActionPerformed
 
-    private void botonReferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReferenciasActionPerformed
+    public void btReferencia() {
         try {
             if (cerrado(clReferencia)) {
                 clReferencia = new ClienteReferencia();
@@ -1109,11 +1176,12 @@ public class Cliente extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.err.println("Error al cargar ventana Datos Referencias" + e);
         }
-
-
+    }
+    private void botonReferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReferenciasActionPerformed
+        btReferencia();
     }//GEN-LAST:event_botonReferenciasActionPerformed
 
-    private void botontrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botontrabajoActionPerformed
+    public void btActividad() {
         try {
             if (cerrado(clActividad)) {
                 clActividad = new ClienteActividadEconomica();
@@ -1121,13 +1189,14 @@ public class Cliente extends javax.swing.JInternalFrame {
                 clActividad.show();
 
                 clActividad.setClienteReferencia(idclient, nombre_trabajo, descripcion_trabajo, cargo_trabajo, direccion_trabajo, ingreso_trabajo, fecha_trabajo);
-
             }
 
         } catch (Exception e) {
             System.err.println("Error al cargar ventana Datos Activida Económica" + e);
         }
-
+    }
+    private void botontrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botontrabajoActionPerformed
+        btActividad();
     }//GEN-LAST:event_botontrabajoActionPerformed
 
 

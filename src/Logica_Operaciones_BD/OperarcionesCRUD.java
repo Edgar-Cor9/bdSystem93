@@ -231,30 +231,34 @@ public final class OperarcionesCRUD {
         status = "Activo";
         String statusActual = "Bloqueado";
 
-        int intentos = 3;
+        int intentos = 0;
+        int maxIntento = 3;
+        boolean acceso = false;
         Statement stm = this.conexion.createStatement();
         try {
             String sql = "select status from usuarios where username = '" + user
                     + "' and password = '" + pass + "'and  status = '" + status + "'";
 
             ResultSet rst = stm.executeQuery(sql);
+            while (intentos < maxIntento && !acceso) {
+                if (rst.next()) {
+                    lg.dispose();
+                    acceso = true;
+                    new Principal().setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "PASSWORD INCORRECTOS");
+                    intentos++;                    
+                    lg.show(true);
+                }
 
-            if (rst.next()) {
-                lg.dispose();
-                new Principal().setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "PASSWORD INCORRECTOS");
-                intentos--;
-                System.out.println(intentos);
-                lg.show(true);
+                if (!acceso) {
+                    JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
+                    ActEstadoUser(user, statusActual);
+
+                }
             }
 
-            if (intentos == 0) {
-                JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO");
-                ActEstadoUser(user, statusActual);
-
-            }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "!! Error al Acesso del Usuario" + e);
             System.out.println("Error al Acceso del Usuario" + e);
         }
@@ -416,8 +420,8 @@ public final class OperarcionesCRUD {
         this.cerrarConexionBD();
         return coduser;
     }
-// permite extraer la lista de usuarios registrados en la base de datos por nombre de USUARIO
 
+    //permite extraer la lista de usuarios registrados en la base de datos por nombre de USUARIO
     public Vector<String> ListaUsername() throws SQLException {
         Vector<String> vector = new Vector<>();
         this.iniciarConexionBD();
@@ -512,7 +516,8 @@ public final class OperarcionesCRUD {
         ArrayList<Vector<String>> matriz = datos;
         try {
             for (Vector<String> vector : matriz) {
-                String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngreso, fechaActual, comentario;
+                String cedul, nombres, apellidos, email, direccion, edad, username, idusuario, fechaIngreso, fechaActual, comentario,
+                        cell, tipoCell, empres, descripcio, nombre_refer, relacion_refer, celular_refer, nombre_trab, descripcion_trab, cargo_trab, direccion_trab, ingreso_trab, fecha_trab;
 
                 cedul = vector.get(0);
                 nombres = vector.get(1);
@@ -524,6 +529,19 @@ public final class OperarcionesCRUD {
                 idusuario = vector.get(7);
                 fechaIngreso = vector.get(8);
                 comentario = vector.get(9);
+                cell = vector.get(10);
+                tipoCell = vector.get(11);
+                empres = vector.get(12);
+                descripcio = vector.get(13);
+                nombre_refer = vector.get(14);
+                relacion_refer = vector.get(15);
+                celular_refer = vector.get(16);
+                nombre_trab = vector.get(17);
+                descripcion_trab = vector.get(18);
+                cargo_trab = vector.get(19);
+                direccion_trab = vector.get(20);
+                ingreso_trab = vector.get(21);
+                fecha_trab = vector.get(22);
 
                 String sql = "select cedula_cliente from clientes where cedula_cliente = '" + cedul + "'";
 
@@ -536,17 +554,23 @@ public final class OperarcionesCRUD {
                     Statement stm2 = this.conexion.createStatement();
                     String sql1 = " INSERT INTO clientes (CEDULA_CLIENTE, NOMBRES_CLIENTE,"
                             + " APELLIDOS_CLIENTE, EMAIL_CLIENTE, DIRECCION_CLIENTE,EDAD,USERNAME, "
-                            + "IDUSUARIOS, FECHA_INGRESO, COMENTARIO) VALUES ('" + cedul + "', '" + nombres + "',"
-                            + " '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "','" + username + "', "
-                            + "'" + idusuario + "', '" + fechaIngreso + "','" + comentario + "')";
+                            + "IDUSUARIOS, FECHA_INGRESO, COMENTARIO, NUMERO, TIPOCELULAR, EMPRESA, "
+                            + "DESCRIPCION, NOMBRE_REFERENCIA, RELACION_REFERENCIA, CELULAR_REFERENCIA, "
+                            + "NOMBRE_TRABAJO, DESCRIPCION_TRABAJO, CARGO_TRABAJO, DIRECCION_TRABAJO, INGRESO_TRABAJO, "
+                            + "FECHA_TRABAJO) VALUES ('" + cedul + "', '" + nombres + "',"
+                            + " '" + apellidos + "', '" + email + "', '" + direccion + "', '" + edad + "', '" + username + "', "
+                            + "'" + idusuario + "', '" + fechaIngreso + "', '" + comentario + "', '" + cell + "', '" + tipoCell + "', "
+                            + "'" + empres + "', '" + descripcio + "', '" + nombre_refer + "', '" + relacion_refer + "', '" + celular_refer + "', "
+                            + "'" + nombre_trab + "', '" + descripcion_trab + "', '" + cargo_trab + "', '" + direccion_trab + "', '" + ingreso_trab + "', '" + fecha_trab + "')";
+
                     stm2.executeUpdate(sql1);
                     JOptionPane.showMessageDialog(null, "!! Persona Guardada con Exito !!\n");
                 }
                 this.cerrarConexionBD();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "!! Error al crear Persona" + e);
-            System.out.println("Error al crear Persona" + e);
+            e.printStackTrace();
         }
 
     }
@@ -608,7 +632,7 @@ public final class OperarcionesCRUD {
         String id, celula, tipoCelula, empres, descripcio;
 
         try {
-          
+
             id = valores.get(0);
             celula = valores.get(1);
             tipoCelula = valores.get(2);

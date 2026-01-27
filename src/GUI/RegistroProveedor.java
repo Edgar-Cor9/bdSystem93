@@ -131,27 +131,27 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Registro Proveedor", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Nombres:");
 
-        txtnombres.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtnombres.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Apellidos:");
 
-        txtapellidos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtapellidos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Email:");
 
-        txtemail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtemail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtdireccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtdireccion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Dirección:");
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Comentario:");
 
         txtcomentario.setColumns(20);
@@ -207,37 +207,37 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Ruc:");
 
-        LabelRuc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelRuc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Usuario Registro:");
 
-        LabelUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Usuario Actualización:");
 
-        UsuarioActualizacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        UsuarioActualizacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Fecha Registro:");
 
-        FechaRegistro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FechaRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Fecha Actualización:");
 
-        fechaActual.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        fechaActual.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("ID Proveedor:");
 
-        labelProveedor.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelProveedor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        IdUSer.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        IdUSer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -385,7 +385,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         });
         jToolBar2.add(jButton4);
 
-        txtRuc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtRuc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtRuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRucActionPerformed(evt);

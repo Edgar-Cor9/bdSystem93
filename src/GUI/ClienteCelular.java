@@ -68,7 +68,6 @@ public class ClienteCelular extends javax.swing.JInternalFrame {
 
     public void Guardar() {
         Vector<String> valores = Celular();
-
         try {
             OperarcionesCRUD op = OperarcionesCRUD.getInstance();
             op.ActualizarCelular(valores);
