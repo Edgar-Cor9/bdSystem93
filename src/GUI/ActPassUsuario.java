@@ -18,14 +18,14 @@ import javax.swing.WindowConstants;
  * @author USUARIO
  */
 public class ActPassUsuario extends javax.swing.JInternalFrame {
-    
+
     String usuario;
 
     /**
      * Creates new form ActPassUsuario
      */
     ActPerfilUsuario actPu;
-    
+
     public ActPassUsuario() {
         initComponents();
         usuario = Login.user;
@@ -33,9 +33,9 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         JBpassword1.setVisible(false);
         JLabelTitulo.setText(" Actualizacion Usuario > Password ");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
+
         jLabelUsuario.setText(usuario);
-        
+
     }
 
     /**
@@ -210,14 +210,12 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
-        
+    public void Guardar() {
         String passnuevo, confirmacionpass;
-        
+
         passnuevo = jPassNuevo.getText();
         confirmacionpass = jPassNuevoConfir.getText();
-        
+
         int validacion = 0;
         if (passnuevo.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el password Nuevo por favor");
@@ -229,12 +227,20 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
             validacion++;
             JBpassword2.setVisible(true);
         }
-        
+
         if (validacion == 0) {
-            
+                                          
+            String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!.,]).{10,}$";
+
+            if (!passnuevo.matches(regex)) {
+                JOptionPane.showMessageDialog(this,
+                        "La contraseña debe tener al menos 10 caracteres, "
+                        + "incluyendo mayúsculas, minúsculas, números y un carácter especial");
+                return; // Detiene la ejecución si no cumple
+            }
             if (confirmacionpass.equals(passnuevo)) {
                 try {
-                    
+
                     OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                     op.ActPassUsuario(usuario, confirmacionpass);
                     JOptionPane.showMessageDialog(this, "Contraseña Actualiza Exitosamente");
@@ -243,15 +249,18 @@ public class ActPassUsuario extends javax.swing.JInternalFrame {
                     err.printStackTrace();
                 }
             } else {
-                
+
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
                 JBpassword1.setVisible(true);
                 JBpassword2.setVisible(true);
             }
-            
+
         }
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     public void Limpiar() {
         jPassNuevo.setText("");
         jPassNuevoConfir.setText("");

@@ -142,7 +142,7 @@ public class Login extends javax.swing.JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "USUARIO SE ENCUENTRA INACTIVO / BLOQUEADO"
-                            + "CONTACTE AL ADMINISTRADOR");
+                            + " CONTACTE AL ADMINISTRADOR");
                 }
 
             } else {

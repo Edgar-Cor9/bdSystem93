@@ -8,6 +8,7 @@ import Logica_Operaciones_BD.OperarcionesCRUD;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.regex.Pattern;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -146,15 +147,11 @@ public class ActPassword extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(58, 58, 58)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel5))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -247,17 +244,17 @@ public class ActPassword extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public void GuardarPassword() {
-        ArrayList<Vector<String>> matriz = new ArrayList<>();
 
         String passnuevo, confirmacionpass;
 
         passnuevo = jPassNuevo.getText();
         confirmacionpass = jPassNuevoConfir.getText();
 
-
         String user = jLabelUsuario.getText();
 
+        int longitud = 10;
         int validacion = 0;
+        int valor = confirmacionpass.length();
         if (passnuevo.equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese el password Nuevo por favor");
             validacion++;
@@ -270,10 +267,27 @@ public class ActPassword extends javax.swing.JInternalFrame {
         }
 
         if (validacion == 0) {
+            // Expresión regular para validar la contraseña
+            String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!.,]).{10,}$";
+            // Expresión regular:
+            // ^ inicio
+            // (?=.*[0-9]) al menos un dígito
+            // (?=.*[a-z]) al menos una letra minúscula
+            // (?=.*[A-Z]) al menos una letra mayúscula
+            // (?=.*[@#$%^&+=!]) al menos un carácter especial
+            // .{10,} mínimo 10 caracteres
+            // $ fin
+
+            if (!passnuevo.matches(regex)) {
+                JOptionPane.showMessageDialog(this,
+                        "La contraseña debe tener al menos 10 caracteres, "
+                        + "incluyendo mayúsculas, minúsculas, números y un carácter especial");
+                return; // Detiene la ejecución si no cumple
+            }
 
             if (confirmacionpass.equals(passnuevo)) {
-                try {
 
+                try {
                     OperarcionesCRUD op = OperarcionesCRUD.getInstance();
                     op.ActPassUsuario(user, confirmacionpass);
                     JOptionPane.showMessageDialog(this, "Contraseña Actualiza Exitosamente");
@@ -290,6 +304,8 @@ public class ActPassword extends javax.swing.JInternalFrame {
 
         }
     }
+
+
     private void GurdarPassUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GurdarPassUActionPerformed
         GuardarPassword();
     }//GEN-LAST:event_GurdarPassUActionPerformed
@@ -314,7 +330,7 @@ public class ActPassword extends javax.swing.JInternalFrame {
 
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       GuardarPassword();
+        GuardarPassword();
     }//GEN-LAST:event_jButton4ActionPerformed
 
 

@@ -5,6 +5,8 @@
 package GUI;
 
 import Logica_Operaciones_BD.OperarcionesCRUD;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -48,6 +50,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         JBApellidos.setVisible(false);
         JBemail.setVisible(false);
         JBtelefono.setVisible(false);
+        verificar();
 
     }
 
@@ -101,6 +104,11 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         txtpass = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         idUSer = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtdireccion = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtComentario = new javax.swing.JTextArea();
 
         jButton1.setText("jButton1");
 
@@ -151,7 +159,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         jToolBar2.add(jButton4);
         jToolBar2.add(JLabelTitulo);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Cédula:");
 
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +221,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         });
         jToolBar3.add(jButton2);
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel12.setText("fecha:");
         jLabel12.setAlignmentX(0.5F);
         jToolBar3.add(jLabel12);
@@ -221,16 +229,16 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Actualizar Usuario", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nombres :");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Apellidos:");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Email:");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Teléfono:");
 
         JBemail.setBackground(new java.awt.Color(255, 51, 51));
@@ -253,16 +261,16 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         JBNombres.setToolTipText("Ingrese los  Nombre");
         JBNombres.setBorder(null);
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Cédula:");
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("Registrado por:");
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setText("Ultima Acualización:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Usuario:");
 
         txtUsuario.setEditable(false);
@@ -275,14 +283,44 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         txtpass.setEditable(false);
         txtpass.setText("jPasswordField1");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("ID Usuario:");
+
+        jLabel7.setText("Dirección:");
+
+        jLabel8.setText("Comentario:");
+
+        txtComentario.setColumns(20);
+        txtComentario.setRows(5);
+        jScrollPane1.setViewportView(txtComentario);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1196, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(329, 329, 329)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(LabelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(txtfono, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(JBtelefono))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(JBApellidos)))
+                    .addComponent(jLabel7)
+                    .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -312,34 +350,40 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtpass, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(38, 38, 38)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(LabelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
-                                    .addComponent(jLabel14)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JBApellidos))
-                                        .addComponent(jLabel4)
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(txtfono, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JBtelefono))
-                                        .addComponent(jLabel2))
-                                    .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 652, Short.MAX_VALUE)
+                            .addComponent(jLabel14)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap()))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LabelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JBApellidos)
+                    .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JBtelefono, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtfono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -347,33 +391,21 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(LabelRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(labelCedula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2)))
+                            .addComponent(jLabel1))
                         .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(JBApellidos)
+                        .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JBNombres))
                     .addGap(12, 12, 12)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4))
+                    .addComponent(jLabel3)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(JBtelefono)
+                        .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JBemail))
                     .addGap(18, 18, 18)
                     .addComponent(jLabel5)
@@ -385,7 +417,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
                         .addComponent(idUSer, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(40, Short.MAX_VALUE)))
+                    .addContainerGap(59, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -407,7 +439,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(426, 426, 426))
+                .addGap(407, 407, 407))
         );
 
         jDesktopPane1Registro.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -457,52 +489,91 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
         txtCedula.setText("");
     }//GEN-LAST:event_jBLimpiarActionPerformed
 
+    // validar que solo se ingrese numero en el txtcedula
+    public void verificar() {
+        String cedula = txtCedula.getText().toString();
+
+        txtCedula.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+    }
+
     public void Consultar() {
         String cedula;
         cedula = txtCedula.getText();
+        int longitud = 10;
+        int valor = cedula.length();
+
         labelCedula.setText(cedula);
         if (!cedula.equals("")) {
-            try {
-                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                ArrayList<Vector<String>> matriz = op.cedulaUsuario(cedula);
+            if (valor < longitud) {
+                JOptionPane.showMessageDialog(this, "Cédula debe contener 10 digitos");
+            } else if (valor > longitud) {
+                JOptionPane.showMessageDialog(this, "Cédula debe contener 10 digitos");
+            } else {
+                try {
+                    OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+                    ArrayList<Vector<String>> matriz = op.cedulaUsuario(cedula);
 
-                jPanel1.setVisible(false);
-                jDesktopPane1Registro.setVisible(true);
-                jPanel2.setVisible(true);
+                    jPanel1.setVisible(false);
+                    jDesktopPane1Registro.setVisible(true);
+                    jPanel2.setVisible(true);
 
-                for (Vector<String> vector : matriz) {
+                    for (Vector<String> vector : matriz) {
 
-                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, registradox, fecha_regis, ult_actua;
+                        String iduser, cedul, nombres, apellidos, email, telefono, username, pass, direccion, comentario, registradox, fecha_regis, ult_actua;
 
-                    iduser = vector.get(0);
-                    cedul = vector.get(1);
-                    nombres = vector.get(2);
-                    apellidos = vector.get(3);
-                    email = vector.get(4);
-                    telefono = vector.get(5);
-                    username = vector.get(6);
-                    pass = vector.get(7);
+                        iduser = vector.get(0);
+                        cedul = vector.get(1);
+                        nombres = vector.get(2);
+                        apellidos = vector.get(3);
+                        email = vector.get(4);
+                        telefono = vector.get(5);
+                        username = vector.get(6);
+                        pass = vector.get(7);
+                        direccion = vector.get(8);
+                        comentario = vector.get(9);
 
-                    registradox = vector.get(8);
-                    fecha_regis = vector.get(9);
-                    ult_actua = vector.get(10);
+                        registradox = vector.get(10);
+                        fecha_regis = vector.get(11);
+                        ult_actua = vector.get(12);
 
-                    idUSer.setText(iduser);
-                    labelCedula.setText(cedul);
-                    txtUsuario.setText(username);
-                    txtnombres.setText(nombres);
-                    txtapellidos.setText(apellidos);
-                    txtemail.setText(email);
-                    txtfono.setText(telefono);
+                        idUSer.setText(iduser);
+                        labelCedula.setText(cedul);
+                        txtUsuario.setText(username);
+                        txtnombres.setText(nombres);
+                        txtapellidos.setText(apellidos);
+                        txtemail.setText(email);
+                        txtfono.setText(telefono);
+                        txtdireccion.setText(direccion);
+                        txtComentario.setText(comentario);
 
-                    LabelRegistro.setText(registradox);
-                    labelFecha.setText(fecha_regis);
-                    LabelActualizacion.setText(ult_actua);
+                        LabelRegistro.setText(registradox);
+                        labelFecha.setText(fecha_regis);
+                        LabelActualizacion.setText(ult_actua);
+                    }
+
+                } catch (SQLException err) {
+                    err.printStackTrace();
                 }
-
-            } catch (SQLException err) {
-                err.printStackTrace();
             }
+
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un número de cédula");
         }
@@ -528,7 +599,7 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
 
             String fechas = formato.format(fecha);
 
-            String cedula, nombres, apellidos, email, telefono, usrname, tipo_nivel, status;
+            String cedula, nombres, apellidos, email, telefono, usrname, direccion, comentario, tipo_nivel, status;
             cedula = labelCedula.getText().toString();
             int validacion = 0;
 
@@ -537,6 +608,8 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
             email = txtemail.getText();
             telefono = txtfono.getText();
             usrname = txtUsuario.getText();
+            direccion = txtdireccion.getText();
+            comentario = txtComentario.getText();
 
             if (nombres.equals("")) {
                 JOptionPane.showMessageDialog(this, "Ingrese los nombres por favor");
@@ -564,6 +637,8 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
                 datos.add(email);
                 datos.add(telefono);
                 datos.add(usrname);
+                datos.add(direccion);
+                datos.add(comentario);
                 datos.add(usuario);
                 datos.add(fechas);
 
@@ -623,18 +698,23 @@ public class ActualizarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JLabel labelCedula;
     private javax.swing.JLabel labelFecha;
     private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextArea txtComentario;
     private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextField txtapellidos;
+    private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtfono;
     private javax.swing.JTextField txtnombres;

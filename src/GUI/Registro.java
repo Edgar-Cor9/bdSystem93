@@ -5,6 +5,8 @@
 package GUI;
 
 import Logica_Operaciones_BD.OperarcionesCRUD;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -46,6 +48,7 @@ public class Registro extends javax.swing.JInternalFrame {
         JBusuario.setVisible(false);
         JBpassword.setVisible(false);
         JBtelefono.setVisible(false);
+        verificar();
     }
 
     /**
@@ -105,6 +108,11 @@ public class Registro extends javax.swing.JInternalFrame {
         LabelRegistro = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         LabelActualizacion = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtdireccion = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtComentario = new javax.swing.JTextArea();
 
         jButton1.setText("jButton1");
 
@@ -305,16 +313,45 @@ public class Registro extends javax.swing.JInternalFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setText("Ultima Acualización:");
 
+        jLabel13.setText("Dirección:");
+
+        jLabel15.setText("Comentario:");
+
+        txtComentario.setColumns(20);
+        txtComentario.setRows(5);
+        jScrollPane1.setViewportView(txtComentario);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(171, 171, 171)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(JBusuario)
-                    .addComponent(JBpassword))
-                .addContainerGap(776, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JBusuario)
+                            .addComponent(JBpassword)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JBnivel))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(JBestado)))))
+                .addGap(124, 124, 124)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel15)
+                    .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(417, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(62, 62, 62)
@@ -347,20 +384,10 @@ public class Registro extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(JBApellidos))
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(JBestado))
-                        .addComponent(jLabel8)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(txtfono, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(JBtelefono))
                         .addComponent(jLabel4)
-                        .addComponent(jLabel7)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(JBnivel))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -374,11 +401,32 @@ public class Registro extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(245, Short.MAX_VALUE)
-                .addComponent(JBusuario)
-                .addGap(43, 43, 43)
-                .addComponent(JBpassword)
-                .addGap(73, 73, 73))
+                .addContainerGap(221, Short.MAX_VALUE)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JBusuario)
+                    .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel15)
+                .addGap(4, 4, 4)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(JBpassword)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JBnivel)))
+                    .addComponent(jScrollPane1))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBestado))
+                .addGap(43, 43, 43))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(45, 45, 45)
@@ -412,30 +460,19 @@ public class Registro extends javax.swing.JInternalFrame {
                                 .addComponent(JBtelefono)
                                 .addComponent(JBemail))
                             .addGap(18, 18, 18)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel7))
+                            .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(JBnivel))
+                            .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel8))
+                            .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jcomboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(JBestado)))
+                            .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(4, 4, 4)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(LabelActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addContainerGap(68, Short.MAX_VALUE)))
+                    .addContainerGap(203, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -458,7 +495,7 @@ public class Registro extends javax.swing.JInternalFrame {
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
 
         jDesktopPane1Registro.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -500,6 +537,30 @@ public class Registro extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    //para validad que solo ingrese numero en el campo txtcedula
+    public void verificar() {
+        String cedula = txtCedula.getText().toString();
+
+        txtCedula.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+    }
+
     public void Guardar() {
         ArrayList<Vector<String>> matriz = new ArrayList<>();
 
@@ -507,7 +568,7 @@ public class Registro extends javax.swing.JInternalFrame {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         String fechas = formato.format(fecha);
 
-        String cedula, nombres, apellidos, email, telefono, username, password, tipo_nivel, status, seleccion1, seleccion2;
+        String cedula, nombres, apellidos, email, telefono, username, password, direccion, comentario, tipo_nivel, status, seleccion1, seleccion2;
         cedula = labelCedula.getText().toString();
         int validacion = 0;
         int seleccion = 0;
@@ -517,6 +578,8 @@ public class Registro extends javax.swing.JInternalFrame {
         telefono = txtfono.getText();
         username = txtusuario.getText();
         password = txtpassword.getText();
+        direccion = txtdireccion.getText();
+        comentario = txtComentario.getText();
 
         tipo_nivel = jComboNivel.getSelectedItem().toString();
         status = jcomboStatus.getSelectedItem().toString();
@@ -562,6 +625,8 @@ public class Registro extends javax.swing.JInternalFrame {
             datos.add(telefono);
             datos.add(username);
             datos.add(password);
+            datos.add(direccion);
+            datos.add(comentario);
             datos.add(tipo_nivel);
             datos.add(status);
             datos.add(usuario);
@@ -589,48 +654,60 @@ public class Registro extends javax.swing.JInternalFrame {
     public void Consultar() {
         String cedula;
         cedula = txtCedula.getText();
+        int longitud = 10;
+        int valor = cedula.length();
         labelCedula.setText(cedula);
         if (!cedula.equals("")) {
-            try {
-                OperarcionesCRUD op = OperarcionesCRUD.getInstance();
-                ArrayList<Vector<String>> matriz = op.cedulaUsuario(cedula);
+            if (valor < longitud) {
+                JOptionPane.showMessageDialog(null, "!! La Cédula debe contener 10 digitos !!\n");
+            } else if (valor > longitud) {
+                JOptionPane.showMessageDialog(null, "!! La Cédula debe contener 10 digitos !!\n");
+            } else {
+                try {
+                    OperarcionesCRUD op = OperarcionesCRUD.getInstance();
+                    ArrayList<Vector<String>> matriz = op.cedulaUsuario(cedula);
 
-                jPanel1.setVisible(false);
-                jDesktopPane1Registro.setVisible(true);
-                jPanel2.setVisible(true);
+                    jPanel1.setVisible(false);
+                    jDesktopPane1Registro.setVisible(true);
+                    jPanel2.setVisible(true);
 
-                for (Vector<String> vector : matriz) {
+                    for (Vector<String> vector : matriz) {
 
-                    String iduser, cedul, nombres, apellidos, email, telefono, username, pass, registradox, fecha_regis, ult_actua;
+                        String iduser, cedul, nombres, apellidos, email, telefono, username, pass, direccion, comentario, registradox, fecha_regis, ult_actua;
 
-                    iduser = vector.get(0);
-                    cedul = vector.get(1);
-                    nombres = vector.get(2);
-                    apellidos = vector.get(3);
-                    email = vector.get(4);
-                    telefono = vector.get(5);
-                    username = vector.get(6);
-                    pass = vector.get(7);
+                        iduser = vector.get(0);
+                        cedul = vector.get(1);
+                        nombres = vector.get(2);
+                        apellidos = vector.get(3);
+                        email = vector.get(4);
+                        telefono = vector.get(5);
+                        username = vector.get(6);
+                        pass = vector.get(7);
+                        direccion = vector.get(8);
+                        comentario = vector.get(9);
 
-                    registradox = vector.get(8);
-                    fecha_regis = vector.get(9);
-                    ult_actua = vector.get(10);
+                        registradox = vector.get(10);
+                        fecha_regis = vector.get(11);
+                        ult_actua = vector.get(12);
 
-                    labelCedula.setText(cedul);
-                    txtnombres.setText(nombres);
-                    txtapellidos.setText(apellidos);
-                    txtemail.setText(email);
-                    txtfono.setText(telefono);
-                    txtusuario.setText(username);
-                    txtpassword.setText(pass);
+                        labelCedula.setText(cedul);
+                        txtnombres.setText(nombres);
+                        txtapellidos.setText(apellidos);
+                        txtemail.setText(email);
+                        txtfono.setText(telefono);
+                        txtusuario.setText(username);
+                        txtpassword.setText(pass);
+                        txtdireccion.setText(direccion);
+                        txtComentario.setText(comentario);
 
-                    LabelRegistro.setText(registradox);
-                    labelFecha.setText("  " + fecha_regis);
-                    LabelActualizacion.setText(ult_actua);
+                        LabelRegistro.setText(registradox);
+                        labelFecha.setText("  " + fecha_regis);
+                        LabelActualizacion.setText(ult_actua);
+                    }
+
+                } catch (SQLException err) {
+                    err.printStackTrace();
                 }
-
-            } catch (SQLException err) {
-                err.printStackTrace();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un número de cédula");
@@ -677,7 +754,9 @@ public class Registro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -689,6 +768,7 @@ public class Registro extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
@@ -696,7 +776,9 @@ public class Registro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelCedula;
     private javax.swing.JLabel labelFecha;
     private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextArea txtComentario;
     private javax.swing.JTextField txtapellidos;
+    private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtfono;
     private javax.swing.JTextField txtnombres;
