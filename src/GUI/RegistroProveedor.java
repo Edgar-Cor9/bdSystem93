@@ -5,6 +5,8 @@
 package GUI;
 
 import Logica_Operaciones_BD.OperarcionesCRUD;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -36,6 +38,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         LocalDate fechaActual = LocalDate.now();
         FechaRegistro.setText(fechaActual.format(DateTimeFormatter.ISO_DATE));
 
+        validar();
     }
 
     /**
@@ -362,7 +365,7 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         jToolBar1.setRollover(true);
         jToolBar1.setEnabled(false);
 
-        LabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jToolBar1.add(LabelTitulo);
 
         jToolBar2.setFloatable(true);
@@ -444,6 +447,27 @@ public class RegistroProveedor extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    public void validar (){
+        txtRuc.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+               char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+               
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+               
+            }
+        });
+    }
     public void Consultar() {
         String ruc = txtRuc.getText().toString();
         LabelRuc.setText(ruc);
